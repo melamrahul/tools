@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>QR Code Generator – Tools by Rahul</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="QR Code Generator – Tools by Rahul" />
+    <meta property="og:description"
+        content="Generate QR Codes instantly. Simple, fast, clean QR generator with download support." />
+    <meta property="og:url" content="https://melamrahul.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tools by Rahul" />
+    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" sizes="192x192" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <link rel="icon" sizes="512x512" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords"
+        content="qr generator, qr code, text to qr, qr download, qr tool, melam, rahul, tools, melam rahul, melam rahul tools, online tools" />
+    <meta name="theme-color" content="auto" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet" />
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: #0a0a0a;
+            color: #fff;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 20px auto;
+            margin-bottom: 60px;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        /* Header */
+        .header {
+            background: black;
+            padding: 25px;
+            border-radius: 16px;
+            border: 1px solid #2a2a2a;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .logo {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .tools-btn {
+            background: linear-gradient(135deg, #ff4d8d, #8f46ff, #3d9dff, #22e3c5);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            white-space: nowrap;
+            background-size: 200%;
+            animation: gradientFlow 6s ease infinite;
+            transition: 0.3s;
+        }
+
+        .tools-btn:hover {
+            filter: brightness(1.15);
+        }
+
+        @keyframes gradientFlow {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Card */
+        .content-card {
+            background: black;
+            border-radius: 16px;
+            border: 1px dashed #fff;
+            padding: 22px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 1px solid #ff008c;
+            background: #111;
+            color: #fff;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ff008c;
+        }
+
+        .action-btn {
+            display: block;
+            width: 220px;
+            margin: 15px auto;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            background: #cc0000;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #ff0000;
+        }
+
+
+        #qrcode {
+            margin-top: 25px;
+            display: flex;
+            padding: 10px;
+            justify-content: center;
+        }
+
+        #qrcode canvas {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        #downloadBtn {
+            display: none;
+        }
+
+        .small-btn {
+            margin-top: 15px;
+            border: none;
+            background: none;
+            color: #1cbfff;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* Global Splash Loader */
+        .global-loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .global-spinner {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            padding: 6px;
+            background: conic-gradient(#ff6a00, #ff0077, #6a00ff, #00d1ff, #ff6a00);
+            animation: spin 2.4s linear infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .global-spinner img {
+            width: 85%;
+            filter: brightness(0) invert(1);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #aaa;
+            background-color: black;
+            padding: 10px 0;
+            z-index: 10;
+        }
+
+        footer a {
+            color: #22e3c5;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Splash Loader -->
+    <div class="global-loader" id="globalLoader">
+        <div class="global-spinner">
+            <img src="https://melamrahul.github.io/tools/tools_logo.png" />
+        </div>
+    </div>
+
+    <div class="container" id="mainContent">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <!-- <img src="https://img.freepik.com/premium-vector/qr-code-icon_946691-780.jpg" /> -->
+                <img src="https://melamrahul.github.io/tools/tool_logo_head.png">
+            </div>
+
+            <div>
+                <h2>QR Code Generator</h2>
+                <p style="color:#aaa; font-size:14px;">Create • Scan • Download</p>
+            </div>
+
+            <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
+        </div>
+
+        <!-- Card -->
+        <div class="content-card">
+            <h3>Create Instant QR Codes</h3>
+            <p style="color:#aaa; margin-top:5px;">Enter any text or URL below</p>
+
+            <input id="qrInput" type="text" placeholder="Enter text or URL…" />
+
+            <button class="action-btn" onclick="generateQR()">Generate QR Code</button>
+
+            <div id="qrcode"></div>
+
+            <button id="downloadBtn" class="action-btn" onclick="downloadQR()">Download QR Code</button>
+
+            <button class="small-btn" onclick="clearQR()">Reset QR Code</button> &emsp;|&emsp;
+            <button class="small-btn"
+                onclick="window.location.href='https://razorpay.com/payment-button/pl_NxfbmRQ4Y7J9El/view'">Donate</button>
+
+        </div>
+    </div>
+
+    <footer style="background-color: black; padding-bottom: 10px;">
+        © Designed ❤️ by <a href="/">M. Rahul</a>
+    </footer>
+
+    <!-- QR Library -->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+    <script>
+        /* Splash Loader */
+        const globalLoader = document.getElementById("globalLoader");
+        const mainContent = document.getElementById("mainContent");
+
+        setTimeout(() => {
+            globalLoader.style.display = "none";
+            document.body.style.overflow = "auto";
+            mainContent.style.opacity = "1";
+        }, 2400);
+
+        let qr;
+
+        function generateQR() {
+            const input = document.getElementById("qrInput");
+            const qrBox = document.getElementById("qrcode");
+            const downloadBtn = document.getElementById("downloadBtn");
+
+            if (!input.value.trim()) return;
+
+            qrBox.innerHTML = "";
+
+            // Generate temporary QR first
+            qr = new QRCode(qrBox, {
+                text: input.value,
+                width: 256,
+                height: 256
+            });
+
+            // Wait a moment for canvas to be added to the DOM
+            setTimeout(() => {
+                const originalCanvas = qrBox.querySelector("canvas");
+                if (!originalCanvas) return;
+
+                const border = 20; // thickness of white border
+                const borderedCanvas = document.createElement("canvas");
+                borderedCanvas.width = originalCanvas.width + border * 2;
+                borderedCanvas.height = originalCanvas.height + border * 2;
+
+                const ctx = borderedCanvas.getContext("2d");
+
+                // Fill border area with white
+                ctx.fillStyle = "white";
+                ctx.fillRect(0, 0, borderedCanvas.width, borderedCanvas.height);
+
+                // Draw the original QR in the center
+                ctx.drawImage(originalCanvas, border, border);
+
+                // Replace the original QR with bordered version
+                qrBox.innerHTML = "";
+                qrBox.appendChild(borderedCanvas);
+
+                downloadBtn.style.display = "block";
+            }, 50);
+        }
+
+
+        function downloadQR() {
+            if (!qr) return;
+
+            const canvas = document.querySelector('#qrcode canvas');
+            const tempCanvas = document.createElement('canvas');
+            const ctx = tempCanvas.getContext('2d');
+
+            tempCanvas.width = canvas.width + 20;
+            tempCanvas.height = canvas.height + 20;
+
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            ctx.drawImage(canvas, 10, 10);
+
+            const link = document.createElement('a');
+            link.href = tempCanvas.toDataURL();
+            link.download = 'qrcode.png';
+            link.click();
+        }
+
+        function clearQR() {
+            document.getElementById("qrcode").innerHTML = "";
+            document.getElementById("qrInput").value = "";
+            document.getElementById("downloadBtn").style.display = "none";
+        }
+
+        /* Disable inspecting */
+        document.oncontextmenu = () => false;
+        document.onkeydown = e => {
+            if (e.ctrlKey && (e.key === "U" || e.key === "I" || e.key === "J")) return false;
+        };
+    </script>
+</body>
+</html>
