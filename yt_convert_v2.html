@@ -1,0 +1,384 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YouTube Converter 2 (MP3/MP4) – Tools by Rahul</title>
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="YouTube Converter 2 (MP3/MP4) – Tools by Rahul" />
+    <meta property="og:description"
+        content="Convert YouTube videos to MP3 or MP4 instantly. Fast, free, high-quality online YouTube converter." />
+    <meta property="og:url" content="https://melamrahul.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tools by Rahul" />
+    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="512" />
+    <meta property="og:image:height" content="512" />
+
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <link rel="manifest" href="manifest.json" />
+    <link rel="icon" sizes="192x192" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <link rel="icon" sizes="512x512" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+
+    <!-- SEO -->
+    <meta name="robots" content="index, follow" />
+    <meta name="keywords"
+        content="youtube to mp3, melam, rahul, youtube converter, mp4 download, mp3 downloader, video converter online" />
+    <meta name="theme-color" content="auto" />
+
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background: #fff;
+    color: #000;
+    overflow: hidden;
+}
+
+/* Container */
+.container {
+    max-width: 650px;
+    margin: 5px auto;
+    margin-bottom: 20px;
+    padding: 10px;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+/* Header */
+.header {
+    background: white;
+    padding: 15px;
+    border-radius: 16px;
+    border: 1px solid #666;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+}
+
+.logo img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Card */
+.content-card {
+    background: white;
+    border-radius: 16px;
+    /* border: 1px dashed #666; */
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.card-header {
+    padding: 10px;
+}
+
+/* 🔥 IFRAME MASK SYSTEM */
+.iframe-wrap {
+    width: 100%;
+    height: 450px; /* default (mobile) */
+    overflow: hidden;
+    position: relative;
+    background: #fff;
+    transition: height 0.3s ease;
+}
+
+/* Zoom + crop controller */
+.zoom {
+    position: absolute;
+    top: -180px;   /* mobile crop */
+    left: -10px;
+    transform: scale(0.85);
+    transform-origin: top left;
+    width: 120%;
+    height: 900px;
+}
+
+@media (min-width: 768px) {
+
+    .iframe-wrap {
+        height: 420px;
+    }
+
+    .zoom {
+        top: -190px;
+        transform: scale(0.82);
+        width: 122%;
+    }
+}
+
+@media (min-width: 1024px) {
+
+    .iframe-wrap {
+        height: 500px;
+    }
+
+    .zoom {
+        top: -160px;
+        transform: scale(0.80);
+        width: 125%;
+    }
+}
+
+
+/* Iframe */
+iframe {
+    width: 100%;
+    margin-left: 10px;
+    height: 900px;
+    border: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+iframe.loaded {
+    opacity: 1;
+}
+
+/* Loader inside card */
+.loader-container {
+    position: absolute;
+    inset: 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.loader-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader {
+    width: 45px;
+    height: 45px;
+    border: 4px solid #2a2a2a;
+    border-top-color: #ff0000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Buttons */
+.button-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    justify-content: center;
+}
+
+.exp-btn {
+    flex: 1;
+    padding: 14px;
+    background: #cc0000;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    text-align: center;
+}
+
+.exp-btn:hover {
+    background: #ff0000;
+}
+
+/* Global Loader */
+.global-loader {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.global-spinner {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 6px;
+    background: conic-gradient(#ff6a00, #ff0077, #6a00ff, #00d1ff, #ff6a00);
+    animation: spin 2.4s linear infinite;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.global-spinner img {
+    width: 85%;
+    filter: brightness(0) invert(1);
+}
+
+/* Tools Button */
+.tools-btn {
+    background: linear-gradient(135deg, #ff4d8d, #8f46ff, #3d9dff, #22e3c5);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    white-space: nowrap;
+    background-size: 200%;
+    animation: gradientFlow 6s ease infinite;
+    transition: 0.3s;
+}
+
+.tools-btn:hover {
+    filter: brightness(1.15);
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Footer */
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    color: black;
+    background-color: white;
+    padding: 10px 0;
+    z-index: 10;
+}
+
+footer a {
+    color: #22e3c5;
+    text-decoration: underline;
+}
+</style>
+
+</head>
+
+<body>
+
+    <!-- GLOBAL LOADER -->
+    <div class="global-loader" id="globalLoader">
+        <div class="global-spinner">
+            <img src="https://melamrahul.github.io/tools/tools_logo.png" />
+        </div>
+    </div>
+
+    <div class="container" id="mainContent">
+
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" />
+            </div>
+            <div>
+                <h2>YT Converter</h2>
+                <p style="color:#aaa; font-size:14px;">MP3 / MP4 Download</p>
+            </div>
+            <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
+        </div>
+
+        <!-- Card -->
+        <div class="content-card">
+            <div class="card-header">
+                <h3>Convert YouTube Links to Audio/Video</h3>
+                <p style="color:#aaa; font-size:14px;">Paste link, choose format, download instantly</p>
+            </div>
+
+            <div class="iframe-wrap" id="iframeWrap">
+                <div class="loader-container" id="loader">
+                    <div class="loader"></div>
+                    <p style="margin-top:12px; color:#888;">Loading converter…</p>
+                </div>
+
+                <div class="zoom">
+                    <iframe id="converterFrame" src="https://ytmp3convert.tools/youtube-converter/"></iframe>
+                </div>
+            </div>
+        </div>
+<!-- 
+        <div class="button-row">
+            <button class="exp-btn" id="qualityBtn">Quality</button>
+            <button class="exp-btn" id="formatBtn">MP3 / MP4</button>
+        </div> -->
+
+    </div>
+
+    <footer style="background-color: white; padding-bottom: 10px;">
+        © Designed ❤️ by <a href="/">M. Rahul</a>
+    </footer>
+
+    <script>
+        /* Global Loader */
+        const globalLoader = document.getElementById("globalLoader");
+        const mainContent = document.getElementById("mainContent");
+
+        setTimeout(() => {
+            globalLoader.style.display = "none";
+            document.body.style.overflow = "auto";
+            mainContent.style.opacity = "1";
+        }, 1500);
+
+        /* Iframe Loader */
+        const iframe = document.getElementById("converterFrame");
+        const loader = document.getElementById("loader");
+        const iframeWrap = document.getElementById("iframeWrap");
+
+        const qualityBtn = document.getElementById("qualityBtn");
+        const formatBtn = document.getElementById("formatBtn");
+
+        iframe.addEventListener("load", () => {
+            loader.classList.add("hidden");
+            iframe.classList.add("loaded");
+        });
+
+        function expandAndRevert(height) {
+            iframeWrap.style.height = height + "px";
+
+            loader.classList.remove("hidden");
+            iframe.classList.remove("loaded");
+
+            iframe.src = iframe.src;
+
+            setTimeout(() => {
+                iframeWrap.style.height = "160px";
+            }, 3000);
+        }
+
+        qualityBtn.onclick = () => expandAndRevert(320);
+        formatBtn.onclick = () => expandAndRevert(220);
+    </script>
+
+</body>
+
+</html>
