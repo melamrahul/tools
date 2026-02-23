@@ -469,8 +469,10 @@
   <script>
     const now = new Date();
     const monthName = now.toLocaleString('default', { month: 'long' });
-    document.getElementById('monthText').innerText =
-      "❤️ Server costs for " + monthName;
+    document.getElementById('monthText').innerHTML =
+  '<img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" ' +
+  'style="width:18px; height:18px; vertical-align:middle; margin-right:6px;">' +
+  ' Server costs for ' + monthName;
 
     const goalAmount = 50; // Your monthly goal
 
