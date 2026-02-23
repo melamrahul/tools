@@ -1,546 +1,390 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>YouTube Converter (MP3/MP4) – Tools by Rahul</title>
+  <!-- ================= BASIC SEO ================= -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube to MP3 & MP4 Converter — Free, No Ads, 320kbps | Tools by Rahul</title>
+  <meta name="description" content="Convert YouTube videos to MP3 (320kbps) or MP4 (HD) free online. No ads, no signup, instant download. Fast YouTube converter by Tools by Rahul.">
+  <meta name="keywords" content="youtube to mp3,youtube to mp4,youtube converter,youtube downloader,mp3 converter,mp4 converter,youtube to mp3 no ads,youtube to mp3 320kbps,free youtube to mp3,youtube to mp3 github,cnvmp3,yt to mp3,youtube video to mp3 converter">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <meta name="author" content="Rahul">
+  <meta name="theme-color" content="#080808">
+  <link rel="canonical" href="https://melamrahul.github.io/">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="YouTube Converter (MP3/MP4) – Tools by Rahul" />
-  <meta property="og:description"
-    content="Convert YouTube videos to MP3 or MP4 instantly. Fast, free, high-quality online YouTube converter." />
-  <meta property="og:url" content="https://melamrahul.github.io/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Tools by Rahul" />
-  <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png" />
-  <meta property="og:image:type" content="image/png" />
-  <meta property="og:image:width" content="512" />
-  <meta property="og:image:height" content="512" />
+  <!-- ================= OPEN GRAPH ================= -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="YouTube to MP3 & MP4 Converter — Free, No Ads | Tools by Rahul">
+  <meta property="og:description" content="Fast, free YouTube to MP3 (320kbps) and MP4 (HD) converter. No ads, no registration required.">
+  <meta property="og:url" content="https://melamrahul.github.io/">
+  <meta property="og:site_name" content="Tools by Rahul">
+  <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+  <meta property="og:image:type" content="image/png">
+  <meta property="og:image:width" content="512">
+  <meta property="og:image:height" content="512">
 
-  <!-- Icons -->
-  <link rel="icon" type="image/png" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-  <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-  <link rel="manifest" href="manifest.json" />
-  <link rel="icon" sizes="192x192" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-  <link rel="icon" sizes="512x512" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
+  <!-- ================= TWITTER CARD ================= -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Free YouTube to MP3 & MP4 Converter — No Ads">
+  <meta name="twitter:description" content="Convert any YouTube video to MP3 or MP4 instantly. Free, secure, no registration.">
+  <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-  <!-- SEO -->
-  <meta name="robots" content="index, follow" />
-  <meta name="keywords"
-    content="youtube to mp3, melam, rahul, youtube converter, mp4 download, mp3 downloader, video converter online" />
-  <meta name="theme-color" content="auto" />
+  <!-- ================= FAVICONS ================= -->
+  <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+  <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+  <!-- ================= PERFORMANCE ================= -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://cnvmp3.com">
+
+  <!-- ================= STYLESHEET ================= -->
+  <link rel="stylesheet" href="../chunk/styles/tools/yt_convert.css">
+
+  <!-- ================= STRUCTURED DATA — Organization ================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Tools by Rahul",
+    "url": "https://melamrahul.github.io/",
+    "logo": "https://melamrahul.github.io/tools/tool_logo_head.png",
+    "description": "Free online tools by Rahul — YouTube to MP3 & MP4 converter, no ads."
+  }
+  </script>
+
+  <!-- ================= STRUCTURED DATA — WebApplication ================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "YouTube to MP3 & MP4 Converter",
+    "url": "https://melamrahul.github.io/",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "description": "Free online YouTube to MP3 (320kbps) and MP4 (HD) converter. No ads, no registration, instant download.",
+    "featureList": [
+      "YouTube to MP3 320kbps conversion",
+      "YouTube to MP4 HD download",
+      "No ads, no registration",
+      "Free, unlimited use"
+    ],
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
     }
+  }
+  </script>
 
-    body {
-      font-family: system-ui, sans-serif;
-      background: #0a0a0a;
-      color: #fff;
-      overflow: hidden;
-    }
-
-    .container {
-      max-width: 650px;
-      margin: 5px auto;
-      margin-bottom: 20px;
-      padding: 10px;
-      opacity: 0;
-      transition: opacity 0.5s ease;
-    }
-
-    /* Header */
-    .header {
-      background: black;
-      padding: 15px;
-      border-radius: 16px;
-      border: 1px solid #2a2a2a;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 25px;
-    }
-
-    .logo {
-      width: 50px;
-      height: 50px;
-      border-radius: 10px;
-    }
-
-    .logo img {
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Card */
-    .content-card {
-      background: black;
-      border-radius: 16px;
-      border: 1px dashed #fff;
-      overflow: hidden;
-      margin-bottom: 15px;
-    }
-
-    /* Desktop only */
-    @media (min-width: 1024px) {
-      .content-card {
-        min-height: 276px;
-        /* increased overall height */
-        display: flex;
-        flex-direction: column;
+  <!-- ================= STRUCTURED DATA — FAQPage ================= -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is this YouTube to MP3 converter free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, completely free with no registration, no ads, and no usage limits."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is cnvmp3 safe to use?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The converter runs via cnvmp3.com which is a reputable YouTube to MP3 service. No files are stored on our servers."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the maximum audio quality for YouTube to MP3?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can convert YouTube videos to MP3 at up to 320kbps — the highest quality available."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download YouTube videos in HD (1080p)?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the MP4 option lets you download YouTube videos in high-definition quality."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does it work on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, the converter works on all devices — Android, iPhone, tablet, and desktop."
+        }
       }
+    ]
+  }
+  </script>
 
-      .iframe-wrap {
-        flex: 1;
-        /* fills remaining space */
-        height: auto;
-        /* override fixed height */
-      }
-    }
-
-    .card-header {
-      padding: 20px;
-    }
-
-    /* Iframe */
-    .iframe-wrap {
-      width: 100%;
-      height: 160px;
-      overflow: hidden;
-      position: relative;
-      background: #000;
-      transition: height 0.3s ease;
-    }
-
-    .zoom {
-      transform: scale(0.80);
-      transform-origin: top left;
-      width: 125%;
-      height: 125%;
-    }
-
-    iframe {
-      position: absolute;
-      top: -398px;
-      left: -10px;
-      width: 100%;
-      height: 2000px;
-      border: none;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    iframe.loaded {
-      opacity: 1;
-    }
-
-    /* Loader inside card */
-    .loader-container {
-      position: absolute;
-      inset: 0;
-      background: #000;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-      transition: opacity 0.3s ease;
-    }
-
-    .loader-container.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .loader {
-      width: 45px;
-      height: 45px;
-      border: 4px solid #2a2a2a;
-      border-top-color: #ff0000;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    /* Buttons */
-    .button-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 15px;
-      justify-content: center;
-    }
-
-    .exp-btn {
-      flex: 1;
-      padding: 14px;
-      background: #cc0000;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-      text-align: center;
-    }
-
-    .exp-btn:hover {
-      background: #ff0000;
-    }
-
-    /* Global Loader */
-    .global-loader {
-      position: fixed;
-      inset: 0;
-      background: #000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
-    }
-
-    .global-spinner {
-      width: 100px;
-      height: 100px;
-      border-radius: 50%;
-      padding: 6px;
-      background: conic-gradient(#ff6a00, #ff0077, #6a00ff, #00d1ff, #ff6a00);
-      animation: spin 2.4s linear infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .global-spinner img {
-      width: 85%;
-      filter: brightness(0) invert(1);
-    }
-
-    .tools-btn {
-      background: linear-gradient(135deg, #ff4d8d, #8f46ff, #3d9dff, #22e3c5);
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 10px;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      white-space: nowrap;
-      background-size: 200%;
-      animation: gradientFlow 6s ease infinite;
-      transition: 0.3s;
-    }
-
-    .tools-btn:hover {
-      filter: brightness(1.15);
-    }
-
-    @keyframes gradientFlow {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      color: #aaa;
-      background-color: black;
-      padding: 10px 0;
-      z-index: 8;
-    }
-
-    /* Goal Container */
-
-    .goal-link {
-      text-decoration: none;
-      display: block;
-    }
-
-    .goal-container {
-      position: relative;
-      max-width: 700px;
-      height: 40px;
-      margin: 20px auto;
-      background: #d9dee2;
-      border-radius: 10px;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .goal-container:hover {
-      transform: scale(1.02);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    }
-
-    .goal-progress {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 0%;
-      background: #6fe3c0;
-      transition: width 0.8s ease;
-    }
-
-    .goal-content {
-      position: relative;
-      z-index: 2;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      font-weight: bold;
-      color: #1a1a1a;
-    }
-
-    .goal-description {
-      max-width: 500px;
-      margin: -20px auto 0px auto;
-      text-align: center;
-      font-size: 14px;
-      color: #bcb5b5;
-      font-family: Arial, sans-serif;
-      line-height: 1.5;
-    }
-
-    .support-btn {
-      position: fixed;
-      bottom: 50px;
-      left: 20px;
-      background-color: #00b9fe;
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 50px;
-      text-decoration: none;
-      font-weight: bold;
-      font-family: Arial, sans-serif;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      transition: 0.3s ease;
-      z-index: 9;
-    }
-
-    .support-btn:hover {
-      background-color: #009ad6;
-      transform: translateY(-2px);
-    }
-
-    .support-icon {
-      width: 25px;
-      height: 20px;
-    }
-
-    .support-btn:hover {
-      background-color: #009ad6;
-      transform: translateY(-2px);
-    }
-
-    /* Goal Container - End */
-
-    footer a {
-      color: #22e3c5;
-      text-decoration: underline;
-    }
-  </style>
+  <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js" defer></script>
 </head>
 
 <body>
 
-  <!-- GLOBAL LOADER -->
-  <div class="global-loader" id="globalLoader">
-    <div class="global-spinner">
-      <img src="https://melamrahul.github.io/tools/tools_logo.png" />
+  <!-- ==========================================
+       GLOBAL LOADER
+  =========================================== -->
+  <div class="global-loader" id="globalLoader" aria-hidden="true">
+    <div class="spinner-ring">
+      <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading" width="62" height="62">
     </div>
+    <span class="loader-label">Loading…</span>
   </div>
 
-  <div class="container" id="mainContent">
+  <!-- ==========================================
+       MAIN PAGE
+  =========================================== -->
+  <main class="page" id="mainContent">
 
-    <!-- Header -->
-    <div class="header">
-      <div class="logo">
-        <img src="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <!-- ---- HEADER ---- -->
+    <header class="site-header">
+      <div class="logo-wrap">
+        <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Tools by Rahul logo" width="46" height="46">
       </div>
-      <div>
-        <h2>YT Converter</h2>
-        <p style="color:#aaa; font-size:14px;">MP3 / MP4 Download</p>
-      </div>
-      <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
-    </div>
-
-    <!-- Card -->
-    <div class="content-card">
-      <div class="card-header">
-        <h3>Convert YouTube Links to Audio/Video</h3>
-        <p style="color:#aaa; font-size:14px;">Paste link, choose format, download instantly</p>
-      </div>
-
-      <div class="iframe-wrap" id="iframeWrap">
-        <div class="loader-container" id="loader">
-          <div class="loader"></div>
-          <p style="margin-top:12px; color:#888;">Loading converter…</p>
-        </div>
-
-        <div class="zoom">
-          <iframe id="converterFrame" src="https://cnvmp3.com/" scrolling="no"></iframe>
+      <div class="header-title">
+        <h1>YT Converter</h1>
+        <p>MP3 / MP4 · No Ads · Free</p>
+        <div class="badge-row" aria-label="Features">
+          <span class="badge badge-free">Free</span>
+          <span class="badge badge-hd">HD MP4</span>
+          <span class="badge badge-noads">No Ads</span>
         </div>
       </div>
+      <a href="https://melamrahul.github.io/tools/" class="tools-link" aria-label="All Tools">
+        All Tools ↗
+      </a>
+    </header>
 
-      <p style="color:#aaa; font-size:14px; margin-left:15px; margin-bottom:10px;">
-        Click on below buttons for Bitrate/Quality and MP3/MP4
-      </p>
-    </div>
+    <!-- ---- HERO ---- -->
+    <section class="hero" aria-labelledby="heroHeading">
+      <h2 id="heroHeading">Convert YouTube to<br>MP3 &amp; MP4 — Free</h2>
+      <p>Paste any YouTube link, choose quality, and download instantly.<br>No signup. No ads. 320kbps audio & HD video.</p>
+    </section>
 
-    <div class="button-row">
-      <button class="exp-btn" id="qualityBtn">Quality</button>
-      <button class="exp-btn" id="formatBtn">MP3 / MP4</button>
-    </div>
-
-    <!-- Goal Container -->
-
-    <a href="https://ko-fi.com/builtforfree" target="_blank" class="goal-link">
-      <div class="goal-container">
-        <div class="goal-progress" id="goalProgress"></div>
-
-        <div class="goal-content">
-          <div style="display: flex; flex-direction: column; gap: 4px;">
-            <span id="monthText"></span>
-          </div>
-
-          <div class="goal-right" id="goalPercent">
-            0% of Goal
-          </div>
+    <!-- ---- CONVERTER CARD ---- -->
+    <section class="converter-card" aria-label="YouTube converter tool">
+      <div class="converter-card-header">
+        <div class="icon" aria-hidden="true">▶</div>
+        <div>
+          <h3>YouTube Link Converter</h3>
+          <p>Supports MP3 (320kbps), MP4 (HD), YouTube Shorts &amp; long videos</p>
         </div>
       </div>
-    </a>
-    <br>
-    <p class="goal-description">
-      This website is kept 100% free and ad-free.
-      If it helped you, consider supporting the monthly server costs 💛
-    </p><br>
-    <hr><br>
 
-    <h3>Failed to Download?</h3>
-    <p style="color:#aaa; font-size:14px; margin-right:15px; margin-bottom:10px;">
-      If you are failed to download, try my another page. Click below button to open converter 2.
-    </p><br>
-    <div style="text-align: right;">
-      <button class="exp-btn" onclick="window.open('https://melamrahul.github.io/tools/yt_convert_v2', '_blank')">
-        Open Converter 2
+      <div class="iframe-zone" id="iframeZone">
+        <!-- Loading overlay -->
+        <div class="iframe-overlay" id="iframeOverlay" aria-live="polite">
+          <div class="mini-spinner" aria-hidden="true"></div>
+          <span>Loading converter…</span>
+        </div>
+
+        <!-- Scaled converter iframe -->
+        <div class="iframe-scaler">
+          <iframe
+            id="converterFrame"
+            src="https://cnvmp3.com/"
+            scrolling="no"
+            title="YouTube to MP3 and MP4 converter"
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="converter-card-footer">
+        <span aria-hidden="true">💡</span>
+        <span>Use the buttons below to change quality or switch between MP3 / MP4</span>
+      </div>
+    </section>
+
+    <!-- ---- ACTION BUTTONS ---- -->
+    <div class="action-row" role="group" aria-label="Converter options">
+      <button class="action-btn quality" id="qualityBtn" aria-label="Adjust quality settings">
+        <span class="btn-icon" aria-hidden="true">🎚</span>
+        Quality / Bitrate
+      </button>
+      <button class="action-btn format" id="formatBtn" aria-label="Switch format between MP3 and MP4">
+        <span class="btn-icon" aria-hidden="true">🎞</span>
+        MP3 / MP4
       </button>
     </div>
-  </div><br><br><br>
 
-  <a href="https://ko-fi.com/builtforfree" target="_blank" class="support-btn">
-    <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" alt="Ko-fi" class="support-icon">
+    <!-- ---- FEATURES STRIP ---- -->
+    <section class="features" aria-label="Key features">
+      <div class="feature-item">
+        <span class="fi" aria-hidden="true">⚡</span>
+        <strong>Instant</strong>
+        <span>Fast conversion</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi" aria-hidden="true">🔒</span>
+        <strong>Secure</strong>
+        <span>No files stored</span>
+      </div>
+      <div class="feature-item">
+        <span class="fi" aria-hidden="true">📱</span>
+        <strong>Any Device</strong>
+        <span>Mobile friendly</span>
+      </div>
+    </section>
+
+    <!-- ---- SUPPORT / GOAL ---- -->
+    <section class="goal-section" aria-label="Support the project">
+      <a href="https://ko-fi.com/builtforfree" target="_blank" rel="noopener noreferrer" class="goal-card">
+        <div class="goal-top">
+          <div class="goal-left">
+            <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" alt="Ko-fi" class="goal-kofi-icon" width="28" height="28">
+            <div>
+              <div class="goal-title" id="monthText">Server costs for this month</div>
+              <div class="goal-sub">100% free &amp; ad-free — kept alive by your support 💛</div>
+            </div>
+          </div>
+          <div class="goal-pct" id="goalPercent" aria-live="polite">0%</div>
+        </div>
+        <div class="progress-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Monthly goal progress">
+          <div class="progress-fill" id="goalProgress"></div>
+        </div>
+        <div class="goal-bottom">
+          Tap to support monthly server costs on Ko-fi — every little bit helps! →
+        </div>
+      </a>
+    </section>
+
+    <div class="divider" aria-hidden="true"></div>
+
+    <!-- ---- FALLBACK CARD ---- -->
+    <section class="fallback-card" aria-label="Alternative converter">
+      <span class="fi" aria-hidden="true">🔄</span>
+      <div class="fallback-text">
+        <h4>Converter not working?</h4>
+        <p>Try Converter 2 — an alternative mirror that may work better for you.</p>
+      </div>
+      <button class="fallback-btn" onclick="window.open('https://melamrahul.github.io/tools/yt_convert_v2', '_blank')" aria-label="Open alternative converter in new tab">
+        Try v2 ↗
+      </button>
+    </section>
+
+    <!-- ---- FAQ (visible for SEO, minimal UI) ---- -->
+    <section aria-labelledby="faqHeading" style="margin-bottom: 24px;">
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px;">
+        <summary style="padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Is this YouTube to MP3 converter free? <span aria-hidden="true" style="font-size:18px;color:var(--muted);transition:transform 0.2s;">+</span>
+        </summary>
+        <p style="padding:0 16px 14px;font-size:13px;color:var(--muted);font-weight:300;">Yes — completely free, no signup, no ads, and no usage limits. Ever.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px;">
+        <summary style="padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Is cnvmp3 safe? <span aria-hidden="true" style="font-size:18px;color:var(--muted);">+</span>
+        </summary>
+        <p style="padding:0 16px 14px;font-size:13px;color:var(--muted);font-weight:300;">Yes. The converter is powered by cnvmp3.com. No files are stored on our servers — downloads go directly to your device.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px;">
+        <summary style="padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          What quality can I download? <span aria-hidden="true" style="font-size:18px;color:var(--muted);">+</span>
+        </summary>
+        <p style="padding:0 16px 14px;font-size:13px;color:var(--muted);font-weight:300;">MP3 up to 320kbps (highest quality) and MP4 in HD. Use the Quality button above to select your preferred bitrate.</p>
+      </details>
+      <details style="background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:8px;">
+        <summary style="padding:14px 16px;font-size:13px;font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;">
+          Does it work on mobile / Android / iPhone? <span aria-hidden="true" style="font-size:18px;color:var(--muted);">+</span>
+        </summary>
+        <p style="padding:0 16px 14px;font-size:13px;color:var(--muted);font-weight:300;">Yes — works on all devices. Android, iPhone, tablet, and desktop are all supported.</p>
+      </details>
+    </section>
+
+  </main>
+
+  <!-- ---- FLOAT SUPPORT BUTTON ---- -->
+  <a href="https://ko-fi.com/builtforfree" target="_blank" rel="noopener noreferrer" class="float-support" aria-label="Support on Ko-fi">
+    <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" alt="Ko-fi" width="20" height="20">
     Support Me
-  </a><br><br>  
+  </a>
 
-  <!-- Goal Container - End -->
-
-  <footer style="background-color: black; padding-bottom: 10px;">
-    © Built For Free ❤️ by <a href="/">Rahul</a>
+  <!-- ---- FOOTER ---- -->
+  <footer class="site-footer">
+    <p>© Built For Free ❤️ by <a href="https://melamrahul.github.io/">Rahul</a></p>
   </footer>
 
-  <!-- Ko-fi Widget -->
-  <!-- <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me', '#72a4f2', 'A0A21FTY57');kofiwidget2.draw();</script>  -->
+  <!-- ==========================================
+       SCRIPTS
+  =========================================== -->
   <script>
-    const now = new Date();
-    const monthName = now.toLocaleString('default', { month: 'long' });
-    document.getElementById('monthText').innerHTML =
-      '<img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" ' +
-      'style="width:18px; height:18px; vertical-align:middle; margin-right:6px;">' +
-      ' Server costs for ' + monthName;
+    /* --- Global loader --- */
+    const globalLoader = document.getElementById('globalLoader');
+    const mainContent  = document.getElementById('mainContent');
 
-    const goalAmount = 50; // Your monthly goal
+    setTimeout(() => {
+      globalLoader.classList.add('hidden');
+      document.body.style.overflow = 'auto';
+      mainContent.classList.add('visible');
+    }, 1200);
+
+    /* --- Iframe loader --- */
+    const iframe      = document.getElementById('converterFrame');
+    const overlay     = document.getElementById('iframeOverlay');
+    const iframeZone  = document.getElementById('iframeZone');
+
+    iframe.addEventListener('load', () => {
+      overlay.classList.add('hidden');
+      iframe.classList.add('loaded');
+    });
+
+    /* --- Expand & revert --- */
+    function expandAndRevert(heightPx) {
+      iframeZone.style.height = heightPx + 'px';
+      overlay.classList.remove('hidden');
+      iframe.classList.remove('loaded');
+      iframe.src = iframe.src; // reload
+      setTimeout(() => {
+        iframeZone.style.height = '165px';
+      }, 3200);
+    }
+
+    document.getElementById('qualityBtn').onclick = () => expandAndRevert(320);
+    document.getElementById('formatBtn').onclick  = () => expandAndRevert(220);
+
+    /* --- Goal / Ko-fi --- */
+    const GOAL = 50;
+    const now  = new Date();
+    document.getElementById('monthText').textContent =
+      'Server costs for ' + now.toLocaleString('default', { month: 'long' });
 
     function updateGoal() {
       fetch('https://rahul.serv00.net/apps/web-push/apps/total.php')
-        .then(res => res.json())
+        .then(r => r.json())
         .then(data => {
-
-          const total = parseFloat(data.total) || 0;
-          const percent = Math.min((total / goalAmount) * 100, 100);
-
-          document.getElementById('goalProgress').style.width = percent + "%";
-          document.getElementById('goalPercent').innerText =
-            Math.floor(percent) + "% of Goal";
-
+          const total   = parseFloat(data.total) || 0;
+          const pct     = Math.min((total / GOAL) * 100, 100);
+          const pctInt  = Math.floor(pct);
+          document.getElementById('goalProgress').style.width = pct + '%';
+          document.getElementById('goalPercent').textContent  = pctInt + '% of Goal';
+          document.querySelector('[role="progressbar"]').setAttribute('aria-valuenow', pctInt);
         })
-        .catch(err => console.log(err));
+        .catch(() => {});
     }
 
     updateGoal();
     setInterval(updateGoal, 30000);
-  </script>
-  <!-- Ko-fi Widget - End -->
 
-  <script>
-    /* Global Loader */
-    const globalLoader = document.getElementById("globalLoader");
-    const mainContent = document.getElementById("mainContent");
-
-    setTimeout(() => {
-      globalLoader.style.display = "none";
-      document.body.style.overflow = "auto";
-      mainContent.style.opacity = "1";
-    }, 1500);
-
-    /* Iframe Loader */
-    const iframe = document.getElementById("converterFrame");
-    const loader = document.getElementById("loader");
-    const iframeWrap = document.getElementById("iframeWrap");
-
-    const qualityBtn = document.getElementById("qualityBtn");
-    const formatBtn = document.getElementById("formatBtn");
-
-    iframe.addEventListener("load", () => {
-      loader.classList.add("hidden");
-      iframe.classList.add("loaded");
+    /* --- FAQ toggle chevron --- */
+    document.querySelectorAll('details').forEach(el => {
+      el.addEventListener('toggle', () => {
+        const icon = el.querySelector('summary span');
+        if (icon) icon.textContent = el.open ? '−' : '+';
+      });
     });
-
-    function expandAndRevert(height) {
-      iframeWrap.style.height = height + "px";
-
-      loader.classList.remove("hidden");
-      iframe.classList.remove("loaded");
-
-      iframe.src = iframe.src;
-
-      setTimeout(() => {
-        iframeWrap.style.height = "160px";
-      }, 3000);
-    }
-
-    qualityBtn.onclick = () => expandAndRevert(320);
-    formatBtn.onclick = () => expandAndRevert(220);
   </script>
 
 </body>
-
 </html>
