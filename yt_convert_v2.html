@@ -435,20 +435,14 @@
   </footer>
 
   <!-- Ko-fi Widget -->
-  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-  <script>
-    kofiWidgetOverlay.draw('builtforfree', {
-      'type': 'floating-chat',
-      'floating-chat.donateButton.text': 'Support Me',
-      'floating-chat.donateButton.background-color': '#00b9fe',
-      'floating-chat.donateButton.text-color': '#fff'
-    });
-  </script>
+  <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Support me', '#72a4f2', 'A0A21FTY57');kofiwidget2.draw();</script> 
   <script>
     const now = new Date();
     const monthName = now.toLocaleString('default', { month: 'long' });
-    document.getElementById('monthText').innerText =
-      "❤️ Server costs for " + monthName;
+    document.getElementById('monthText').innerHTML =
+  '<img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" ' +
+  'style="width:18px; height:18px; vertical-align:middle; margin-right:6px;">' +
+  ' Server costs for ' + monthName;
 
     const goalAmount = 50; // Your monthly goal
 
