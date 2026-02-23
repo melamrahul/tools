@@ -85,6 +85,23 @@
       margin-bottom: 15px;
     }
 
+    /* Desktop only */
+    @media (min-width: 1024px) {
+      .content-card {
+        min-height: 276px;
+        /* increased overall height */
+        display: flex;
+        flex-direction: column;
+      }
+
+      .iframe-wrap {
+        flex: 1;
+        /* fills remaining space */
+        height: auto;
+        /* override fixed height */
+      }
+    }
+
     .card-header {
       padding: 20px;
     }
@@ -262,10 +279,10 @@
     .goal-container {
       position: relative;
       max-width: 700px;
-      height: 80px;
-      margin: 40px auto;
+      height: 40px;
+      margin: 20px auto;
       background: #d9dee2;
-      border-radius: 16px;
+      border-radius: 10px;
       overflow: hidden;
       font-family: Arial, sans-serif;
       box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
@@ -302,42 +319,12 @@
 
     .goal-description {
       max-width: 500px;
-      margin: -20px auto 30px auto;
+      margin: -20px auto 0px auto;
       text-align: center;
       font-size: 14px;
       color: #bcb5b5;
       font-family: Arial, sans-serif;
       line-height: 1.5;
-    }
-
-    /* 🔹 Improve mobile responsiveness */
-    @media (max-width: 768px) {
-
-      .goal-container {
-        max-width: 95%;
-        height: 110px;
-        padding: 15px 0;
-      }
-
-      .goal-content {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-      }
-
-      .goal-right {
-        align-self: flex-end;
-        font-size: 14px;
-      }
-
-      #monthText {
-        font-size: 16px;
-      }
-
-      .goal-description-mobile {
-        font-size: 13px;
-        margin-left: 0 !important;
-      }
     }
 
     /* Goal Container - End */
@@ -398,7 +385,30 @@
     <div class="button-row">
       <button class="exp-btn" id="qualityBtn">Quality</button>
       <button class="exp-btn" id="formatBtn">MP3 / MP4</button>
-    </div><br>
+    </div>
+
+    <!-- Goal Container -->
+
+    <a href="https://ko-fi.com/builtforfree" target="_blank" class="goal-link">
+      <div class="goal-container">
+        <div class="goal-progress" id="goalProgress"></div>
+
+        <div class="goal-content">
+          <div style="display: flex; flex-direction: column; gap: 4px;">
+            <span id="monthText"></span>
+          </div>
+
+          <div class="goal-right" id="goalPercent">
+            0% of Goal
+          </div>
+        </div>
+      </div>
+    </a>
+    <br>
+    <p class="goal-description">
+      This website is kept 100% free and ad-free.
+      If it helped you, consider supporting the monthly server costs 💛
+    </p><br>
     <hr><br>
 
     <h3>Failed to Download?</h3>
@@ -407,35 +417,7 @@
     </p>
     <button class="exp-btn" onclick="window.open('https://melamrahul.github.io/tools/yt_convert_v2', '_blank')">Open
       Converter 2</button>
-
-  </div>
-
-  <!-- Goal Container -->
-
-  <a href="https://ko-fi.com/builtforfree" target="_blank" class="goal-link">
-    <div class="goal-container">
-      <div class="goal-progress" id="goalProgress"></div>
-
-      <div class="goal-content">
-        <div style="display: flex; flex-direction: column; gap: 4px;">
-          <span id="monthText"></span>
-
-          <div style="font-size: 14px; color: #555; margin-top: 4px; margin-left: 25px;">
-            Click to Support for this month's server costs! Every bit helps 💛
-          </div>
-        </div>
-
-        <div class="goal-right" id="goalPercent">
-          0% of Goal
-        </div>
-      </div>
-    </div>
-  </a>
-
-  <p class="goal-description">
-    This website is kept 100% free and ad-free.
-    If it helped you, consider supporting the monthly server costs 💛
-  </p><br><br><br>
+  </div><br><br><br>
 
   <!-- Goal Container - End -->
 
