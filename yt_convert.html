@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preload" href="../chunk/styles/tools/yt_convert.css" as="style">
     <link rel="stylesheet" href="../chunk/styles/tools/yt_convert.css">
-    <!--<script src="../chunk/scripts/sentinel.js" defer=""></script>-->
     <title>YouTube to MP3 &amp; MP4 Converter — 100% Free, No Ads | Tools by Rahul</title>
     <meta name="description" content="Convert YouTube videos to MP3 (320kbps) or MP4 (HD) free online. No ads, no signup, instant download. Fast YouTube converter by Tools by Rahul.">
     <meta name="keywords" content="youtube to mp3,youtube to mp4,youtube converter,cnv, cnvmp3, c, n, v, mp3, mp4, download, audio, video, youtube downloader,mp3 converter,mp4 converter,youtube to mp3 no ads,youtube to mp3 320kbps,free youtube to mp3,youtube to mp3 github,cnvmp3,yt to mp3,youtube video to mp3 converter">
@@ -32,13 +30,12 @@
     <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link rel="dns-prefetch" href="https://etacloud.org">
+    <link rel="dns-prefetch" href="https://gammacloud.net">
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Tools by Rahul","url":"https://melamrahul.github.io/","logo":"https://melamrahul.github.io/tools/tool_logo_head.png"}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"YouTube to MP3 & MP4 Converter","url":"https://melamrahul.github.io/","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Is this YouTube to MP3 converter free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free with no registration, no ads, and no usage limits."}},{"@type":"Question","name":"What is the maximum audio quality?","acceptedAnswer":{"@type":"Answer","text":"Up to 320kbps MP3."}},{"@type":"Question","name":"Does it work on mobile?","acceptedAnswer":{"@type":"Answer","text":"Yes, on all devices."}}]}</script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-
 <body>
     <div class="global-loader" id="globalLoader" aria-hidden="true">
         <div class="spinner-ring">
@@ -59,7 +56,7 @@
         <div class="card" id="main-card">
             <div class="card-header">
                 <span>Youtube to Audio/Video</span>
-                <span style="font-size:0.7em;opacity:0.7">v2.3</span>
+                <span style="font-size:0.7em;opacity:0.7">v2.4</span>
             </div>
             <div class="format-tabs">
                 <button class="tab-btn active" id="tab-mp3" onclick="switchMode('mp3')">🔊 Audio (MP3)</button>
@@ -155,7 +152,7 @@
     </div>
 
     <script>
-    /* YT Converter v2.3 */
+    /* YT Converter v2.4 */
 
     const globalLoader = document.getElementById('globalLoader');
     const mainContent  = document.getElementById('mainContent');
@@ -165,8 +162,8 @@
         mainContent.classList.add('visible');
     }, 1200);
 
-    const MAX_ATTEMPTS    = 5;     // 5 real convert attempts, each ~45s timeout = ~3.5 min max
-    const RETRY_DELAY_MS  = 3000;  // 3s between retries
+    const MAX_ATTEMPTS   = 5;
+    const RETRY_DELAY_MS = 3000;
     const BASE = 'https://rahul.serv00.net/apps/yt_convert/';
 
     let state = {
@@ -212,16 +209,17 @@
     updateGoal();
     setInterval(updateGoal, 60000);
 
+    // ── Mode switch ───────────────────────────────────────────────────────────
     function switchMode(mode) {
         state.mode        = mode;
         state.formatValue = (mode === 'mp4') ? 0 : 1;
         resetUI(true);
         if (mode === 'mp3') {
-            els.tabMp3.classList.add('active');    els.tabMp4.classList.remove('active');
-            els.optAudio.style.display = '';       els.optVideo.style.display = 'none';
+            els.tabMp3.classList.add('active');  els.tabMp4.classList.remove('active');
+            els.optAudio.style.display = '';     els.optVideo.style.display = 'none';
         } else {
-            els.tabMp4.classList.add('active');    els.tabMp3.classList.remove('active');
-            els.optAudio.style.display = 'none';   els.optVideo.style.display = '';
+            els.tabMp4.classList.add('active');  els.tabMp3.classList.remove('active');
+            els.optAudio.style.display = 'none'; els.optVideo.style.display = '';
         }
     }
 
@@ -251,18 +249,18 @@
         state.attempts    = 0;
         state.downloadUrl = null;
         els.downloadBtn.classList.remove('visible');
-        els.downloadBtn.style.display = 'none';
+        els.downloadBtn.style.display    = 'none';
         els.statusBox.classList.remove('visible');
         els.successView.classList.remove('visible');
         els.mainCard.style.display       = 'block';
         els.rahulContainer.style.display = 'block';
         els.rahulContainer.classList.remove('fade-out');
         els.preview.classList.remove('visible');
-        els.thumb.src = '';
-        els.title.textContent   = '—';
-        els.channel.textContent = '';
-        els.btnGo.disabled    = false;
-        els.btnGo.textContent = 'Convert';
+        els.thumb.src            = '';
+        els.title.textContent    = '—';
+        els.channel.textContent  = '';
+        els.btnGo.disabled       = false;
+        els.btnGo.textContent    = 'Convert';
         if (!keepMode) els.urlInput.value = '';
         els.urlInput.focus();
     };
@@ -280,9 +278,10 @@
         if (['—','Loading…',''].includes(els.title.textContent)) els.title.textContent = t;
     }
 
+    // ── Fetch video metadata ──────────────────────────────────────────────────
     async function fetchMeta(youtubeId, url) {
-        els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
-        els.title.textContent = 'Loading…';
+        els.thumb.src           = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
+        els.title.textContent   = 'Loading…';
         els.channel.textContent = '';
         els.preview.classList.add('visible');
         try {
@@ -299,7 +298,7 @@
         } catch { els.title.textContent = '—'; }
     }
 
-    // ── Core: one real convert call, no check_only ─────────────────────────────
+    // ── Core convert call ─────────────────────────────────────────────────────
     async function doConvert() {
         try {
             const res = await fetch(BASE + 'r7q', {
@@ -319,6 +318,7 @@
         }
     }
 
+    // ── Start conversion ──────────────────────────────────────────────────────
     els.btnGo.addEventListener('click', startFlow);
     els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
 
@@ -338,10 +338,10 @@
             ? parseInt(els.audioQuality.value)
             : parseInt(els.videoQuality.value);
 
-        els.mainCard.style.display  = 'none';
+        els.mainCard.style.display       = 'none';
         els.rahulContainer.style.display = 'block';
         els.rahulContainer.classList.remove('fade-out');
-        els.downloadBtn.style.display = 'none';
+        els.downloadBtn.style.display    = 'none';
         els.downloadBtn.classList.remove('visible');
         els.successView.classList.remove('visible');
         els.btnGo.disabled    = true;
@@ -349,7 +349,6 @@
 
         setStatus('Converting…', true);
 
-        // Meta + convert in parallel
         const [, result] = await Promise.all([fetchMeta(id, raw), doConvert()]);
         handleResult(result);
     }
@@ -357,15 +356,12 @@
     function handleResult(data) {
         if (!state.running) return;
 
-        // ── SUCCESS ───────────────────────────────────────────────────────────
         if (data.success && data.status === 'ready') {
             const dl = data.download_link || data.server_path || '';
             if (!dl) { showError('Got empty download link. Please try again.'); return; }
-
             stopPolling();
             state.downloadUrl = dl;
             if (data.title) applyTitle(data.title);
-
             setStatus('Ready!', false, true);
             const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
             els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
@@ -376,24 +372,20 @@
             return;
         }
 
-        // ── HARD ERROR (not retryable) ────────────────────────────────────────
         if (data.status === 'error') {
             showError(data.message || 'Conversion failed. Please try again.');
             return;
         }
 
-        // ── RETRY ─────────────────────────────────────────────────────────────
         state.attempts++;
         if (state.attempts >= MAX_ATTEMPTS) {
             showError('Could not convert after several attempts. Please try again later.');
             return;
         }
-
         setStatus(`Converting… (attempt ${state.attempts + 1} of ${MAX_ATTEMPTS})`, true);
         state.retryTimer = setTimeout(async () => {
             if (!state.running) return;
-            const result = await doConvert();
-            handleResult(result);
+            handleResult(await doConvert());
         }, RETRY_DELAY_MS);
     }
 
@@ -404,59 +396,57 @@
         els.btnGo.textContent = 'Convert';
     }
 
-    // ── Download ───────────────────────────────────────────────────────────────
+    // ── Download ──────────────────────────────────────────────────────────────
     els.downloadBtn.addEventListener('click', async () => {
-    if (!state.downloadUrl) return;
-    setStatus('Preparing download…', true);
+        if (!state.downloadUrl) return;
+        setStatus('Preparing download…', true);
 
-    let dlUrl = state.downloadUrl;
-    try {
-        const fresh = await doConvert();
-        if (fresh.success && (fresh.download_link || fresh.server_path)) {
-            dlUrl = fresh.download_link || fresh.server_path;
-            if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
+        // Re-fetch from cache to get a fresh URL just in case
+        let dlUrl = state.downloadUrl;
+        try {
+            const fresh = await doConvert();
+            if (fresh.success && (fresh.download_link || fresh.server_path)) {
+                dlUrl = fresh.download_link || fresh.server_path;
+                if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
+            }
+        } catch(e) { /* keep existing dlUrl */ }
+
+        if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
+        state.downloadUrl = dlUrl;
+
+        const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
+
+        // POST JSON — URL sent as plain string, zero encoding issues
+        try {
+            const resp = await fetch(BASE + '_k3z', {
+                method:  'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body:    JSON.stringify({ url: dlUrl, format: ext, title: state.title || '' }),
+            });
+            if (!resp.ok) throw new Error('proxy ' + resp.status);
+            const blob    = await resp.blob();
+            const blobUrl = URL.createObjectURL(blob);
+            const a       = document.createElement('a');
+            a.href     = blobUrl;
+            a.download = state.filename;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => { URL.revokeObjectURL(blobUrl); document.body.removeChild(a); }, 2000);
+        } catch(e) {
+            console.warn('proxy failed, opening direct:', e);
+            window.open(dlUrl, '_blank');
         }
-    } catch(e) {}
 
-    if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
-    state.downloadUrl = dlUrl;
+        els.rahulContainer.classList.add('fade-out');
+        setTimeout(() => {
+            els.rahulContainer.style.display = 'none';
+            els.downloadBtn.style.display    = 'none';
+            els.successView.classList.add('visible');
+            window.scrollTo(0, 0);
+        }, 300);
+    });
 
-    const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
-
-    // ── POST instead of GET to avoid encodeURIComponent double-encoding the sig ──
-    try {
-        const resp = await fetch(BASE + '_k3z', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                url:    dlUrl,
-                format: ext,
-                title:  state.title || '',
-            }),
-        });
-        if (!resp.ok) throw new Error('proxy error');
-        const blob     = await resp.blob();
-        const blobUrl  = URL.createObjectURL(blob);
-        const a        = document.createElement('a');
-        a.href         = blobUrl;
-        a.download     = state.filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => { URL.revokeObjectURL(blobUrl); document.body.removeChild(a); }, 2000);
-    } catch(e) {
-        // fallback: open directly
-        window.open(dlUrl, '_blank');
-    }
-
-    els.rahulContainer.classList.add('fade-out');
-    setTimeout(() => {
-        els.rahulContainer.style.display = 'none';
-        els.downloadBtn.style.display    = 'none';
-        els.successView.classList.add('visible');
-        window.scrollTo(0, 0);
-    }, 300);
-});
-        
+    // ── Ko-fi goal ────────────────────────────────────────────────────────────
     function updateGoal() {
         fetch(BASE + 'total')
             .then(r => r.json())
