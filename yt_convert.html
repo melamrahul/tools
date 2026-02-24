@@ -406,41 +406,44 @@
 
     // ── Download ───────────────────────────────────────────────────────────────
     els.downloadBtn.addEventListener('click', async () => {
-        if (!state.downloadUrl) return;
-        setStatus('Starting download…', true);
+    if (!state.downloadUrl) return;
+    setStatus('Starting download…', true);
 
-        // Re-fetch from cache (instant) to get a fresh URL just in case
-        const fresh  = await doConvert();
-        const dlUrl  = (fresh.success && fresh.download_link) ? fresh.download_link : state.downloadUrl;
-        if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
+    const fresh = await doConvert();
+    const dlUrl = (fresh.success && fresh.download_link) ? fresh.download_link : state.downloadUrl;
+    if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
 
-        state.downloadUrl = dlUrl;
-        if (fresh.title) applyTitle(fresh.title);
+    state.downloadUrl = dlUrl;
+    if (fresh.title) applyTitle(fresh.title);
 
-        const ext      = state.mode === 'mp4' ? 'mp4' : 'mp3';
-        const proxyUrl = BASE + '_k3z'
-            + '?format=' + encodeURIComponent(ext)
-            + '&title='  + encodeURIComponent(state.title || '')
-            + '&url='    + encodeURIComponent(dlUrl)
-            + '&_='      + Date.now();
-
+    try {
+        setStatus('Downloading…', true);
+        const response = await fetch(dlUrl);
+        if (!response.ok) throw new Error('Fetch failed');
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
         const a = document.createElement('a');
-        a.href = dlUrl;  // direct URL, skip proxy
+        a.href = blobUrl;
         a.download = state.filename;
-        // a.href = proxyUrl; 
-        // a.download = state.filename; 
-        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => { URL.revokeObjectURL(blobUrl); document.body.removeChild(a); }, 2000);
+    } catch (e) {
+        // Fallback if CORS blocks the blob fetch
+        const a = document.createElement('a');
+        a.href = dlUrl; a.download = state.filename; a.target = '_blank';
         document.body.appendChild(a); a.click();
         setTimeout(() => document.body.removeChild(a), 2000);
+    }
 
-        els.rahulContainer.classList.add('fade-out');
-        setTimeout(() => {
-            els.rahulContainer.style.display = 'none';
-            els.downloadBtn.style.display    = 'none';
-            els.successView.classList.add('visible');
-            window.scrollTo(0, 0);
-        }, 300);
-    });
+    els.rahulContainer.classList.add('fade-out');
+    setTimeout(() => {
+        els.rahulContainer.style.display = 'none';
+        els.downloadBtn.style.display = 'none';
+        els.successView.classList.add('visible');
+        window.scrollTo(0, 0);
+    }, 300);
+});
 
     function updateGoal() {
         fetch(BASE + 'total')
