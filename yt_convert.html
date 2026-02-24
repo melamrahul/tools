@@ -286,14 +286,15 @@
             mainContent.classList.add('visible');
         }, 1200);
 
-        const POLL_INTERVAL = 1500;
-        const MAX_ATTEMPTS  = 25;
+        const POLL_INTERVAL = 2000;   // 2s between polls
+        const MAX_ATTEMPTS  = 45;     // 45 × 2s = ~90 seconds before timeout
 
         let state = {
             polling: false,
             attempts: 0,
             converting: false,
             downloadUrl: null,
+            downloadToken: null,   // short token for the proxy GET URL
             filename: 'audio.mp3',
             youtubeId: null,
             url: null,
@@ -371,10 +372,11 @@
         }
 
         function reset() {
-            state.polling    = false;
-            state.attempts   = 0;
-            state.converting = false;
-            state.downloadUrl = null;
+            state.polling      = false;
+            state.attempts     = 0;
+            state.converting   = false;
+            state.downloadUrl  = null;
+            state.downloadToken = null;
             hideProgress();
             setProgress(0);
             els.downloadBtn.classList.remove('visible');
@@ -502,12 +504,14 @@
 
             // ── READY ─────────────────────────────────────────────────────────
             if (data.success && data.status === 'ready') {
-                const dl = data.download_link || data.server_path || '';
-                if (!dl) {
+                const dl    = data.download_link || data.server_path || '';
+                const token = data.download_token || '';
+                if (!dl && !token) {
                     setTimeout(() => poll(true), POLL_INTERVAL);
                     return;
                 }
-                state.downloadUrl = dl;
+                state.downloadUrl   = dl;
+                state.downloadToken = token;
                 if (data.title) applyTitle(data.title);
                 setStatus('Ready!');
                 setProgress(100);
@@ -520,7 +524,7 @@
                 return;
             }
 
-            // ── EXPLICIT ERROR — only stop on status:'error' ──────────────────
+            // ── EXPLICIT ERROR ────────────────────────────────────────────────
             if (data.status === 'error') {
                 setStatus('Error: ' + (data.message || 'Something went wrong. Please try again.'));
                 hideProgress();
@@ -529,8 +533,8 @@
                 return;
             }
 
-            // ── EVERYTHING ELSE = still converting ────────────────────────────
-            const pct = data.progress || Math.min(15 + state.attempts * 4, 90);
+            // ── STILL CONVERTING ─────────────────────────────────────────────
+            const pct = data.progress || Math.min(15 + state.attempts * 2, 90);
             setStatus(data.message || `Converting… ${pct}%`);
             setProgress(pct);
             setTimeout(() => poll(true), POLL_INTERVAL);
@@ -545,22 +549,22 @@
             setProgress(90);
 
             try {
+                // Re-fetch to get the freshest token
                 const fresh = await realPoll(true);
-                const dlUrl = (fresh.success && fresh.download_link)
-                    ? fresh.download_link
-                    : state.downloadUrl;
+                const token = (fresh.success && fresh.download_token)
+                    ? fresh.download_token
+                    : state.downloadToken;
 
-                if (!dlUrl) {
+                if (!token) {
                     setStatus('Link expired. Please convert again.');
                     hideProgress();
                     return;
                 }
 
-                // Update cached URL if we got a fresher one
-                if (fresh.download_link) state.downloadUrl = fresh.download_link;
+                // Update cached token
+                if (fresh.download_token) state.downloadToken = fresh.download_token;
 
-                setStatus('Downloading…');
-                await triggerDownload(dlUrl, state.filename, state.mode, state.title);
+                triggerDownload(token, state.filename, state.mode);
 
                 els.rahulContainer.classList.add('fade-out');
                 setTimeout(() => {
@@ -577,36 +581,22 @@
             }
         });
 
-        // POST the file URL in JSON body — avoids nginx blocking encoded
-        // non-ASCII chars that appear in query strings for non-English titles.
-        // PHP streams the file back; JS creates a blob URL for the download.
-        async function triggerDownload(remoteUrl, filename, format, title) {
-            const res = await fetch(PROXY_BASE + 'download_proxy.php', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    url:    remoteUrl,
-                    format: format,
-                    title:  title || '',
-                }),
-            });
-
-            if (!res.ok) throw new Error(`Proxy returned ${res.status}`);
-
-            const blob    = await res.blob();
-            const blobUrl = URL.createObjectURL(blob);
+        // Simple anchor-tag download using the short token.
+        // The proxy URL only contains ?token=abc123&format=mp3 — clean ASCII,
+        // no encoded Telugu or other non-ASCII chars in the URI.
+        // Works on all browsers including mobile Safari.
+        function triggerDownload(token, filename, format) {
+            const proxyUrl = PROXY_BASE + 'download_proxy.php'
+                + '?token='  + encodeURIComponent(token)
+                + '&format=' + encodeURIComponent(format);
 
             const a = document.createElement('a');
-            a.href          = blobUrl;
+            a.href          = proxyUrl;
             a.download      = filename;
             a.style.display = 'none';
             document.body.appendChild(a);
             a.click();
-
-            setTimeout(() => {
-                document.body.removeChild(a);
-                URL.revokeObjectURL(blobUrl);
-            }, 5000);
+            setTimeout(() => document.body.removeChild(a), 2000);
         }
 
         window.resetUI = function () {
