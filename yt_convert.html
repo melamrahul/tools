@@ -171,7 +171,7 @@
 
             <div class="format-tabs">
                 <button class="tab-btn active" id="tab-mp3" onclick="switchMode('mp3')">🔊 Audio (MP3)</button>
-                <button class="tab-btn" id="tab-mp4" onclick="switchMode('mp4')"> 📹Video (MP4)</button>
+                <button class="tab-btn" id="tab-mp4" onclick="switchMode('mp4')"> 📹 Video (MP4)</button>
             </div>
 
             <div class="input-section">
@@ -254,14 +254,16 @@
             </a>
         </div>
         <p style="margin-bottom: 10px; margin-top: 10px; margin-left: 10px; font-size: 0.9rem;">
-            If this tool <strong>helps</strong> you, please <strong>consider Supporting Me</strong> as i'm an individual
-            student and can't able to bare the server charges for smooth running of this tools & enable free for
+            If this tool <strong>helps</strong> you, please <strong>consider Supporting Me</strong> as the servers
+            requires some costs for smooth running of this tools & enable free for
             <strong>everyone</strong>.🌍
         </p>
         <p style="margin-left: 10px; font-size: 0.9rem;">Even a <strong>small penny</strong>, can make a <strong>huge
                 difference</strong>!❤️😇
         </p><br>
-        <p style="margin-left: 10px; font-size: 0.9rem; color: rgb(212, 34, 34);">If you are getting any <strong>Error,</strong> try refreshing the page. Im working hard to make this tool more stable and <strong>Error free</strong>. 🙏
+        <p style="margin-left: 10px; font-size: 0.9rem; color: rgb(212, 34, 34);">If you are getting any
+            <strong>Error,</strong> try refreshing the page. Im working hard to make this tool more stable and
+            <strong>Error free</strong>. 🙏
         </p><br>
 
         <a href="https://ko-fi.com/builtforfree" target="_blank" rel="noopener noreferrer" class="float-support"
@@ -469,7 +471,7 @@
                 return { error: 'network_error' };
             }
         }
-      
+
         els.btnGo.addEventListener('click', startFlow);
         els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
 
@@ -580,21 +582,44 @@
                 setTimeout(() => poll(true), POLL_INTERVAL);
             }
         }
-      
-        els.downloadBtn.addEventListener('click', () => {
-            if (!state.downloadUrl) return;
 
-            triggerDownload(state.downloadUrl, state.filename, state.mode, state.title);
+        els.downloadBtn.addEventListener('click', async () => {
+            if (!state.youtubeId) return;
 
-            // Smooth fade out
-            els.rahulContainer.classList.add('fade-out');
+            setStatus("Refreshing download link...");
+            showProgress();
+            setProgress(90);
 
-            setTimeout(() => {
-                els.rahulContainer.style.display = 'none';
-                els.downloadBtn.style.display = 'none';
-                els.successView.classList.add('visible');
-                window.scrollTo(0, 0);
-            }, 300); // matches CSS transition time
+            try {
+                const fresh = await realPoll(true); // check_only mode
+
+                if (fresh.success && fresh.download_link) {
+
+                    triggerDownload(
+                        fresh.download_link,
+                        state.filename,
+                        state.mode,
+                        state.title
+                    );
+
+                    els.rahulContainer.classList.add('fade-out');
+
+                    setTimeout(() => {
+                        els.rahulContainer.style.display = 'none';
+                        els.downloadBtn.style.display = 'none';
+                        els.successView.classList.add('visible');
+                        window.scrollTo(0, 0);
+                    }, 300);
+
+                } else {
+                    setStatus("Link expired. Please convert again.");
+                    hideProgress();
+                }
+
+            } catch (e) {
+                setStatus("Download failed. Try again.");
+                hideProgress();
+            }
         });
 
         window.resetUI = function () {
@@ -614,7 +639,7 @@
             reset();
             els.urlInput.focus();
         }
-        
+
         function triggerDownload(remoteUrl, filename, format, title) {
             const unique = Date.now() + Math.random().toString(36).substring(2);
 
