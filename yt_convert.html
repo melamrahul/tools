@@ -156,7 +156,7 @@
             <div class="logo-area">
                 <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Logo" class="logo-img">
                 <div class="header-title">
-                    <h1>YT Converter</h1>
+                    <h1>YT Converter (beta)</h1>
                 </div>
             </div>
             <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
@@ -261,7 +261,8 @@
         <p style="margin-left: 10px; font-size: 0.9rem;">Even a <strong>small penny</strong>, can make a <strong>huge
                 difference</strong>!❤️😇
         </p><br>
-
+        <p style="margin-left: 10px; font-size: 0.9rem; color: rgb(212, 34, 34);">If you are getting any <strong>Error,</strong> try refreshing the page. Im working hard to make this tool more stable and <strong>Error free</strong>. 🙏
+        </p><br>
 
         <a href="https://ko-fi.com/builtforfree" target="_blank" rel="noopener noreferrer" class="float-support"
             aria-label="Support on Ko-fi">
@@ -473,6 +474,7 @@
         els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
 
         async function startFlow() {
+            els.rahulContainer.style.display = 'block';
             const raw = els.urlInput.value.trim();
             if (!raw) { alert('Please paste a link'); return; }
 
