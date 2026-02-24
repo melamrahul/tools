@@ -287,10 +287,21 @@
         }
 
         /* showLoader: true = spinning webp visible, false = hidden (ready/error) */
-        function setStatus(label, showLoader) {
+        function setStatus(label, showLoader, showTick = false) {
             els.statusBox.classList.add('visible');
-            els.statusBox.style.borderColor = state.converting ? 'white' : 'white';
-            els.statusLabel.textContent = label;
+            els.statusBox.style.borderColor = 'white';
+        
+            if (showTick) {
+                els.statusLabel.innerHTML = `
+                    <img src="https://melamrahul.github.io/tools/right-tick.png" 
+                         alt="Success" 
+                         style="width:18px; height:18px; vertical-align:middle; margin-right:6px;">
+                    ${label}
+                `;
+            } else {
+                els.statusLabel.textContent = label;
+            }
+        
             if (els.infinityLoader) {
                 els.infinityLoader.style.display = (showLoader === false) ? 'none' : 'block';
             }
@@ -443,7 +454,7 @@
                 if (serverTitle) applyTitle(serverTitle);
 
                 /* ✅ "Ready to download" — loader hidden */
-                setStatus('✅ Ready to download!', false);
+                setStatus('Ready to download!', false, true);
 
                 const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
                 els.downloadBtn.style.display = 'block';
