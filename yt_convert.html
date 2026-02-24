@@ -47,8 +47,10 @@
     <link rel="dns-prefetch" href="https://cnvmp3.com">
 
     <!-- ================= STRUCTURED DATA ================= -->
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Tools by Rahul","url":"https://melamrahul.github.io/","logo":"https://melamrahul.github.io/tools/tool_logo_head.png"}</script>
-    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"YouTube to MP3 & MP4 Converter","url":"https://melamrahul.github.io/","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+    <script
+        type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Tools by Rahul","url":"https://melamrahul.github.io/","logo":"https://melamrahul.github.io/tools/tool_logo_head.png"}</script>
+    <script
+        type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"YouTube to MP3 & MP4 Converter","url":"https://melamrahul.github.io/","applicationCategory":"MultimediaApplication","operatingSystem":"All","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
     <script type="application/ld+json">
     {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
       {"@type":"Question","name":"Is this YouTube to MP3 converter free?","acceptedAnswer":{"@type":"Answer","text":"Yes, completely free with no registration, no ads, and no usage limits."}},
@@ -64,8 +66,429 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <!-- rahulContainer improvements (video preview + progress row) -->
-    <link rel="stylesheet" href="../chunk/styles/tools/yt_convert_improvements.css">
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #000000;
+            --border: #4468a9;
+            --accent: #ff5e5b;
+            --accent-hover: #e04e4b;
+            --secondary: #f3f3f3;
+            --success: #107225;
+            --goal-green: #3ed676;
+            --border-width: 2px;
+            --radius: 0px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--border);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 80px;
+        }
+
+        .global-loader {
+            position: fixed;
+            inset: 0;
+            background: var(--bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            gap: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .global-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .spinner-ring {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: conic-gradient(var(--teal), var(--red), #8844ff, var(--teal));
+            padding: 5px;
+            animation: spin 1.6s linear infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .spinner-ring img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            background: var(--bg);
+        }
+        .loader-label {
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .float-support {
+            position: fixed;
+            bottom: 52px;
+            left: 18px;
+            background: var(--accent);
+            color: #fff;
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            box-shadow: 0 4px 20px rgba(0,185,254,0.3);
+            transition: transform 0.2s, background 0.2s;
+            z-index: 99;
+            text-decoration: none;
+        }
+        .float-support:hover { transform: translateY(-3px); background: #009ad6; }
+        .float-support img { width: 20px; height: 20px; }
+
+        .container {
+            width: 100%;
+            max-width: 640px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 15px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            border-bottom: var(--border-width) solid var(--border);
+            padding-bottom: 15px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 10px; }
+        .logo-img { height: 32px; width: auto; }
+        .header-title h1 { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.5px; }
+        .tools-btn {
+            background: var(--secondary);
+            color: var(--text);
+            border: var(--border-width) solid var(--border);
+            padding: 6px 12px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-decoration: none;
+            transition: all 0.1s;
+        }
+        .tools-btn:hover { background: var(--border); color: var(--bg); }
+
+        .card {
+            border: var(--border-width) solid var(--border);
+            margin-bottom: 20px;
+            background: white;
+        }
+        .card-header {
+            background: var(--border);
+            color: white;
+            padding: 10px 15px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .format-tabs {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-bottom: var(--border-width) solid var(--border);
+        }
+        .tab-btn {
+            padding: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: none;
+            border-right: var(--border-width) solid var(--border);
+            background: white;
+            color: var(--text);
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .tab-btn:last-child { border-right: none; }
+        .tab-btn.active {
+            background: #d7e0fb;
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+        .input-section {
+            padding: 15px;
+            border-bottom: var(--border-width) solid var(--border);
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        @media (min-width: 480px) { .input-group { flex-direction: row; } }
+        input {
+            flex: 1;
+            padding: 12px;
+            border: var(--border-width) solid var(--border);
+            font-size: 0.95rem;
+            font-weight: 600;
+            background: white;
+        }
+        input:focus { outline: 2px solid var(--text); outline-offset: 2px; }
+        .btn-go {
+            background: var(--border);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-go:hover { opacity: 0.9; }
+        .btn-go:disabled { background: #ccc; cursor: not-allowed; }
+        .options-row { display: flex; gap: 10px; padding: 0 15px 15px 15px; }
+        .opt-group { flex: 1; }
+        .opt-group label {
+            font-size: 0.65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+            display: block;
+        }
+        select {
+            width: 100%;
+            padding: 10px;
+            border: var(--border-width) solid var(--border);
+            background: white;
+            font-weight: 600;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        /* ═══════════════════════════════════════════
+           RAHUL CONTAINER — improved styles
+           ═══════════════════════════════════════════ */
+
+        /* 1. Thumbnail: full-width, centered, 16:9 */
+        #video-preview {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 14px 14px 0;
+            gap: 10px;
+        }
+        #video-preview.visible { display: flex; }
+
+        #video-thumb {
+            width: 100%;
+            max-width: 380px;
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #1a1a1a;
+            display: block;
+            margin: 0 auto;  /* centers it */
+        }
+
+        /* 2. Title + channel: below the thumb, centered */
+        .video-meta { width: 100%; }
+        .video-title {
+            font-size: 0.93rem;
+            font-weight: 700;
+            line-height: 1.45;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-align: center;
+        }
+        .video-channel {
+            font-size: 0.76rem;
+            opacity: 0.5;
+            margin-top: 3px;
+            text-align: center;
+        }
+
+        /* 3. Status box: white background, loader LEFT, text RIGHT */
+        #progress-track { display: none !important; }
+        .round-spinner-wrap { display: none !important; }
+
+        #status-box {
+            display: none;
+            flex-direction: row;        /* loader on LEFT, label on RIGHT */
+            align-items: center;
+            gap: 8px;
+            margin: 12px 14px 14px;
+            padding: 9px 12px;
+            background: #ffffff;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+        }
+        #status-box.visible { display: flex; }
+
+        /* 4. Infinity loader — small, left side */
+        #status-box .infinity-loader {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            object-fit: contain;
+        }
+
+        /* 5. Text — right of loader, left-aligned */
+        #status-label {
+            font-size: 0.83rem;
+            font-weight: 600;
+            color: var(--border);
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        /* ═══════════════════════════════════════════ */
+
+        #download-btn {
+            display: none;
+            width: 100%;
+            padding: 16px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-top: var(--border-width) solid var(--border);
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+        #download-btn.visible { display: block; }
+
+        #success-view {
+            display: none;
+            text-align: center;
+            padding: 30px 20px;
+            border: var(--border-width) solid var(--border);
+            margin-bottom: 20px;
+            background: white;
+        }
+        #success-view.visible { display: block; }
+        .success-title {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            line-height: 1.2;
+        }
+        .kofi-btn {
+            display: block;
+            background: var(--accent);
+            color: white;
+            padding: 14px 20px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-decoration: none;
+            border: var(--border-width) solid var(--secondary);
+            margin-bottom: 15px;
+            width: 100%;
+            text-transform: uppercase;
+            box-shadow: 3px 3px 0px var(--secondary);
+            transition: all 0.1s;
+        }
+        .kofi-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0px var(--border); background: var(--accent-hover); }
+        .kofi-btn:active { transform: translate(2px,2px); box-shadow: none; }
+        .convert-again-btn {
+            display: inline-block;
+            background: white;
+            color: var(--text);
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            font-weight: 800;
+            border: var(--border-width) solid var(--border);
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 3px 3px 0px var(--border);
+            transition: all 0.1s;
+        }
+        .convert-again-btn:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0px var(--border); }
+
+        .fixed-footer {
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            padding: 10px 15px;
+            margin-top: -10px;
+        }
+        .goal-pill {
+            background: #f2f4eb;
+            border-radius: 10px;
+            height: 50px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 4px;
+            border: 1.5px solid var(--border);
+            box-shadow: 2px 2px 0px rgba(0,0,0,0.1);
+        }
+        .goal-fill {
+            position: absolute;
+            left: 4px; top: 4px; bottom: 4px;
+            background: var(--goal-green);
+            border-radius: 10px;
+            width: 0%;
+            transition: width 1s ease;
+            z-index: 1;
+        }
+        .goal-text-left {
+            position: relative;
+            z-index: 2;
+            font-size: 0.9rem;
+            font-weight: 800;
+            padding-left: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .goal-text-right {
+            position: relative;
+            z-index: 2;
+            font-size: 0.9rem;
+            font-weight: 800;
+            padding-right: 12px;
+        }
+        .goal-icon { width: 28px; height: 28px; }
+
+        footer {
+            position: fixed;
+            bottom: 0; left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #09759c;
+            padding: 10px 0;
+            border: 1.5px solid var(--border);
+        }
+        .fade-out { opacity: 0; transition: opacity 0.3s ease; }
+    </style>
 </head>
 
 <body>
@@ -131,9 +554,10 @@
             </div>
         </div>
 
+        <!-- Result card -->
         <div class="card" id="rahul-container" style="border-top: #f0f0f0;">
 
-            <!-- Video Preview: big thumbnail centered, title below -->
+            <!-- Thumbnail: centered, full-width, title below -->
             <div id="video-preview">
                 <img id="video-thumb" src="" alt="" />
                 <div class="video-meta">
@@ -142,40 +566,32 @@
                 </div>
             </div>
 
-            <!-- Progress row: [status text left]  [infinity loader right] -->
+            <!-- Status row: [🔄 small loader LEFT] [text RIGHT] — white card -->
             <div id="status-box">
-                <!-- loader on the RIGHT (flex-direction:row-reverse makes it appear right) -->
-                <img
-                    class="infinity-loader"
-                    id="infinity-loader"
-                    src="https://melamrahul.github.io/tools/infinity-loader.webp"
-                    alt="loading"
-                />
+                <img class="infinity-loader" id="infinity-loader"
+                    src="https://melamrahul.github.io/tools/infinity-loader.webp" alt="loading" />
                 <div id="status-label"></div>
             </div>
 
-            <!-- Hidden — kept so JS setProgress() calls don't throw errors -->
+            <!-- Kept hidden so JS refs don't break -->
             <div id="progress-track" style="display:none!important;">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
-            <!-- Hidden — old spinner kept so showSpinner()/hideSpinner() don't throw -->
             <div class="round-spinner-wrap" id="round-spinner-wrap" style="display:none!important;"></div>
 
         </div>
 
         <button id="download-btn">Download File</button>
 
-        <!-- SUCCESS VIEW (Hidden initially) -->
+        <!-- SUCCESS VIEW -->
         <div id="success-view">
             <div class="success-title">Download Started!</div>
             <p style="margin-bottom: 20px; font-weight: 600; font-size: 0.9rem;">
                 Your file is getting downloaded. until that please,
             </p>
-
             <a href="https://ko-fi.com/builtforfree" target="_blank" class="kofi-btn">
                 💛 Help Keep It Free
             </a>
-
             <button class="convert-again-btn" onclick="resetUI()">
                 ↺ Convert Another
             </button>
@@ -221,7 +637,7 @@
 
         /* --- Global loader --- */
         const globalLoader = document.getElementById('globalLoader');
-        const mainContent  = document.getElementById('mainContent');
+        const mainContent = document.getElementById('mainContent');
 
         setTimeout(() => {
             globalLoader.classList.add('hidden');
@@ -230,48 +646,48 @@
         }, 1200);
 
         const POLL_INTERVAL = 3500;
-        const MAX_ATTEMPTS  = 50;
+        const MAX_ATTEMPTS = 50;
 
         let state = {
-            polling:      false,
-            attempts:     0,
-            converting:   false,
-            downloadUrl:  null,
-            filename:     'audio.mp3',
-            youtubeId:    null,
-            url:          null,
-            title:        '',
-            mode:         'mp3',
-            quality:      4,
-            formatValue:  1,
+            polling: false,
+            attempts: 0,
+            converting: false,
+            downloadUrl: null,
+            filename: 'audio.mp3',
+            youtubeId: null,
+            url: null,
+            title: '',
+            mode: 'mp3',
+            quality: 4,
+            formatValue: 1,
         };
 
         const els = {
             rahulContainer: document.getElementById('rahul-container'),
-            urlInput:       document.getElementById('yt-url'),
-            btnGo:          document.getElementById('btn-go'),
-            audioQuality:   document.getElementById('audio-quality'),
-            videoQuality:   document.getElementById('video-quality'),
-            optAudio:       document.getElementById('opt-audio-quality'),
-            optVideo:       document.getElementById('opt-video-quality'),
-            tabMp3:         document.getElementById('tab-mp3'),
-            tabMp4:         document.getElementById('tab-mp4'),
-            statusBox:      document.getElementById('status-box'),
-            statusLabel:    document.getElementById('status-label'),
-            spinnerWrap:    document.getElementById('round-spinner-wrap'),
+            urlInput: document.getElementById('yt-url'),
+            btnGo: document.getElementById('btn-go'),
+            audioQuality: document.getElementById('audio-quality'),
+            videoQuality: document.getElementById('video-quality'),
+            optAudio: document.getElementById('opt-audio-quality'),
+            optVideo: document.getElementById('opt-video-quality'),
+            tabMp3: document.getElementById('tab-mp3'),
+            tabMp4: document.getElementById('tab-mp4'),
+            statusBox: document.getElementById('status-box'),
+            statusLabel: document.getElementById('status-label'),
+            spinnerWrap: document.getElementById('round-spinner-wrap'),
             infinityLoader: document.getElementById('infinity-loader'),
-            progressTrack:  document.getElementById('progress-track'),
-            progressFill:   document.getElementById('progress-fill'),
-            downloadBtn:    document.getElementById('download-btn'),
-            preview:        document.getElementById('video-preview'),
-            thumb:          document.getElementById('video-thumb'),
-            title:          document.getElementById('video-title'),
-            channel:        document.getElementById('video-channel'),
-            mainCard:       document.getElementById('main-card'),
-            successView:    document.getElementById('success-view'),
-            monthText:      document.getElementById('monthText'),
-            goalProgress:   document.getElementById('goalProgress'),
-            goalPercent:    document.getElementById('goalPercent'),
+            progressTrack: document.getElementById('progress-track'),
+            progressFill: document.getElementById('progress-fill'),
+            downloadBtn: document.getElementById('download-btn'),
+            preview: document.getElementById('video-preview'),
+            thumb: document.getElementById('video-thumb'),
+            title: document.getElementById('video-title'),
+            channel: document.getElementById('video-channel'),
+            mainCard: document.getElementById('main-card'),
+            successView: document.getElementById('success-view'),
+            monthText: document.getElementById('monthText'),
+            goalProgress: document.getElementById('goalProgress'),
+            goalPercent: document.getElementById('goalPercent'),
         };
 
         const PROXY_BASE = 'https://rahul.serv00.net/apps/uesi/youtube-mp3/';
@@ -281,7 +697,7 @@
         setInterval(updateGoal, 60000);
 
         function switchMode(mode) {
-            state.mode        = mode;
+            state.mode = mode;
             state.formatValue = (mode === 'mp4') ? 0 : 1;
             reset();
             if (mode === 'mp3') {
@@ -302,7 +718,7 @@
             return m ? m[1] : null;
         }
 
-        // showLoader=true while converting, false when ready/error
+        /* showLoader: true = spinning webp visible, false = hidden (ready/error) */
         function setStatus(label, showLoader) {
             els.statusBox.classList.add('visible');
             els.statusLabel.textContent = label;
@@ -311,25 +727,17 @@
             }
         }
 
-        function showSpinner() {
-            els.spinnerWrap.style.display = 'none'; // old spinner always hidden
-            // The infinity loader is inside status-box and shows when status-box is visible
-        }
-        function hideSpinner() {
-            // Loader hides automatically when status-box loses .visible
-        }
-
-        // Keep these so nothing breaks — bar is hidden via CSS
+        function showSpinner() {}
+        function hideSpinner() {}
         function showProgress() {}
         function hideProgress() {}
         function setProgress(pct) {}
 
         function reset() {
-            state.polling     = false;
-            state.attempts    = 0;
-            state.converting  = false;
+            state.polling = false;
+            state.attempts = 0;
+            state.converting = false;
             state.downloadUrl = null;
-            hideSpinner();
             if (els.infinityLoader) els.infinityLoader.style.display = 'none';
             els.downloadBtn.classList.remove('visible');
             els.downloadBtn.style.display = 'none';
@@ -355,7 +763,7 @@
 
         async function fetchMeta(youtubeId, url) {
             els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
-            els.title.textContent   = 'Loading…';
+            els.title.textContent = 'Loading…';
             els.channel.textContent = '';
             els.preview.classList.add('visible');
             try {
@@ -365,11 +773,11 @@
                     body: JSON.stringify({ url }),
                 });
                 if (!res.ok) throw new Error('Network error');
-                const data    = await res.json();
-                const title   = data?.title   || data?.data?.title   || '';
+                const data = await res.json();
+                const title = data?.title || data?.data?.title || '';
                 const channel = data?.channel || data?.data?.channel || '';
                 if (title) {
-                    els.title.textContent   = title;
+                    els.title.textContent = title;
                     els.channel.textContent = channel;
                     applyTitle(title);
                 } else {
@@ -383,10 +791,10 @@
 
         async function realPoll(converting) {
             const body = {
-                youtube_id:  state.youtubeId,
-                url:         state.url,
-                title:       state.title,
-                quality:     state.quality,
+                youtube_id: state.youtubeId,
+                url: state.url,
+                title: state.title,
+                quality: state.quality,
                 formatValue: state.formatValue,
             };
             if (converting) body.action = 'check_only';
@@ -418,13 +826,13 @@
             els.rahulContainer.style.display = 'block';
             els.rahulContainer.classList.remove('fade-out');
             els.mainCard.style.display = 'none';
-            els.btnGo.disabled    = true;
+            els.btnGo.disabled = true;
             els.btnGo.textContent = '…';
 
             state.youtubeId = id;
-            state.url       = raw;
-            state.title     = '';
-            state.quality   = state.mode === 'mp3'
+            state.url = raw;
+            state.title = '';
+            state.quality = state.mode === 'mp3'
                 ? parseInt(els.audioQuality.value)
                 : parseInt(els.videoQuality.value);
 
@@ -432,7 +840,6 @@
             els.title.textContent = '—';
 
             setStatus('Fetching metadata…', true);
-            showSpinner();
 
             await fetchMeta(id, raw);
 
@@ -441,13 +848,12 @@
         }
 
         async function poll(converting) {
-            state.polling    = true;
+            state.polling = true;
             state.converting = converting;
 
             if (state.attempts >= MAX_ATTEMPTS) {
-                hideSpinner();
                 setStatus('Timed out. Please try again.', false);
-                els.btnGo.disabled    = false;
+                els.btnGo.disabled = false;
                 els.btnGo.textContent = 'Convert';
                 return;
             }
@@ -467,34 +873,33 @@
                 const serverTitle = (data.title || '').trim();
                 if (serverTitle) applyTitle(serverTitle);
 
-                hideSpinner();
-                setStatus('Ready!', false);
+                /* ✅ "Ready to download" — loader hidden */
+                setStatus('✅ Ready to download!', false);
 
                 const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
                 els.downloadBtn.style.display = 'block';
                 setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
                 els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
 
-                els.btnGo.disabled    = false;
+                els.btnGo.disabled = false;
                 els.btnGo.textContent = 'Convert';
                 return;
             }
 
             // ── EXPLICIT ERROR ────────────────────────────────────────────────
             if (data.status === 'error') {
-                hideSpinner();
                 setStatus('Error: ' + (data.message || 'Something went wrong. Please try again.'), false);
-                els.btnGo.disabled    = false;
+                els.btnGo.disabled = false;
                 els.btnGo.textContent = 'Convert';
                 return;
             }
 
-            // ── STILL CONVERTING — show clean status, hide raw server messages ─
-            const srvMsg    = (data.message || '').toLowerCase();
+            // ── STILL CONVERTING — hide noisy server messages ─────────────────
+            const srvMsg = (data.message || '').toLowerCase();
             const isGeneric = srvMsg.includes('rate') || srvMsg.includes('retry') ||
-                              srvMsg.includes('session') || srvMsg.includes('busy') ||
-                              srvMsg.includes('queued') || srvMsg.includes('shortly');
-            const display   = (!data.message || isGeneric) ? 'Converting…' : data.message;
+                srvMsg.includes('session') || srvMsg.includes('busy') ||
+                srvMsg.includes('queued') || srvMsg.includes('shortly');
+            const display = (!data.message || isGeneric) ? 'Converting…' : data.message;
             setStatus(display, true);
 
             setTimeout(() => poll(true), POLL_INTERVAL);
@@ -504,7 +909,6 @@
         els.downloadBtn.addEventListener('click', async () => {
             if (!state.youtubeId) return;
 
-            showSpinner();
             setStatus('Preparing download…', true);
 
             try {
@@ -514,7 +918,6 @@
                     : state.downloadUrl;
 
                 if (!dlUrl) {
-                    hideSpinner();
                     setStatus('Link expired. Please convert again.', false);
                     return;
                 }
@@ -522,20 +925,18 @@
                 state.downloadUrl = dlUrl;
                 if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
 
-                hideSpinner();
                 triggerDownload(dlUrl, state.filename, state.mode, state.title);
 
                 els.rahulContainer.classList.add('fade-out');
                 setTimeout(() => {
                     els.rahulContainer.style.display = 'none';
-                    els.downloadBtn.style.display    = 'none';
+                    els.downloadBtn.style.display = 'none';
                     els.successView.classList.add('visible');
                     window.scrollTo(0, 0);
                 }, 300);
 
             } catch (e) {
                 console.error('Download error:', e);
-                hideSpinner();
                 setStatus('Download failed. Try again.', false);
             }
         });
@@ -543,13 +944,13 @@
         function triggerDownload(remoteUrl, filename, format, title) {
             const proxyUrl = PROXY_BASE + 'download_proxy.php'
                 + '?format=' + encodeURIComponent(format)
-                + '&title='  + encodeURIComponent(title || '')
-                + '&url='    + encodeURIComponent(remoteUrl)
-                + '&_='      + Date.now();
+                + '&title=' + encodeURIComponent(title || '')
+                + '&url=' + encodeURIComponent(remoteUrl)
+                + '&_=' + Date.now();
 
             const a = document.createElement('a');
-            a.href          = proxyUrl;
-            a.download      = filename;
+            a.href = proxyUrl;
+            a.download = filename;
             a.style.display = 'none';
             document.body.appendChild(a);
             a.click();
@@ -563,7 +964,7 @@
             els.rahulContainer.classList.remove('fade-out');
             els.preview.classList.remove('visible');
             els.thumb.src = '';
-            els.title.textContent   = '—';
+            els.title.textContent = '—';
             els.channel.textContent = '';
             reset();
             els.urlInput.focus();
@@ -575,11 +976,12 @@
                 .then(data => {
                     const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
                     els.goalProgress.style.width = pct + '%';
-                    els.goalPercent.textContent  = Math.floor(pct) + '% of Goal';
+                    els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
                 })
                 .catch(() => { els.goalPercent.textContent = '0%'; });
         }
 
     </script>
 </body>
+
 </html>
