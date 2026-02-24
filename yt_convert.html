@@ -186,16 +186,18 @@
                         <label>Quality</label>
                         <select id="audio-quality">
                             <option value="9">320 kbps</option>
-                            <option value="4" selected>192 kbps</option>
-                            <option value="2">128 kbps</option>
+                            <option value="4">192 kbps</option>
+                            <option value="2" selected>128 kbps</option>
                         </select>
                     </div>
                     <div class="opt-group" id="opt-video-quality" style="display:none">
                         <label>Resolution</label>
                         <select id="video-quality">
                             <option value="1080">1080p</option>
-                            <option value="720" selected>720p</option>
+                            <option value="720"selected>720p</option>
                             <option value="480">480p</option>
+                            <option value="360">360p</option>
+                            <option value="144">144p</option>
                         </select>
                     </div>
                 </div>
@@ -262,7 +264,7 @@
                 difference</strong>!❤️😇
         </p><br>
         <p style="margin-left: 10px; font-size: 0.9rem; color: rgb(212, 34, 34);">If you are getting any
-            <strong>Error,</strong> try refreshing the page. Im working hard to make this tool more stable and
+            <strong>Error,</strong> try refreshing the page. I'm working hard to make this tool more stable and
             <strong>Error free</strong>. 🙏
         </p><br>
 
@@ -504,7 +506,7 @@
 
             let title = await fetchMeta(id, raw);
 
-            setStatus('Starting conversion…');
+            setStatus('Convertion engine started..');
             await poll(false);
         }
 
@@ -586,7 +588,7 @@
         els.downloadBtn.addEventListener('click', async () => {
             if (!state.youtubeId) return;
 
-            setStatus("Refreshing download link...");
+            setStatus("Waiting for goodness...");
             showProgress();
             setProgress(90);
 
