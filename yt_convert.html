@@ -569,7 +569,9 @@
                 return;
             }
 
-            if (data.error) {
+            if (!data.success && data.status !== 'converting') {
+                console.log("Server response:", data);
+                setStatus('Error occurred. Try again.');
                 setStatus('Error: ' + (data.message || 'Unknown'));
                 hideProgress();
                 els.btnGo.disabled = false;
