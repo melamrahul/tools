@@ -425,7 +425,11 @@
             + '&_='      + Date.now();
 
         const a = document.createElement('a');
-        a.href = proxyUrl; a.download = state.filename; a.style.display = 'none';
+        a.href = dlUrl;  // direct URL, skip proxy
+        a.download = state.filename;
+        // a.href = proxyUrl; 
+        // a.download = state.filename; 
+        a.style.display = 'none';
         document.body.appendChild(a); a.click();
         setTimeout(() => document.body.removeChild(a), 2000);
 
