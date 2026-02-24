@@ -406,54 +406,57 @@
 
     // ── Download ───────────────────────────────────────────────────────────────
     els.downloadBtn.addEventListener('click', async () => {
-        if (!state.downloadUrl) return;
-        setStatus('Preparing download…', true);
+    if (!state.downloadUrl) return;
+    setStatus('Preparing download…', true);
 
-        // Re-fetch from cache (instant) to get a fresh URL
-        let dlUrl = state.downloadUrl;
-        try {
-            const fresh = await doConvert();
-            if (fresh.success && (fresh.download_link || fresh.server_path)) {
-                dlUrl = fresh.download_link || fresh.server_path;
-                if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
-            }
-        } catch(e) {
-            // cache re-fetch failed, use existing URL
+    let dlUrl = state.downloadUrl;
+    try {
+        const fresh = await doConvert();
+        if (fresh.success && (fresh.download_link || fresh.server_path)) {
+            dlUrl = fresh.download_link || fresh.server_path;
+            if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
         }
+    } catch(e) {}
 
-        if (!dlUrl) {
-            setStatus('Link expired. Please convert again.', false);
-            return;
-        }
+    if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
+    state.downloadUrl = dlUrl;
 
-        state.downloadUrl = dlUrl;
+    const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
 
-        // Build proxy URL (this is your _k3z / download_proxy.php)
-        const ext      = state.mode === 'mp4' ? 'mp4' : 'mp3';
-        const proxyUrl = BASE + '_k3z'
-            + '?format=' + encodeURIComponent(ext)
-            + '&title='  + encodeURIComponent(state.title || '')
-            + '&url='    + encodeURIComponent(dlUrl)
-            + '&_='      + Date.now();
-
-        const a = document.createElement('a');
-        a.href     = proxyUrl;
-        a.download = state.filename;
-        a.style.display = 'none';
+    // ── POST instead of GET to avoid encodeURIComponent double-encoding the sig ──
+    try {
+        const resp = await fetch(BASE + '_k3z', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                url:    dlUrl,
+                format: ext,
+                title:  state.title || '',
+            }),
+        });
+        if (!resp.ok) throw new Error('proxy error');
+        const blob     = await resp.blob();
+        const blobUrl  = URL.createObjectURL(blob);
+        const a        = document.createElement('a');
+        a.href         = blobUrl;
+        a.download     = state.filename;
         document.body.appendChild(a);
         a.click();
-        setTimeout(() => document.body.removeChild(a), 2000);
+        setTimeout(() => { URL.revokeObjectURL(blobUrl); document.body.removeChild(a); }, 2000);
+    } catch(e) {
+        // fallback: open directly
+        window.open(dlUrl, '_blank');
+    }
 
-        setStatus('Download started!', false, true);
-
-        els.rahulContainer.classList.add('fade-out');
-        setTimeout(() => {
-            els.rahulContainer.style.display = 'none';
-            els.downloadBtn.style.display    = 'none';
-            els.successView.classList.add('visible');
-            window.scrollTo(0, 0);
-        }, 300);
-    });
+    els.rahulContainer.classList.add('fade-out');
+    setTimeout(() => {
+        els.rahulContainer.style.display = 'none';
+        els.downloadBtn.style.display    = 'none';
+        els.successView.classList.add('visible');
+        window.scrollTo(0, 0);
+    }, 300);
+});
+        
     function updateGoal() {
         fetch(BASE + 'total')
             .then(r => r.json())
