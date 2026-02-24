@@ -406,44 +406,39 @@
 
     // ── Download ───────────────────────────────────────────────────────────────
     els.downloadBtn.addEventListener('click', async () => {
-    if (!state.downloadUrl) return;
-    setStatus('Starting download…', true);
+            if (!state.youtubeId) return;
 
-    const fresh = await doConvert();
-    const dlUrl = (fresh.success && fresh.download_link) ? fresh.download_link : state.downloadUrl;
-    if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
+            setStatus('Preparing download…', true);
 
-    state.downloadUrl = dlUrl;
-    if (fresh.title) applyTitle(fresh.title);
+            try {
+                const fresh = await realPoll(true);
+                const dlUrl = (fresh.success && (fresh.download_link || fresh.server_path))
+                    ? (fresh.download_link || fresh.server_path)
+                    : state.downloadUrl;
 
-    try {
-        setStatus('Downloading…', true);
-        const response = await fetch(dlUrl);
-        if (!response.ok) throw new Error('Fetch failed');
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = state.filename;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => { URL.revokeObjectURL(blobUrl); document.body.removeChild(a); }, 2000);
-    } catch (e) {
-        // Fallback if CORS blocks the blob fetch
-        const a = document.createElement('a');
-        a.href = dlUrl; a.download = state.filename; a.target = '_blank';
-        document.body.appendChild(a); a.click();
-        setTimeout(() => document.body.removeChild(a), 2000);
-    }
+                if (!dlUrl) {
+                    setStatus('Link expired. Please convert again.', false);
+                    return;
+                }
 
-    els.rahulContainer.classList.add('fade-out');
-    setTimeout(() => {
-        els.rahulContainer.style.display = 'none';
-        els.downloadBtn.style.display = 'none';
-        els.successView.classList.add('visible');
-        window.scrollTo(0, 0);
-    }, 300);
-});
+                state.downloadUrl = dlUrl;
+                if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
+
+                triggerDownload(dlUrl, state.filename, state.mode, state.title);
+
+                els.rahulContainer.classList.add('fade-out');
+                setTimeout(() => {
+                    els.rahulContainer.style.display = 'none';
+                    els.downloadBtn.style.display = 'none';
+                    els.successView.classList.add('visible');
+                    window.scrollTo(0, 0);
+                }, 300);
+
+            } catch (e) {
+                console.error('Download error:', e);
+                setStatus('Download failed. Try again.', false);
+            }
+        });
 
     function updateGoal() {
         fetch(BASE + 'total')
