@@ -46,9 +46,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="dns-prefetch" href="https://cnvmp3.com">
 
-    <!-- ================= STYLESHEET ================= -->
-    <link rel="stylesheet" href="../chunk/styles/tools/yt_convert.css">
-
     <!-- ================= STRUCTURED DATA — Organization ================= -->
     <script type="application/ld+json">
   {
@@ -186,15 +183,15 @@
                         <label>Quality</label>
                         <select id="audio-quality">
                             <option value="9">320 kbps</option>
-                            <option value="4">192 kbps</option>
-                            <option value="2" selected>128 kbps</option>
+                            <option value="4" selected>192 kbps</option>
+                            <option value="2">128 kbps</option>
                         </select>
                     </div>
                     <div class="opt-group" id="opt-video-quality" style="display:none">
                         <label>Resolution</label>
                         <select id="video-quality">
                             <option value="1080">1080p</option>
-                            <option value="720"selected>720p</option>
+                            <option value="720" selected>720p</option>
                             <option value="480">480p</option>
                             <option value="360">360p</option>
                             <option value="144">144p</option>
@@ -203,6 +200,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card" id="rahul-container" style="border-top: #f0f0f0;">
             <!-- Video Preview Area -->
             <div id="video-preview">
@@ -373,7 +371,6 @@
         }
 
         function setProgress(pct) {
-            // Ensure percentage is between 0 and 100
             const safePct = Math.min(Math.max(pct, 0), 100);
             els.progressFill.style.width = safePct + '%';
         }
@@ -399,29 +396,12 @@
 
         function applyTitle(title) {
             if (!title || title === state.title) return;
-
             state.title = title;
-
             const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
             state.filename = makeFilename(title, ext);
-
             if (els.downloadBtn.classList.contains('visible')) {
                 els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
             }
-        }
-
-        async function mockConvertPoll() {
-            await new Promise(r => setTimeout(r, 1500));
-            state.attempts++;
-            if (state.attempts < 3) return { status: 'converting', progress: 10 };
-            if (state.attempts < 6) return { status: 'converting', progress: (state.attempts * 12) };
-            return {
-                success: true,
-                status: 'ready',
-                progress: 100,
-                download_link: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                title: state.title
-            };
         }
 
         async function fetchMeta(youtubeId, url) {
@@ -504,9 +484,9 @@
             showProgress();
             setProgress(5);
 
-            let title = await fetchMeta(id, raw);
+            await fetchMeta(id, raw);
 
-            setStatus('Convertion engine started..');
+            setStatus('Conversion engine started…');
             await poll(false);
         }
 
@@ -547,7 +527,6 @@
                 setProgress(100);
 
                 const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
-
                 els.downloadBtn.style.display = 'block';
                 setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
                 els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
@@ -558,9 +537,8 @@
             }
 
             if (data.status === 'converting') {
-                // Use progress from server if available, otherwise estimate
                 const pct = data.progress || Math.min(15 + state.attempts * 6, 90);
-                setStatus(`Converting... ${pct}%`);
+                setStatus(`Converting… ${pct}%`);
                 setProgress(pct);
                 setTimeout(() => poll(true), POLL_INTERVAL);
                 return;
@@ -575,8 +553,7 @@
 
             if (!data.success && data.status !== 'converting') {
                 console.log("Server response:", data);
-                setStatus('Error occurred. Try again.');
-                setStatus('Error: ' + (data.message || 'Unknown'));
+                setStatus('Error: ' + (data.message || 'Unknown error. Try again.'));
                 hideProgress();
                 els.btnGo.disabled = false;
                 els.btnGo.textContent = 'Convert';
@@ -588,7 +565,7 @@
         els.downloadBtn.addEventListener('click', async () => {
             if (!state.youtubeId) return;
 
-            setStatus("Waiting for goodness...");
+            setStatus('Waiting for goodness…');
             showProgress();
             setProgress(90);
 
@@ -596,7 +573,6 @@
                 const fresh = await realPoll(true); // check_only mode
 
                 if (fresh.success && fresh.download_link) {
-
                     triggerDownload(
                         fresh.download_link,
                         state.filename,
@@ -614,30 +590,25 @@
                     }, 300);
 
                 } else {
-                    setStatus("Link expired. Please convert again.");
+                    setStatus('Link expired. Please convert again.');
                     hideProgress();
                 }
 
             } catch (e) {
-                setStatus("Download failed. Try again.");
+                setStatus('Download failed. Try again.');
                 hideProgress();
             }
         });
 
         window.resetUI = function () {
-            // Hide success screen
             els.successView.classList.remove('visible');
-            // Show main card
             els.mainCard.style.display = 'block';
-            // Restore preview container properly
             els.rahulContainer.style.display = 'block';
             els.rahulContainer.classList.remove('fade-out');
-            // Reset preview visibility
             els.preview.classList.remove('visible');
             els.thumb.src = '';
             els.title.textContent = '—';
             els.channel.textContent = '';
-            // Reset state & UI
             reset();
             els.urlInput.focus();
         }
