@@ -64,30 +64,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <style>
-        /* ── Round spinner replacing the horizontal progress bar ── */
-        #progress-track { display: none !important; } /* hide the old bar */
-
-        .round-spinner-wrap {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            padding: 12px 0 4px;
-        }
-        .round-spinner-wrap.visible { display: flex; }
-
-        .round-spinner {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            border: 3.5px solid rgba(255,255,255,0.08);
-            border-top-color: #ff4444;
-            border-right-color: #ff8800;
-            animation: rs-spin 0.85s linear infinite;
-            flex-shrink: 0;
-        }
-        @keyframes rs-spin { to { transform: rotate(360deg); } }
-    </style>
+    <!-- rahulContainer improvements (video preview + progress row) -->
+    <link rel="stylesheet" href="../chunk/styles/tools/yt_convert_improvements.css">
 </head>
 
 <body>
@@ -154,7 +132,8 @@
         </div>
 
         <div class="card" id="rahul-container" style="border-top: #f0f0f0;">
-            <!-- Video Preview Area -->
+
+            <!-- Video Preview: big thumbnail centered, title below -->
             <div id="video-preview">
                 <img id="video-thumb" src="" alt="" />
                 <div class="video-meta">
@@ -163,20 +142,25 @@
                 </div>
             </div>
 
-            <!-- Status -->
+            <!-- Progress row: [status text left]  [infinity loader right] -->
             <div id="status-box">
+                <!-- loader on the RIGHT (flex-direction:row-reverse makes it appear right) -->
+                <img
+                    class="infinity-loader"
+                    id="infinity-loader"
+                    src="https://melamrahul.github.io/tools/infinity-loader.webp"
+                    alt="loading"
+                />
                 <div id="status-label"></div>
             </div>
 
-            <!-- Round spinner (replaces horizontal bar) -->
-            <div class="round-spinner-wrap" id="round-spinner-wrap">
-                <div class="round-spinner"></div>
-            </div>
-
-            <!-- Keep the old progress-track in DOM so JS doesn't break, it's hidden via CSS -->
-            <div id="progress-track">
+            <!-- Hidden — kept so JS setProgress() calls don't throw errors -->
+            <div id="progress-track" style="display:none!important;">
                 <div class="progress-fill" id="progress-fill"></div>
             </div>
+            <!-- Hidden — old spinner kept so showSpinner()/hideSpinner() don't throw -->
+            <div class="round-spinner-wrap" id="round-spinner-wrap" style="display:none!important;"></div>
+
         </div>
 
         <button id="download-btn">Download File</button>
@@ -275,6 +259,7 @@
             statusBox:      document.getElementById('status-box'),
             statusLabel:    document.getElementById('status-label'),
             spinnerWrap:    document.getElementById('round-spinner-wrap'),
+            infinityLoader: document.getElementById('infinity-loader'),
             progressTrack:  document.getElementById('progress-track'),
             progressFill:   document.getElementById('progress-fill'),
             downloadBtn:    document.getElementById('download-btn'),
@@ -317,13 +302,22 @@
             return m ? m[1] : null;
         }
 
-        function setStatus(label) {
+        // showLoader=true while converting, false when ready/error
+        function setStatus(label, showLoader) {
             els.statusBox.classList.add('visible');
             els.statusLabel.textContent = label;
+            if (els.infinityLoader) {
+                els.infinityLoader.style.display = (showLoader === false) ? 'none' : 'block';
+            }
         }
 
-        function showSpinner() { els.spinnerWrap.classList.add('visible'); }
-        function hideSpinner() { els.spinnerWrap.classList.remove('visible'); }
+        function showSpinner() {
+            els.spinnerWrap.style.display = 'none'; // old spinner always hidden
+            // The infinity loader is inside status-box and shows when status-box is visible
+        }
+        function hideSpinner() {
+            // Loader hides automatically when status-box loses .visible
+        }
 
         // Keep these so nothing breaks — bar is hidden via CSS
         function showProgress() {}
@@ -336,6 +330,7 @@
             state.converting  = false;
             state.downloadUrl = null;
             hideSpinner();
+            if (els.infinityLoader) els.infinityLoader.style.display = 'none';
             els.downloadBtn.classList.remove('visible');
             els.downloadBtn.style.display = 'none';
             els.statusBox.classList.remove('visible');
@@ -436,12 +431,12 @@
             els.preview.classList.remove('visible');
             els.title.textContent = '—';
 
-            setStatus('Fetching metadata…');
+            setStatus('Fetching metadata…', true);
             showSpinner();
 
             await fetchMeta(id, raw);
 
-            setStatus('Conversion engine started…');
+            setStatus('Conversion engine started…', true);
             await poll(false);
         }
 
@@ -451,7 +446,7 @@
 
             if (state.attempts >= MAX_ATTEMPTS) {
                 hideSpinner();
-                setStatus('Timed out. Please try again.');
+                setStatus('Timed out. Please try again.', false);
                 els.btnGo.disabled    = false;
                 els.btnGo.textContent = 'Convert';
                 return;
@@ -473,7 +468,7 @@
                 if (serverTitle) applyTitle(serverTitle);
 
                 hideSpinner();
-                setStatus('Ready!');
+                setStatus('Ready!', false);
 
                 const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
                 els.downloadBtn.style.display = 'block';
@@ -488,7 +483,7 @@
             // ── EXPLICIT ERROR ────────────────────────────────────────────────
             if (data.status === 'error') {
                 hideSpinner();
-                setStatus('Error: ' + (data.message || 'Something went wrong. Please try again.'));
+                setStatus('Error: ' + (data.message || 'Something went wrong. Please try again.'), false);
                 els.btnGo.disabled    = false;
                 els.btnGo.textContent = 'Convert';
                 return;
@@ -500,7 +495,7 @@
                               srvMsg.includes('session') || srvMsg.includes('busy') ||
                               srvMsg.includes('queued') || srvMsg.includes('shortly');
             const display   = (!data.message || isGeneric) ? 'Converting…' : data.message;
-            setStatus(display);
+            setStatus(display, true);
 
             setTimeout(() => poll(true), POLL_INTERVAL);
         }
@@ -510,7 +505,7 @@
             if (!state.youtubeId) return;
 
             showSpinner();
-            setStatus('Preparing download…');
+            setStatus('Preparing download…', true);
 
             try {
                 const fresh = await realPoll(true);
@@ -520,7 +515,7 @@
 
                 if (!dlUrl) {
                     hideSpinner();
-                    setStatus('Link expired. Please convert again.');
+                    setStatus('Link expired. Please convert again.', false);
                     return;
                 }
 
@@ -541,7 +536,7 @@
             } catch (e) {
                 console.error('Download error:', e);
                 hideSpinner();
-                setStatus('Download failed. Try again.');
+                setStatus('Download failed. Try again.', false);
             }
         });
 
