@@ -482,6 +482,8 @@
             if (!id) { alert('Invalid URL'); return; }
 
             reset();
+            els.rahulContainer.style.display = 'block';
+            els.rahulContainer.classList.remove('fade-out');
             els.mainCard.style.display = "none";
             els.btnGo.disabled = true;
             els.btnGo.textContent = '…';
@@ -594,12 +596,23 @@
         });
 
         window.resetUI = function () {
+            // Hide success screen
             els.successView.classList.remove('visible');
+            // Show main card
             els.mainCard.style.display = 'block';
+            // Restore preview container properly
+            els.rahulContainer.style.display = 'block';
+            els.rahulContainer.classList.remove('fade-out');
+            // Reset preview visibility
+            els.preview.classList.remove('visible');
+            els.thumb.src = '';
+            els.title.textContent = '—';
+            els.channel.textContent = '';
+            // Reset state & UI
             reset();
             els.urlInput.focus();
         }
-
+        
         function triggerDownload(remoteUrl, filename, format, title) {
             const unique = Date.now() + Math.random().toString(36).substring(2);
 
