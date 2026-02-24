@@ -258,7 +258,7 @@
             goalPercent: document.getElementById('goalPercent'),
         };
 
-        const PROXY_BASE = 'https://rahul.serv00.net/apps/uesi/youtube-mp3/';
+        const _0x1f = 'https://rahul.serv00.net/apps/yt_convert/';
 
         els.monthText.textContent = new Date().toLocaleString('default', { month: 'long' });
         updateGoal();
@@ -347,7 +347,7 @@
             els.channel.textContent = '';
             els.preview.classList.add('visible');
             try {
-                const res = await fetch(PROXY_BASE + 'get_video_data_proxy.php', {
+                const res = await fetch(_0x1f + 'get_video_data', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url }),
@@ -379,7 +379,7 @@
             };
             if (converting) body.action = 'check_only';
             try {
-                const res = await fetch(PROXY_BASE + 'auto_convert.php', {
+                const res = await fetch(_0x1f + 'auto_convert', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
@@ -522,14 +522,14 @@
         });
 
         function triggerDownload(remoteUrl, filename, format, title) {
-            const proxyUrl = PROXY_BASE + 'download_proxy.php'
+            const rA1 = _0x1f + 'pull_down'
                 + '?format=' + encodeURIComponent(format)
                 + '&title=' + encodeURIComponent(title || '')
                 + '&url=' + encodeURIComponent(remoteUrl)
                 + '&_=' + Date.now();
 
             const a = document.createElement('a');
-            a.href = proxyUrl;
+            a.href = rA1;
             a.download = filename;
             a.style.display = 'none';
             document.body.appendChild(a);
@@ -551,15 +551,17 @@
         };
 
         function updateGoal() {
-            fetch('https://rahul.serv00.net/apps/web-push/apps/total.php')
-                .then(r => r.json())
-                .then(data => {
-                    const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
-                    els.goalProgress.style.width = pct + '%';
-                    els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
-                })
-                .catch(() => { els.goalPercent.textContent = '0%'; });
-        }
+        fetch(_0x1f + "total")
+            .then(r => r.json())
+            .then(data => {
+                const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
+                els.goalProgress.style.width = pct + '%';
+                els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
+            })
+            .catch(() => { 
+                els.goalPercent.textContent = '0%'; 
+            });
+    }
 
     </script>
 </body>
