@@ -425,9 +425,6 @@
             }
         }
 
-        // Returns a safe object — never throws.
-        // On any network/parse failure returns { status:'converting' }
-        // so poll() keeps going instead of crashing out.
         async function realPoll(converting) {
             const body = {
                 youtube_id:  state.youtubeId,
@@ -437,7 +434,6 @@
                 formatValue: state.formatValue,
             };
             if (converting) body.action = 'check_only';
-
             try {
                 const res = await fetch(PROXY_BASE + 'auto_convert.php', {
                     method: 'POST',
@@ -445,11 +441,9 @@
                     body: JSON.stringify(body),
                 });
                 if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                const data = await res.json();
-                return data;
+                return await res.json();
             } catch (e) {
-                console.warn('realPoll network error:', e.message);
-                // Treat as still-converting so we retry rather than hard-fail
+                console.warn('realPoll error:', e.message);
                 return { success: false, status: 'converting', message: 'Network hiccup, retrying…' };
             }
         }
@@ -510,7 +504,6 @@
             if (data.success && data.status === 'ready') {
                 const dl = data.download_link || data.server_path || '';
                 if (!dl) {
-                    // No URL yet — keep polling, don't show error
                     setTimeout(() => poll(true), POLL_INTERVAL);
                     return;
                 }
@@ -527,7 +520,7 @@
                 return;
             }
 
-            // ── EXPLICIT SERVER-SIDE ERROR (only stop on status:'error') ──────
+            // ── EXPLICIT ERROR — only stop on status:'error' ──────────────────
             if (data.status === 'error') {
                 setStatus('Error: ' + (data.message || 'Something went wrong. Please try again.'));
                 hideProgress();
@@ -536,9 +529,7 @@
                 return;
             }
 
-            // ── EVERYTHING ELSE = still converting, keep polling ──────────────
-            // Covers: status:'converting', not_in_db, network hiccups,
-            // missing status, rate_limited, any unknown response shape.
+            // ── EVERYTHING ELSE = still converting ────────────────────────────
             const pct = data.progress || Math.min(15 + state.attempts * 4, 90);
             setStatus(data.message || `Converting… ${pct}%`);
             setProgress(pct);
@@ -554,53 +545,69 @@
             setProgress(90);
 
             try {
-                // Re-fetch the freshest link before triggering download
                 const fresh = await realPoll(true);
+                const dlUrl = (fresh.success && fresh.download_link)
+                    ? fresh.download_link
+                    : state.downloadUrl;
 
-                if (fresh.success && fresh.download_link) {
-                    triggerDownload(fresh.download_link, state.filename, state.mode, state.title);
-
-                    els.rahulContainer.classList.add('fade-out');
-                    setTimeout(() => {
-                        els.rahulContainer.style.display = 'none';
-                        els.downloadBtn.style.display    = 'none';
-                        els.successView.classList.add('visible');
-                        window.scrollTo(0, 0);
-                    }, 300);
-
-                } else if (fresh.status === 'converting') {
-                    // Link not ready yet — keep current download button visible,
-                    // tell user to wait a moment and try again
-                    setStatus('Still processing, please wait a moment and try again.');
-                    setProgress(90);
-
-                } else if (state.downloadUrl) {
-                    // Fallback: use the cached URL we already have
-                    triggerDownload(state.downloadUrl, state.filename, state.mode, state.title);
-
-                    els.rahulContainer.classList.add('fade-out');
-                    setTimeout(() => {
-                        els.rahulContainer.style.display = 'none';
-                        els.downloadBtn.style.display    = 'none';
-                        els.successView.classList.add('visible');
-                        window.scrollTo(0, 0);
-                    }, 300);
-
-                } else {
+                if (!dlUrl) {
                     setStatus('Link expired. Please convert again.');
                     hideProgress();
+                    return;
                 }
 
+                // Update cached URL if we got a fresher one
+                if (fresh.download_link) state.downloadUrl = fresh.download_link;
+
+                setStatus('Downloading…');
+                await triggerDownload(dlUrl, state.filename, state.mode, state.title);
+
+                els.rahulContainer.classList.add('fade-out');
+                setTimeout(() => {
+                    els.rahulContainer.style.display = 'none';
+                    els.downloadBtn.style.display    = 'none';
+                    els.successView.classList.add('visible');
+                    window.scrollTo(0, 0);
+                }, 300);
+
             } catch (e) {
-                // Fallback to cached URL on any exception
-                if (state.downloadUrl) {
-                    triggerDownload(state.downloadUrl, state.filename, state.mode, state.title);
-                } else {
-                    setStatus('Download failed. Try again.');
-                    hideProgress();
-                }
+                console.error('Download error:', e);
+                setStatus('Download failed. Try again.');
+                hideProgress();
             }
         });
+
+        // POST the file URL in JSON body — avoids nginx blocking encoded
+        // non-ASCII chars that appear in query strings for non-English titles.
+        // PHP streams the file back; JS creates a blob URL for the download.
+        async function triggerDownload(remoteUrl, filename, format, title) {
+            const res = await fetch(PROXY_BASE + 'download_proxy.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    url:    remoteUrl,
+                    format: format,
+                    title:  title || '',
+                }),
+            });
+
+            if (!res.ok) throw new Error(`Proxy returned ${res.status}`);
+
+            const blob    = await res.blob();
+            const blobUrl = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href          = blobUrl;
+            a.download      = filename;
+            a.style.display = 'none';
+            document.body.appendChild(a);
+            a.click();
+
+            setTimeout(() => {
+                document.body.removeChild(a);
+                URL.revokeObjectURL(blobUrl);
+            }, 5000);
+        }
 
         window.resetUI = function () {
             els.successView.classList.remove('visible');
@@ -614,23 +621,6 @@
             reset();
             els.urlInput.focus();
         };
-
-        function triggerDownload(remoteUrl, filename, format, title) {
-            const unique = Date.now() + Math.random().toString(36).substring(2);
-            const proxyUrl = PROXY_BASE + 'download_proxy.php'
-                + '?format=' + encodeURIComponent(format)
-                + '&title='  + encodeURIComponent(title || '')
-                + '&url='    + encodeURIComponent(remoteUrl)
-                + '&_='      + unique;
-
-            const a = document.createElement('a');
-            a.href          = proxyUrl;
-            a.download      = filename;
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => document.body.removeChild(a), 2000);
-        }
 
         function updateGoal() {
             fetch('https://rahul.serv00.net/apps/web-push/apps/total.php')
