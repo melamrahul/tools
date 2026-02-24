@@ -46,9 +46,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link rel="dns-prefetch" href="https://cnvmp3.com">
 
-    <!-- ================= STYLESHEET ================= -->
-    <link rel="stylesheet" href="../chunk/styles/tools/yt_convert.css">
-
     <!-- ================= STRUCTURED DATA — Organization ================= -->
     <script type="application/ld+json">
   {
@@ -186,15 +183,15 @@
                         <label>Quality</label>
                         <select id="audio-quality">
                             <option value="9">320 kbps</option>
-                            <option value="4">192 kbps</option>
-                            <option value="2" selected>128 kbps</option>
+                            <option value="4" selected>192 kbps</option>
+                            <option value="2">128 kbps</option>
                         </select>
                     </div>
                     <div class="opt-group" id="opt-video-quality" style="display:none">
                         <label>Resolution</label>
                         <select id="video-quality">
                             <option value="1080">1080p</option>
-                            <option value="720"selected>720p</option>
+                            <option value="720" selected>720p</option>
                             <option value="480">480p</option>
                             <option value="360">360p</option>
                             <option value="144">144p</option>
@@ -203,6 +200,7 @@
                 </div>
             </div>
         </div>
+
         <div class="card" id="rahul-container" style="border-top: #f0f0f0;">
             <!-- Video Preview Area -->
             <div id="video-preview">
@@ -245,16 +243,15 @@
             <a href="https://ko-fi.com/builtforfree" target="_blank" style="text-decoration: none; color: inherit;">
                 <div class="goal-pill">
                     <div class="goal-fill" id="goalProgress"></div>
-
                     <div class="goal-text-left">
                         <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" class="goal-icon" alt="Ko-fi">
                         Server costs for <span id="monthText">...</span>
                     </div>
-
                     <div class="goal-text-right" id="goalPercent">0%</div>
                 </div>
             </a>
         </div>
+
         <p style="margin-bottom: 10px; margin-top: 10px; margin-left: 10px; font-size: 0.9rem;">
             If this tool <strong>helps</strong> you, please <strong>consider Supporting Me</strong> as the servers
             requires some costs for smooth running of this tools & enable free for
@@ -281,7 +278,7 @@
 
         /* --- Global loader --- */
         const globalLoader = document.getElementById('globalLoader');
-        const mainContent = document.getElementById('mainContent');
+        const mainContent  = document.getElementById('mainContent');
 
         setTimeout(() => {
             globalLoader.classList.add('hidden');
@@ -289,58 +286,60 @@
             mainContent.classList.add('visible');
         }, 1200);
 
-        const POLL_INTERVAL = 1500;
-        const MAX_ATTEMPTS = 20;
+        const POLL_INTERVAL = 2000;   // 2s between polls
+        const MAX_ATTEMPTS  = 45;     // 45 × 2s = ~90 seconds before timeout
+
         let state = {
-            polling: false,
-            attempts: 0,
-            converting: false,
-            downloadUrl: null,
-            filename: 'audio.mp3',
-            youtubeId: null,
-            url: null,
-            title: '',
-            mode: 'mp3',
-            quality: 4,
-            formatValue: 1,
+            polling:      false,
+            attempts:     0,
+            converting:   false,
+            downloadUrl:  null,
+            filename:     'audio.mp3',
+            youtubeId:    null,
+            url:          null,
+            title:        '',
+            mode:         'mp3',
+            quality:      4,
+            formatValue:  1,
         };
+
         const els = {
             rahulContainer: document.getElementById('rahul-container'),
-            urlInput: document.getElementById('yt-url'),
-            btnGo: document.getElementById('btn-go'),
-            audioQuality: document.getElementById('audio-quality'),
-            videoQuality: document.getElementById('video-quality'),
-            optAudio: document.getElementById('opt-audio-quality'),
-            optVideo: document.getElementById('opt-video-quality'),
-            tabMp3: document.getElementById('tab-mp3'),
-            tabMp4: document.getElementById('tab-mp4'),
-            statusBox: document.getElementById('status-box'),
-            statusLabel: document.getElementById('status-label'),
-            progressTrack: document.getElementById('progress-track'),
-            progressFill: document.getElementById('progress-fill'),
-            downloadBtn: document.getElementById('download-btn'),
-            preview: document.getElementById('video-preview'),
-            thumb: document.getElementById('video-thumb'),
-            title: document.getElementById('video-title'),
-            channel: document.getElementById('video-channel'),
-            mainCard: document.getElementById('main-card'),
-            successView: document.getElementById('success-view'),
-            monthText: document.getElementById('monthText'),
-            goalProgress: document.getElementById('goalProgress'),
-            goalPercent: document.getElementById('goalPercent'),
+            urlInput:       document.getElementById('yt-url'),
+            btnGo:          document.getElementById('btn-go'),
+            audioQuality:   document.getElementById('audio-quality'),
+            videoQuality:   document.getElementById('video-quality'),
+            optAudio:       document.getElementById('opt-audio-quality'),
+            optVideo:       document.getElementById('opt-video-quality'),
+            tabMp3:         document.getElementById('tab-mp3'),
+            tabMp4:         document.getElementById('tab-mp4'),
+            statusBox:      document.getElementById('status-box'),
+            statusLabel:    document.getElementById('status-label'),
+            progressTrack:  document.getElementById('progress-track'),
+            progressFill:   document.getElementById('progress-fill'),
+            downloadBtn:    document.getElementById('download-btn'),
+            preview:        document.getElementById('video-preview'),
+            thumb:          document.getElementById('video-thumb'),
+            title:          document.getElementById('video-title'),
+            channel:        document.getElementById('video-channel'),
+            mainCard:       document.getElementById('main-card'),
+            successView:    document.getElementById('success-view'),
+            monthText:      document.getElementById('monthText'),
+            goalProgress:   document.getElementById('goalProgress'),
+            goalPercent:    document.getElementById('goalPercent'),
         };
-        const now = new Date();
-        const monthName = now.toLocaleString('default', { month: 'long' });
+
         const PROXY_BASE = 'https://rahul.serv00.net/apps/uesi/youtube-mp3/';
-        els.monthText.textContent = monthName;
+
+        els.monthText.textContent = new Date().toLocaleString('default', { month: 'long' });
         updateGoal();
         setInterval(updateGoal, 60000);
 
+        // ── Mode switch ───────────────────────────────────────────────────────
         function switchMode(mode) {
-            state.mode = mode;
+            state.mode        = mode;
             state.formatValue = (mode === 'mp4') ? 0 : 1;
             reset();
-
             if (mode === 'mp3') {
                 els.tabMp3.classList.add('active');
                 els.tabMp4.classList.remove('active');
@@ -364,24 +363,17 @@
             els.statusLabel.textContent = label;
         }
 
-        function showProgress() {
-            els.progressTrack.classList.add('visible');
-        }
-
-        function hideProgress() {
-            els.progressTrack.classList.remove('visible');
-        }
+        function showProgress() { els.progressTrack.classList.add('visible'); }
+        function hideProgress() { els.progressTrack.classList.remove('visible'); }
 
         function setProgress(pct) {
-            // Ensure percentage is between 0 and 100
-            const safePct = Math.min(Math.max(pct, 0), 100);
-            els.progressFill.style.width = safePct + '%';
+            els.progressFill.style.width = Math.min(Math.max(pct, 0), 100) + '%';
         }
 
         function reset() {
-            state.polling = false;
-            state.attempts = 0;
-            state.converting = false;
+            state.polling     = false;
+            state.attempts    = 0;
+            state.converting  = false;
             state.downloadUrl = null;
             hideProgress();
             setProgress(0);
@@ -392,44 +384,24 @@
         }
 
         function makeFilename(title, ext) {
-            if (!title) return (ext === 'mp4') ? 'video.mp4' : 'audio.mp3';
+            if (!title) return ext === 'mp4' ? 'video.mp4' : 'audio.mp3';
             const safe = title.replace(/[^\w\s\-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 80);
-            return (safe || ((ext === 'mp4') ? 'video' : 'audio')) + '.' + ext;
+            return (safe || (ext === 'mp4' ? 'video' : 'audio')) + '.' + ext;
         }
 
         function applyTitle(title) {
             if (!title || title === state.title) return;
-
             state.title = title;
-
             const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
             state.filename = makeFilename(title, ext);
-
-            if (els.downloadBtn.classList.contains('visible')) {
-                els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
-            }
         }
 
-        async function mockConvertPoll() {
-            await new Promise(r => setTimeout(r, 1500));
-            state.attempts++;
-            if (state.attempts < 3) return { status: 'converting', progress: 10 };
-            if (state.attempts < 6) return { status: 'converting', progress: (state.attempts * 12) };
-            return {
-                success: true,
-                status: 'ready',
-                progress: 100,
-                download_link: 'https://www.w3schools.com/html/mov_bbb.mp4',
-                title: state.title
-            };
-        }
-
+        // ── Fetch video metadata ──────────────────────────────────────────────
         async function fetchMeta(youtubeId, url) {
             els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
             els.title.textContent = 'Loading…';
             els.channel.textContent = '';
             els.preview.classList.add('visible');
-
             try {
                 const res = await fetch(PROXY_BASE + 'get_video_data_proxy.php', {
                     method: 'POST',
@@ -438,64 +410,67 @@
                 });
                 if (!res.ok) throw new Error('Network error');
                 const data = await res.json();
-                const title = data?.title || data?.data?.title || '';
+                const title   = data?.title   || data?.data?.title   || '';
                 const channel = data?.channel || data?.data?.channel || '';
-
                 if (title) {
-                    els.title.textContent = title;
+                    els.title.textContent   = title;
                     els.channel.textContent = channel;
                     applyTitle(title);
-                    return title;
                 }
-            } catch (e) { console.error(e); }
-            return '';
+            } catch (e) {
+                console.error('fetchMeta:', e);
+                els.title.textContent = '—';
+            }
         }
 
+        // ── API call ──────────────────────────────────────────────────────────
         async function realPoll(converting) {
             const body = {
-                youtube_id: state.youtubeId,
-                url: state.url,
-                title: state.title,
-                quality: state.quality,
+                youtube_id:  state.youtubeId,
+                url:         state.url,
+                title:       state.title,
+                quality:     state.quality,
                 formatValue: state.formatValue,
             };
             if (converting) body.action = 'check_only';
-
             try {
                 const res = await fetch(PROXY_BASE + 'auto_convert.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
                 });
-                if (!res.ok) throw new Error('Network error');
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
                 return await res.json();
             } catch (e) {
-                return { error: 'network_error' };
+                console.warn('realPoll error:', e.message);
+                return { success: false, status: 'converting', message: 'Network hiccup, retrying…' };
             }
         }
 
+        // ── Start flow ────────────────────────────────────────────────────────
         els.btnGo.addEventListener('click', startFlow);
         els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
 
         async function startFlow() {
-            els.rahulContainer.style.display = 'block';
             const raw = els.urlInput.value.trim();
-            if (!raw) { alert('Please paste a link'); return; }
+            if (!raw) { alert('Please paste a YouTube link'); return; }
 
             const id = extractYoutubeId(raw);
-            if (!id) { alert('Invalid URL'); return; }
+            if (!id) { alert('Invalid YouTube URL'); return; }
 
             reset();
             els.rahulContainer.style.display = 'block';
             els.rahulContainer.classList.remove('fade-out');
-            els.mainCard.style.display = "none";
+            els.mainCard.style.display = 'none';
             els.btnGo.disabled = true;
             els.btnGo.textContent = '…';
 
             state.youtubeId = id;
-            state.url = raw;
-            state.title = '';
-            state.quality = state.mode === 'mp3' ? parseInt(els.audioQuality.value) : parseInt(els.videoQuality.value);
+            state.url       = raw;
+            state.title     = '';
+            state.quality   = state.mode === 'mp3'
+                ? parseInt(els.audioQuality.value)
+                : parseInt(els.videoQuality.value);
 
             els.preview.classList.remove('visible');
             els.title.textContent = '—';
@@ -504,42 +479,36 @@
             showProgress();
             setProgress(5);
 
-            let title = await fetchMeta(id, raw);
+            await fetchMeta(id, raw);
 
-            setStatus('Convertion engine started..');
+            setStatus('Conversion engine started…');
             await poll(false);
         }
 
+        // ── Poll loop ─────────────────────────────────────────────────────────
         async function poll(converting) {
-            state.polling = true;
+            state.polling    = true;
             state.converting = converting;
 
             if (state.attempts >= MAX_ATTEMPTS) {
-                setStatus('Timed out. Try again.');
+                setStatus('Timed out. Please try again.');
                 hideProgress();
-                els.btnGo.disabled = false;
+                els.btnGo.disabled    = false;
                 els.btnGo.textContent = 'Convert';
                 return;
             }
 
             state.attempts++;
-            let data = await realPoll(converting);
+            const data = await realPoll(converting);
 
-            if (data.error === 'network_error') {
-                setStatus('Connection Error.');
-                hideProgress();
-                els.btnGo.disabled = false;
-                els.btnGo.textContent = 'Convert';
-                return;
-            }
-
+            // ── READY ─────────────────────────────────────────────────────────
             if (data.success && data.status === 'ready') {
                 const dl = data.download_link || data.server_path || '';
                 if (!dl) {
-                    setStatus('No link received.');
+                    // Got success but no link yet — keep polling
+                    setTimeout(() => poll(true), POLL_INTERVAL);
                     return;
                 }
-
                 state.downloadUrl = dl;
                 if (data.title) applyTitle(data.title);
 
@@ -547,131 +516,117 @@
                 setProgress(100);
 
                 const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
-
                 els.downloadBtn.style.display = 'block';
                 setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
                 els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
 
-                els.btnGo.disabled = false;
+                els.btnGo.disabled    = false;
                 els.btnGo.textContent = 'Convert';
                 return;
             }
 
-            if (data.status === 'converting') {
-                // Use progress from server if available, otherwise estimate
-                const pct = data.progress || Math.min(15 + state.attempts * 6, 90);
-                setStatus(`Converting... ${pct}%`);
-                setProgress(pct);
-                setTimeout(() => poll(true), POLL_INTERVAL);
-                return;
-            }
-
-            if (converting && data.error === 'not_in_db') {
-                setStatus('Processing…');
-                setProgress(20);
-                setTimeout(() => poll(true), POLL_INTERVAL);
-                return;
-            }
-
-            if (!data.success && data.status !== 'converting') {
-                console.log("Server response:", data);
-                setStatus('Error occurred. Try again.');
-                setStatus('Error: ' + (data.message || 'Unknown'));
+            // ── EXPLICIT ERROR ────────────────────────────────────────────────
+            if (data.status === 'error') {
+                setStatus('Error: ' + (data.message || 'Something went wrong. Please try again.'));
                 hideProgress();
-                els.btnGo.disabled = false;
+                els.btnGo.disabled    = false;
                 els.btnGo.textContent = 'Convert';
-            } else {
-                setTimeout(() => poll(true), POLL_INTERVAL);
+                return;
             }
+
+            // ── STILL CONVERTING (or anything else) ──────────────────────────
+            // Treat everything that isn't 'ready' or 'error' as still converting
+            const pct = data.progress || Math.min(15 + state.attempts * 2, 90);
+            setStatus(data.message || `Converting… ${pct}%`);
+            setProgress(pct);
+            setTimeout(() => poll(true), POLL_INTERVAL);
         }
 
+        // ── Download button ───────────────────────────────────────────────────
         els.downloadBtn.addEventListener('click', async () => {
             if (!state.youtubeId) return;
 
-            setStatus("Waiting for goodness...");
+            setStatus('Preparing download…');
             showProgress();
             setProgress(90);
 
             try {
-                const fresh = await realPoll(true); // check_only mode
+                // Re-fetch to get freshest link
+                const fresh = await realPoll(true);
+                const dlUrl = (fresh.success && (fresh.download_link || fresh.server_path))
+                    ? (fresh.download_link || fresh.server_path)
+                    : state.downloadUrl;
 
-                if (fresh.success && fresh.download_link) {
-
-                    triggerDownload(
-                        fresh.download_link,
-                        state.filename,
-                        state.mode,
-                        state.title
-                    );
-
-                    els.rahulContainer.classList.add('fade-out');
-
-                    setTimeout(() => {
-                        els.rahulContainer.style.display = 'none';
-                        els.downloadBtn.style.display = 'none';
-                        els.successView.classList.add('visible');
-                        window.scrollTo(0, 0);
-                    }, 300);
-
-                } else {
-                    setStatus("Link expired. Please convert again.");
+                if (!dlUrl) {
+                    setStatus('Link expired. Please convert again.');
                     hideProgress();
+                    return;
                 }
 
+                // Update cached URL
+                state.downloadUrl = dlUrl;
+                if (fresh.title) applyTitle(fresh.title);
+
+                triggerDownload(dlUrl, state.filename, state.mode, state.title);
+
+                els.rahulContainer.classList.add('fade-out');
+                setTimeout(() => {
+                    els.rahulContainer.style.display = 'none';
+                    els.downloadBtn.style.display    = 'none';
+                    els.successView.classList.add('visible');
+                    window.scrollTo(0, 0);
+                }, 300);
+
             } catch (e) {
-                setStatus("Download failed. Try again.");
+                console.error('Download error:', e);
+                setStatus('Download failed. Try again.');
                 hideProgress();
             }
         });
 
-        window.resetUI = function () {
-            // Hide success screen
-            els.successView.classList.remove('visible');
-            // Show main card
-            els.mainCard.style.display = 'block';
-            // Restore preview container properly
-            els.rahulContainer.style.display = 'block';
-            els.rahulContainer.classList.remove('fade-out');
-            // Reset preview visibility
-            els.preview.classList.remove('visible');
-            els.thumb.src = '';
-            els.title.textContent = '—';
-            els.channel.textContent = '';
-            // Reset state & UI
-            reset();
-            els.urlInput.focus();
-        }
-
+        // Trigger download via anchor with proxy URL (GET params)
         function triggerDownload(remoteUrl, filename, format, title) {
-            const unique = Date.now() + Math.random().toString(36).substring(2);
-
             const proxyUrl = PROXY_BASE + 'download_proxy.php'
                 + '?format=' + encodeURIComponent(format)
-                + '&title=' + encodeURIComponent(title || '')
-                + '&url=' + encodeURIComponent(remoteUrl)
-                + '&_=' + unique;
+                + '&title='  + encodeURIComponent(title || '')
+                + '&url='    + encodeURIComponent(remoteUrl)
+                + '&_='      + Date.now();
 
             const a = document.createElement('a');
-            a.href = proxyUrl;
-            a.download = filename;
+            a.href          = proxyUrl;
+            a.download      = filename;
             a.style.display = 'none';
             document.body.appendChild(a);
             a.click();
             setTimeout(() => document.body.removeChild(a), 2000);
         }
 
+        // ── Reset UI ──────────────────────────────────────────────────────────
+        window.resetUI = function () {
+            els.successView.classList.remove('visible');
+            els.mainCard.style.display = 'block';
+            els.rahulContainer.style.display = 'block';
+            els.rahulContainer.classList.remove('fade-out');
+            els.preview.classList.remove('visible');
+            els.thumb.src = '';
+            els.title.textContent   = '—';
+            els.channel.textContent = '';
+            reset();
+            els.urlInput.focus();
+        };
+
+        // ── Goal bar ──────────────────────────────────────────────────────────
         function updateGoal() {
             fetch('https://rahul.serv00.net/apps/web-push/apps/total.php')
-                .then(res => res.json())
+                .then(r => r.json())
                 .then(data => {
-                    const total = parseFloat(data.total) || 0;
-                    const goalAmount = 50;
-                    const percent = Math.min((total / goalAmount) * 100, 100);
-                    els.goalProgress.style.width = percent + '%';
-                    els.goalPercent.textContent = Math.floor(percent) + '% of Goal';
+                    const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
+                    els.goalProgress.style.width = pct + '%';
+                    els.goalPercent.textContent  = Math.floor(pct) + '% of Goal';
                 })
                 .catch(() => { els.goalPercent.textContent = '0%'; });
         }
+
     </script>
 </body>
 
