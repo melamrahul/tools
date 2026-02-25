@@ -396,7 +396,7 @@
             if (state.aborted) return;
 
             // Step 2: now trigger conversion — state.title is populated
-            setStatus('Starting conversion…', true);
+            setStatus('Convertion engine started..', true);
             const firstResult = await callAPI(false);
 
             if (state.aborted) return;
