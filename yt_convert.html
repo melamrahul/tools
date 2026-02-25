@@ -17,6 +17,7 @@
     <meta property="og:type" content="website">
     <meta property="og:title" content="YouTube to MP3 &amp; MP4 Converter — Free, No Ads | Tools by Rahul">
     <meta property="og:description" content="Fast, free YouTube to MP3 (320kbps) and MP4 (HD) converter. No ads, no registration required.">
+    <script src="../chunk/scripts/sentinel.js" defer=""></script>
     <meta property="og:url" content="https://melamrahul.github.io/">
     <meta property="og:site_name" content="Tools by Rahul">
     <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
@@ -278,16 +279,22 @@
         }
 
         function applyTitle(title) {
-            if (!title || title === state.title) return;
-            state.title = title;
+            if (!title) return;
             const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
-            state.filename = makeFilename(title, ext);
-            if (!els.title.textContent || els.title.textContent === '—' || els.title.textContent === 'Loading…') {
+            // Always update filename when we get a real title (overwrite generic fallbacks)
+            if (title !== state.title) {
+                state.title    = title;
+                state.filename = makeFilename(title, ext);
+            }
+            // Update display only if it's still showing a placeholder
+            const cur = els.title.textContent;
+            if (!cur || cur === '—' || cur === 'Loading…') {
                 els.title.textContent = title;
             }
         }
 
         /* ── Fetch video metadata ─────────────────────────────────────────── */
+        // Returns the title string (or '') so callers can use it immediately
         async function fetchMeta(youtubeId, url) {
             els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
             els.title.textContent = 'Loading…';
@@ -298,16 +305,23 @@
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url }),
-                    signal: AbortSignal.timeout(8000), // 8s timeout for meta
+                    signal: AbortSignal.timeout(8000),
                 });
                 if (!res.ok) throw new Error('Network error');
-                const data = await res.json();
+                const data    = await res.json();
                 const title   = data?.title   || data?.data?.title   || '';
                 const channel = data?.channel || data?.data?.channel || '';
-                if (title) { els.title.textContent = title; els.channel.textContent = channel; applyTitle(title); }
-                else els.title.textContent = '—';
+                if (title) {
+                    els.title.textContent   = title;
+                    els.channel.textContent = channel;
+                    applyTitle(title); // sets state.title + state.filename
+                } else {
+                    els.title.textContent = '—';
+                }
+                return title; // ← hand back to caller
             } catch (e) {
-                els.title.textContent = '—'; // don't block on meta failure
+                els.title.textContent = '—';
+                return ''; // don't block on meta failure
             }
         }
 
@@ -369,13 +383,21 @@
             els.title.textContent   = '—';
             els.channel.textContent = '';
 
-            setStatus('Fetching info…', true);
+            setStatus('Lightening fast converting..', true);
 
-            // Fetch meta + first API call in parallel for speed
-            const [, firstResult] = await Promise.all([
+            // Step 1: fetch meta FIRST so state.title is set before we call the API.
+            // The API needs the real title to store it in the DB correctly.
+            // We race it against a 6s timeout so a slow meta fetch doesn't delay conversion.
+            await Promise.race([
                 fetchMeta(id, raw),
-                callAPI(false), // first call: trigger conversion
+                new Promise(r => setTimeout(r, 6000)), // give up waiting after 6s
             ]);
+
+            if (state.aborted) return;
+
+            // Step 2: now trigger conversion — state.title is populated
+            setStatus('Starting conversion…', true);
+            const firstResult = await callAPI(false);
 
             if (state.aborted) return;
 
