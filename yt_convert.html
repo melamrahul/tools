@@ -155,299 +155,354 @@
     </div>
 
     <script>
-    /* YT Converter v2.3 */
+    /* YT Converter v2.4 — Fixed infinite converting loop */
 
-    const globalLoader = document.getElementById('globalLoader');
-    const mainContent  = document.getElementById('mainContent');
-    setTimeout(() => {
-        globalLoader.classList.add('hidden');
-        document.body.style.overflow = 'auto';
-        mainContent.classList.add('visible');
-    }, 1200);
+const globalLoader = document.getElementById('globalLoader');
+const mainContent  = document.getElementById('mainContent');
+setTimeout(() => {
+    globalLoader.classList.add('hidden');
+    document.body.style.overflow = 'auto';
+    mainContent.classList.add('visible');
+}, 1200);
 
-    const MAX_ATTEMPTS    = 5;     // 5 real convert attempts, each ~45s timeout = ~3.5 min max
-    const RETRY_DELAY_MS  = 3000;  // 3s between retries
-    const BASE = 'https://rahul.serv00.net/apps/yt_convert/';
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+// Each doConvert() call takes up to ~75s (PHP polls gamma for ~64s internally)
+// So we wait 5s after each attempt before retrying
+// Total patience: 6 attempts × ~80s = ~8 minutes max
+const MAX_ATTEMPTS   = 6;
+const RETRY_DELAY_MS = 5000;   // 5s gap between frontend retries
+const BASE = 'https://rahul.serv00.net/apps/yt_convert/';
 
-    let state = {
-        attempts:    0,
-        downloadUrl: null,
-        filename:    'audio.mp3',
-        youtubeId:   null,
-        url:         null,
-        title:       '',
-        mode:        'mp3',
-        quality:     4,
-        formatValue: 1,
-        retryTimer:  null,
-        running:     false,
-    };
+let state = {
+    attempts:    0,
+    downloadUrl: null,
+    filename:    'audio.mp3',
+    youtubeId:   null,
+    url:         null,
+    title:       '',
+    mode:        'mp3',
+    quality:     4,
+    formatValue: 1,
+    retryTimer:  null,
+    running:     false,
+    startTime:   null,
+};
 
-    const els = {
-        rahulContainer: document.getElementById('rahul-container'),
-        urlInput:       document.getElementById('yt-url'),
-        btnGo:          document.getElementById('btn-go'),
-        audioQuality:   document.getElementById('audio-quality'),
-        videoQuality:   document.getElementById('video-quality'),
-        optAudio:       document.getElementById('opt-audio-quality'),
-        optVideo:       document.getElementById('opt-video-quality'),
-        tabMp3:         document.getElementById('tab-mp3'),
-        tabMp4:         document.getElementById('tab-mp4'),
-        statusBox:      document.getElementById('status-box'),
-        statusLabel:    document.getElementById('status-label'),
-        infinityLoader: document.getElementById('infinity-loader'),
-        downloadBtn:    document.getElementById('download-btn'),
-        preview:        document.getElementById('video-preview'),
-        thumb:          document.getElementById('video-thumb'),
-        title:          document.getElementById('video-title'),
-        channel:        document.getElementById('video-channel'),
-        mainCard:       document.getElementById('main-card'),
-        successView:    document.getElementById('success-view'),
-        monthText:      document.getElementById('monthText'),
-        goalProgress:   document.getElementById('goalProgress'),
-        goalPercent:    document.getElementById('goalPercent'),
-    };
+const els = {
+    rahulContainer: document.getElementById('rahul-container'),
+    urlInput:       document.getElementById('yt-url'),
+    btnGo:          document.getElementById('btn-go'),
+    audioQuality:   document.getElementById('audio-quality'),
+    videoQuality:   document.getElementById('video-quality'),
+    optAudio:       document.getElementById('opt-audio-quality'),
+    optVideo:       document.getElementById('opt-video-quality'),
+    tabMp3:         document.getElementById('tab-mp3'),
+    tabMp4:         document.getElementById('tab-mp4'),
+    statusBox:      document.getElementById('status-box'),
+    statusLabel:    document.getElementById('status-label'),
+    infinityLoader: document.getElementById('infinity-loader'),
+    downloadBtn:    document.getElementById('download-btn'),
+    preview:        document.getElementById('video-preview'),
+    thumb:          document.getElementById('video-thumb'),
+    title:          document.getElementById('video-title'),
+    channel:        document.getElementById('video-channel'),
+    mainCard:       document.getElementById('main-card'),
+    successView:    document.getElementById('success-view'),
+    monthText:      document.getElementById('monthText'),
+    goalProgress:   document.getElementById('goalProgress'),
+    goalPercent:    document.getElementById('goalPercent'),
+};
 
-    els.monthText.textContent = new Date().toLocaleString('default', { month: 'long' });
-    updateGoal();
-    setInterval(updateGoal, 60000);
+els.monthText.textContent = new Date().toLocaleString('default', { month: 'long' });
+updateGoal();
+setInterval(updateGoal, 60000);
 
-    function switchMode(mode) {
-        state.mode        = mode;
-        state.formatValue = (mode === 'mp4') ? 0 : 1;
-        resetUI(true);
-        if (mode === 'mp3') {
-            els.tabMp3.classList.add('active');    els.tabMp4.classList.remove('active');
-            els.optAudio.style.display = '';       els.optVideo.style.display = 'none';
-        } else {
-            els.tabMp4.classList.add('active');    els.tabMp3.classList.remove('active');
-            els.optAudio.style.display = 'none';   els.optVideo.style.display = '';
+function switchMode(mode) {
+    state.mode        = mode;
+    state.formatValue = (mode === 'mp4') ? 0 : 1;
+    resetUI(true);
+    if (mode === 'mp3') {
+        els.tabMp3.classList.add('active');    els.tabMp4.classList.remove('active');
+        els.optAudio.style.display = '';       els.optVideo.style.display = 'none';
+    } else {
+        els.tabMp4.classList.add('active');    els.tabMp3.classList.remove('active');
+        els.optAudio.style.display = 'none';   els.optVideo.style.display = '';
+    }
+}
+
+function extractYoutubeId(input) {
+    const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+    return m ? m[1] : null;
+}
+
+function elapsedStr() {
+    if (!state.startTime) return '';
+    const s = Math.round((Date.now() - state.startTime) / 1000);
+    return s > 5 ? ` (${s}s)` : '';
+}
+
+function setStatus(label, showLoader, showTick = false) {
+    els.statusBox.classList.add('visible');
+    if (showTick) {
+        els.statusLabel.innerHTML = `<img src="https://melamrahul.github.io/tools/right-tick.png"
+            alt="✓" style="width:32px;height:32px;vertical-align:middle;margin-right:4px;">${label}`;
+    } else {
+        els.statusLabel.textContent = label;
+    }
+    els.infinityLoader.style.display = showLoader ? 'block' : 'none';
+}
+
+function stopPolling() {
+    state.running = false;
+    if (state.retryTimer) { clearTimeout(state.retryTimer); state.retryTimer = null; }
+}
+
+window.resetUI = function(keepMode = false) {
+    stopPolling();
+    state.attempts    = 0;
+    state.downloadUrl = null;
+    state.startTime   = null;
+    els.downloadBtn.classList.remove('visible');
+    els.downloadBtn.style.display = 'none';
+    els.statusBox.classList.remove('visible');
+    els.successView.classList.remove('visible');
+    els.mainCard.style.display       = 'block';
+    els.rahulContainer.style.display = 'block';
+    els.rahulContainer.classList.remove('fade-out');
+    els.preview.classList.remove('visible');
+    els.thumb.src = '';
+    els.title.textContent   = '—';
+    els.channel.textContent = '';
+    els.btnGo.disabled    = false;
+    els.btnGo.textContent = 'Convert';
+    if (!keepMode) els.urlInput.value = '';
+    els.urlInput.focus();
+};
+
+function makeFilename(title, ext) {
+    if (!title) return ext === 'mp4' ? 'video.mp4' : 'audio.mp3';
+    const safe = title.replace(/[^\w\s\-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 80);
+    return (safe || (ext === 'mp4' ? 'video' : 'audio')) + '.' + ext;
+}
+
+function applyTitle(t) {
+    if (!t) return;
+    state.title    = t;
+    state.filename = makeFilename(t, state.mode === 'mp4' ? 'mp4' : 'mp3');
+    if (['—','Loading…',''].includes(els.title.textContent)) els.title.textContent = t;
+}
+
+async function fetchMeta(youtubeId, url) {
+    els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
+    els.title.textContent = 'Loading…';
+    els.channel.textContent = '';
+    els.preview.classList.add('visible');
+    try {
+        const res  = await fetch(BASE + 'get_video_data', {
+            method: 'POST', headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({ url }),
+        });
+        const data = await res.json();
+        const t    = data?.title   ?? data?.data?.title   ?? '';
+        const c    = data?.channel ?? data?.data?.channel ?? '';
+        els.title.textContent   = t || '—';
+        els.channel.textContent = c || '';
+        if (t) applyTitle(t);
+    } catch { els.title.textContent = '—'; }
+}
+
+// ── Core convert — single call, waits up to ~75s for PHP to finish polling ────
+async function doConvert() {
+    const controller = new AbortController();
+    // 100s timeout — PHP set_time_limit is 90s, add 10s buffer
+    const tid = setTimeout(() => controller.abort(), 100_000);
+    try {
+        const res = await fetch(BASE + 'r7q', {
+            method:  'POST',
+            headers: {'Content-Type': 'application/json'},
+            signal:  controller.signal,
+            body: JSON.stringify({
+                youtube_id:  state.youtubeId,
+                title:       state.title,
+                formatValue: state.formatValue,
+            }),
+        });
+        clearTimeout(tid);
+        if (!res.ok) {
+            const text = await res.text().catch(() => '');
+            console.warn('[doConvert] HTTP', res.status, text.slice(0, 200));
+            return { success: false, status: 'converting', message: `Server error ${res.status}` };
         }
-    }
-
-    function extractYoutubeId(input) {
-        const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
-        return m ? m[1] : null;
-    }
-
-    function setStatus(label, showLoader, showTick = false) {
-        els.statusBox.classList.add('visible');
-        if (showTick) {
-            els.statusLabel.innerHTML = `<img src="https://melamrahul.github.io/tools/right-tick.png"
-                alt="✓" style="width:32px;height:32px;vertical-align:middle;margin-right:4px;">${label}`;
-        } else {
-            els.statusLabel.textContent = label;
+        const text = await res.text();
+        try {
+            return JSON.parse(text);
+        } catch(e) {
+            console.warn('[doConvert] JSON parse failed:', text.slice(0, 200));
+            // If PHP died mid-response, treat as 'converting' not error
+            return { success: false, status: 'converting', message: 'Conversion in progress…' };
         }
-        els.infinityLoader.style.display = showLoader ? 'block' : 'none';
+    } catch (e) {
+        clearTimeout(tid);
+        if (e.name === 'AbortError') {
+            console.warn('[doConvert] fetch aborted (timeout)');
+            return { success: false, status: 'converting', message: 'Taking longer than expected…' };
+        }
+        console.warn('[doConvert] fetch error:', e.message);
+        return { success: false, status: 'converting', message: 'Network error, retrying…' };
     }
+}
 
-    function stopPolling() {
-        state.running = false;
-        if (state.retryTimer) { clearTimeout(state.retryTimer); state.retryTimer = null; }
-    }
+els.btnGo.addEventListener('click', startFlow);
+els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
 
-    window.resetUI = function(keepMode = false) {
+async function startFlow() {
+    const raw = els.urlInput.value.trim();
+    if (!raw) { alert('Please paste a YouTube link'); return; }
+    const id  = extractYoutubeId(raw);
+    if (!id)  { alert('Invalid YouTube URL'); return; }
+
+    stopPolling();
+    state.attempts   = 0;
+    state.youtubeId  = id;
+    state.url        = raw;
+    state.title      = '';
+    state.running    = true;
+    state.startTime  = Date.now();
+    state.quality    = state.mode === 'mp3'
+        ? parseInt(els.audioQuality.value)
+        : parseInt(els.videoQuality.value);
+
+    els.mainCard.style.display       = 'none';
+    els.rahulContainer.style.display = 'block';
+    els.rahulContainer.classList.remove('fade-out');
+    els.downloadBtn.style.display    = 'none';
+    els.downloadBtn.classList.remove('visible');
+    els.successView.classList.remove('visible');
+    els.btnGo.disabled    = true;
+    els.btnGo.textContent = '…';
+
+    setStatus('Converting… this may take up to 2 minutes', true);
+
+    // Meta + convert in parallel
+    const [, result] = await Promise.all([fetchMeta(id, raw), doConvert()]);
+    handleResult(result);
+}
+
+function handleResult(data) {
+    if (!state.running) return;
+    console.log('[handleResult]', data);
+
+    // ── SUCCESS ───────────────────────────────────────────────────────────────
+    if (data?.success && data?.status === 'ready') {
+        const dl = data.download_link || data.server_path || '';
+        if (!dl) { showError('Got empty download link. Please convert again.'); return; }
+
         stopPolling();
-        state.attempts    = 0;
-        state.downloadUrl = null;
-        els.downloadBtn.classList.remove('visible');
-        els.downloadBtn.style.display = 'none';
-        els.statusBox.classList.remove('visible');
-        els.successView.classList.remove('visible');
-        els.mainCard.style.display       = 'block';
-        els.rahulContainer.style.display = 'block';
-        els.rahulContainer.classList.remove('fade-out');
-        els.preview.classList.remove('visible');
-        els.thumb.src = '';
-        els.title.textContent   = '—';
-        els.channel.textContent = '';
+        state.downloadUrl = dl;
+        if (data.title) applyTitle(data.title);
+
+        setStatus('Ready!', false, true);
+        const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
+        els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
+        els.downloadBtn.style.display = 'block';
+        setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
         els.btnGo.disabled    = false;
         els.btnGo.textContent = 'Convert';
-        if (!keepMode) els.urlInput.value = '';
-        els.urlInput.focus();
-    };
-
-    function makeFilename(title, ext) {
-        if (!title) return ext === 'mp4' ? 'video.mp4' : 'audio.mp3';
-        const safe = title.replace(/[^\w\s\-]/g, '').replace(/\s+/g, ' ').trim().slice(0, 80);
-        return (safe || (ext === 'mp4' ? 'video' : 'audio')) + '.' + ext;
+        return;
     }
 
-    function applyTitle(t) {
-        if (!t) return;
-        state.title    = t;
-        state.filename = makeFilename(t, state.mode === 'mp4' ? 'mp4' : 'mp3');
-        if (['—','Loading…',''].includes(els.title.textContent)) els.title.textContent = t;
+    // ── STILL CONVERTING — keep polling, don't count as a failed attempt ──────
+    if (data?.status === 'converting') {
+        const elapsed = Math.round((Date.now() - state.startTime) / 1000);
+        const msg = data.message || 'Converting…';
+        setStatus(`${msg} (${elapsed}s elapsed)`, true);
+
+        state.retryTimer = setTimeout(async () => {
+            if (!state.running) return;
+            setStatus(`Converting… (${Math.round((Date.now() - state.startTime)/1000)}s elapsed)`, true);
+            const result = await doConvert();
+            handleResult(result);
+        }, RETRY_DELAY_MS);
+        return;
     }
 
-    async function fetchMeta(youtubeId, url) {
-        els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
-        els.title.textContent = 'Loading…';
-        els.channel.textContent = '';
-        els.preview.classList.add('visible');
-        try {
-            const res  = await fetch(BASE + 'get_video_data', {
-                method: 'POST', headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({ url }),
-            });
-            const data = await res.json();
-            const t    = data?.title   ?? data?.data?.title   ?? '';
-            const c    = data?.channel ?? data?.data?.channel ?? '';
-            els.title.textContent   = t || '—';
-            els.channel.textContent = c || '';
-            if (t) applyTitle(t);
-        } catch { els.title.textContent = '—'; }
-    }
-
-    // ── Core: one real convert call, no check_only ─────────────────────────────
-    async function doConvert() {
-        try {
-            const res = await fetch(BASE + 'r7q', {
-                method:  'POST',
-                headers: {'Content-Type':'application/json'},
-                body: JSON.stringify({
-                    youtube_id:  state.youtubeId,
-                    title:       state.title,
-                    formatValue: state.formatValue,
-                }),
-            });
-            if (!res.ok) throw new Error(`HTTP ${res.status}`);
-            return await res.json();
-        } catch (e) {
-            console.warn('doConvert error:', e.message);
-            return { success: false, status: 'error', message: 'Network error.' };
-        }
-    }
-
-    els.btnGo.addEventListener('click', startFlow);
-    els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
-
-    async function startFlow() {
-        const raw = els.urlInput.value.trim();
-        if (!raw) { alert('Please paste a YouTube link'); return; }
-        const id  = extractYoutubeId(raw);
-        if (!id)  { alert('Invalid YouTube URL'); return; }
-
-        stopPolling();
-        state.attempts   = 0;
-        state.youtubeId  = id;
-        state.url        = raw;
-        state.title      = '';
-        state.running    = true;
-        state.quality    = state.mode === 'mp3'
-            ? parseInt(els.audioQuality.value)
-            : parseInt(els.videoQuality.value);
-
-        els.mainCard.style.display  = 'none';
-        els.rahulContainer.style.display = 'block';
-        els.rahulContainer.classList.remove('fade-out');
-        els.downloadBtn.style.display = 'none';
-        els.downloadBtn.classList.remove('visible');
-        els.successView.classList.remove('visible');
-        els.btnGo.disabled    = true;
-        els.btnGo.textContent = '…';
-
-        setStatus('Converting…', true);
-
-        // Meta + convert in parallel
-        const [, result] = await Promise.all([fetchMeta(id, raw), doConvert()]);
-        handleResult(result);
-    }
-
-    function handleResult(data) {
-        if (!state.running) return;
-
-        // ── SUCCESS ───────────────────────────────────────────────────────────
-        if (data.success && data.status === 'ready') {
-            const dl = data.download_link || data.server_path || '';
-            if (!dl) { showError('Got empty download link. Please try again.'); return; }
-
-            stopPolling();
-            state.downloadUrl = dl;
-            if (data.title) applyTitle(data.title);
-
-            setStatus('Ready!', false, true);
-            const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
-            els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
-            els.downloadBtn.style.display = 'block';
-            setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
-            els.btnGo.disabled    = false;
-            els.btnGo.textContent = 'Convert';
-            return;
-        }
-
-        // ── HARD ERROR (not retryable) ────────────────────────────────────────
-        if (data.status === 'error') {
+    // ── HARD ERROR ────────────────────────────────────────────────────────────
+    if (data?.status === 'error') {
+        // Only give up after MAX_ATTEMPTS even on 'error' in case it's transient
+        state.attempts++;
+        if (state.attempts >= MAX_ATTEMPTS) {
             showError(data.message || 'Conversion failed. Please try again.');
             return;
         }
-
-        // ── RETRY ─────────────────────────────────────────────────────────────
-        state.attempts++;
-        if (state.attempts >= MAX_ATTEMPTS) {
-            showError('Could not convert after several attempts. Please try again later.');
-            return;
-        }
-
-        setStatus(`Converting… (attempt ${state.attempts + 1} of ${MAX_ATTEMPTS})`, true);
+        setStatus(`Error, retrying… (${state.attempts}/${MAX_ATTEMPTS})`, true);
         state.retryTimer = setTimeout(async () => {
             if (!state.running) return;
             const result = await doConvert();
             handleResult(result);
         }, RETRY_DELAY_MS);
+        return;
     }
 
-    function showError(msg) {
-        stopPolling();
-        setStatus('❌ ' + msg, false);
-        els.btnGo.disabled    = false;
-        els.btnGo.textContent = 'Convert';
-    }
+    // ── NULL / UNEXPECTED ─────────────────────────────────────────────────────
+    // PHP may have returned garbage — treat as 'converting'
+    state.retryTimer = setTimeout(async () => {
+        if (!state.running) return;
+        const result = await doConvert();
+        handleResult(result);
+    }, RETRY_DELAY_MS);
+}
 
-    // ── Download ───────────────────────────────────────────────────────────────
-    els.downloadBtn.addEventListener('click', async () => {
-        if (!state.downloadUrl) return;
-        setStatus('Starting download…', true);
+function showError(msg) {
+    stopPolling();
+    setStatus('❌ ' + msg, false);
+    els.btnGo.disabled    = false;
+    els.btnGo.textContent = 'Convert';
+}
 
-        // Re-fetch from cache (instant) to get a fresh URL just in case
-        const fresh  = await doConvert();
-        const dlUrl  = (fresh.success && fresh.download_link) ? fresh.download_link : state.downloadUrl;
-        if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
+// ── Download ───────────────────────────────────────────────────────────────────
+els.downloadBtn.addEventListener('click', async () => {
+    if (!state.downloadUrl) return;
+    setStatus('Starting download…', true);
 
-        state.downloadUrl = dlUrl;
-        if (fresh.title) applyTitle(fresh.title);
+    // Re-fetch from cache (instant) to get fresh URL
+    const fresh  = await doConvert();
+    const dlUrl  = (fresh?.success && fresh?.download_link) ? fresh.download_link : state.downloadUrl;
+    if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
 
-        const ext      = state.mode === 'mp4' ? 'mp4' : 'mp3';
-        const proxyUrl = BASE + '_k3z'
-            + '?format=' + encodeURIComponent(ext)
-            + '&title='  + encodeURIComponent(state.title || '')
-            + '&url='    + encodeURIComponent(dlUrl)
-            + '&_='      + Date.now();
+    state.downloadUrl = dlUrl;
+    if (fresh?.title) applyTitle(fresh.title);
 
-        const a = document.createElement('a');
-        a.href = proxyUrl; a.download = state.filename; a.style.display = 'none';
-        document.body.appendChild(a); a.click();
-        setTimeout(() => document.body.removeChild(a), 2000);
+    const ext      = state.mode === 'mp4' ? 'mp4' : 'mp3';
+    const proxyUrl = BASE + '_k3z'
+        + '?format=' + encodeURIComponent(ext)
+        + '&title='  + encodeURIComponent(state.title || '')
+        + '&url='    + encodeURIComponent(dlUrl)
+        + '&_='      + Date.now();
 
-        els.rahulContainer.classList.add('fade-out');
-        setTimeout(() => {
-            els.rahulContainer.style.display = 'none';
-            els.downloadBtn.style.display    = 'none';
-            els.successView.classList.add('visible');
-            window.scrollTo(0, 0);
-        }, 300);
-    });
+    const a = document.createElement('a');
+    a.href = proxyUrl; a.download = state.filename; a.style.display = 'none';
+    document.body.appendChild(a); a.click();
+    setTimeout(() => document.body.removeChild(a), 2000);
 
-    function updateGoal() {
-        fetch(BASE + 'total')
-            .then(r => r.json())
-            .then(d => {
-                const pct = Math.min(((parseFloat(d.total)||0)/50)*100, 100);
-                els.goalProgress.style.width = pct + '%';
-                els.goalPercent.textContent  = Math.floor(pct) + '% of Goal';
-            })
-            .catch(() => { els.goalPercent.textContent = '0%'; });
-    }
+    els.rahulContainer.classList.add('fade-out');
+    setTimeout(() => {
+        els.rahulContainer.style.display = 'none';
+        els.downloadBtn.style.display    = 'none';
+        els.successView.classList.add('visible');
+        window.scrollTo(0, 0);
+    }, 300);
+});
+
+function updateGoal() {
+    fetch(BASE + 'total')
+        .then(r => r.json())
+        .then(d => {
+            const pct = Math.min(((parseFloat(d.total) || 0) / 50) * 100, 100);
+            els.goalProgress.style.width = pct + '%';
+            els.goalPercent.textContent  = Math.floor(pct) + '% of Goal';
+        })
+        .catch(() => { els.goalPercent.textContent = '0%'; });
+}
     </script>
 </body>
 </html>
