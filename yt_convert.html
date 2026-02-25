@@ -483,55 +483,52 @@
 
         // ── Download button ───────────────────────────────────────────────────
         els.downloadBtn.addEventListener('click', async () => {
-            if (!state.youtubeId) return;
-
+            if (!state.downloadUrl) return;
             setStatus('Preparing download…', true);
-
-            try {
-                const fresh = await realPoll(true);
-                const dlUrl = (fresh.success && (fresh.download_link || fresh.server_path))
-                    ? (fresh.download_link || fresh.server_path)
-                    : state.downloadUrl;
-
-                if (!dlUrl) {
-                    setStatus('Link expired. Please convert again.', false);
-                    return;
-                }
-
-                state.downloadUrl = dlUrl;
-                if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
-
-                triggerDownload(dlUrl, state.filename, state.mode, state.title);
-
-                els.rahulContainer.classList.add('fade-out');
-                setTimeout(() => {
-                    els.rahulContainer.style.display = 'none';
-                    els.downloadBtn.style.display = 'none';
-                    els.successView.classList.add('visible');
-                    window.scrollTo(0, 0);
-                }, 300);
-
-            } catch (e) {
-                console.error('Download error:', e);
-                setStatus('Download failed. Try again.', false);
+        
+            // Force a fresh conversion — bypass cache by clearing downloadUrl first
+            state.downloadUrl = null;
+            const fresh = await realPoll(false);  // false = full convert, not check_only
+            const dlUrl = (fresh.success && (fresh.download_link || fresh.server_path))
+                ? (fresh.download_link || fresh.server_path)
+                : null;
+        
+            if (!dlUrl) {
+                setStatus('Link expired. Please convert again.', false);
+                return;
             }
+        
+            state.downloadUrl = dlUrl;
+            if ((fresh.title || '').trim()) applyTitle(fresh.title.trim());
+        
+            triggerDownload(dlUrl, state.filename, state.mode, state.title);
+        
+            els.rahulContainer.classList.add('fade-out');
+            setTimeout(() => {
+                els.rahulContainer.style.display = 'none';
+                els.downloadBtn.style.display    = 'none';
+                els.successView.classList.add('visible');
+                window.scrollTo(0, 0);
+            }, 300);
         });
 
         function triggerDownload(remoteUrl, filename, format, title) {
-            const rA1 = _0x1f + '_k3z'
-                + '?format=' + encodeURIComponent(format)
-                + '&title=' + encodeURIComponent(title || '')
-                + '&url=' + encodeURIComponent(remoteUrl)
-                + '&_=' + Date.now();
-
+        // POST JSON — no encodeURIComponent on the URL, zero double-encoding
+        fetch(_0x1f + '_k3z', {
+            method:  'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body:    JSON.stringify({ url: remoteUrl, format: format, title: title || '' }),
+        })
+        .then(r => { if (!r.ok) throw new Error('proxy ' + r.status); return r.blob(); })
+        .then(blob => {
+            const blobUrl = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = rA1;
-            a.download = filename;
-            a.style.display = 'none';
-            document.body.appendChild(a);
-            a.click();
-            setTimeout(() => document.body.removeChild(a), 2000);
-        }
+            a.href = blobUrl; a.download = filename;
+            document.body.appendChild(a); a.click();
+            setTimeout(() => { URL.revokeObjectURL(blobUrl); document.body.removeChild(a); }, 2000);
+        })
+        .catch(e => { console.warn('proxy failed, direct open:', e); window.open(remoteUrl, '_blank'); });
+    }
 
         window.resetUI = function () {
             els.successView.classList.remove('visible');
