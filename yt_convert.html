@@ -155,7 +155,9 @@
     </div>
 
     <script>
-    /* YT Converter v2.4 — Fixed infinite converting loop */
+   /* YT Converter — Pure Client-Side via Gamma API v2.5
+   Calls gamma directly from browser (no PHP proxy)
+   Replace the entire <script> block with this */
 
 const globalLoader = document.getElementById('globalLoader');
 const mainContent  = document.getElementById('mainContent');
@@ -165,27 +167,24 @@ setTimeout(() => {
     mainContent.classList.add('visible');
 }, 1200);
 
-// ── CONFIG ────────────────────────────────────────────────────────────────────
-// Each doConvert() call takes up to ~75s (PHP polls gamma for ~64s internally)
-// So we wait 5s after each attempt before retrying
-// Total patience: 6 attempts × ~80s = ~8 minutes max
-const MAX_ATTEMPTS   = 6;
-const RETRY_DELAY_MS = 5000;   // 5s gap between frontend retries
-const BASE = 'https://rahul.serv00.net/apps/yt_convert/';
+const PHP_BASE  = 'https://rahul.serv00.net/apps/yt_convert/'; // still used for meta, download proxy, goal
+const GAMMA_KEY = 'zcuRdziU2ApuKqcmAYICw9vCXf7Ib3N0';
+const MAX_POLLS = 25;
+const POLL_MS   = 4000; // 4s between polls
 
 let state = {
-    attempts:    0,
     downloadUrl: null,
     filename:    'audio.mp3',
     youtubeId:   null,
     url:         null,
     title:       '',
     mode:        'mp3',
-    quality:     4,
     formatValue: 1,
-    retryTimer:  null,
     running:     false,
+    pollTimer:   null,
+    pollCount:   0,
     startTime:   null,
+    pollUrl:     null,
 };
 
 const els = {
@@ -222,23 +221,17 @@ function switchMode(mode) {
     state.formatValue = (mode === 'mp4') ? 0 : 1;
     resetUI(true);
     if (mode === 'mp3') {
-        els.tabMp3.classList.add('active');    els.tabMp4.classList.remove('active');
-        els.optAudio.style.display = '';       els.optVideo.style.display = 'none';
+        els.tabMp3.classList.add('active');  els.tabMp4.classList.remove('active');
+        els.optAudio.style.display = '';     els.optVideo.style.display = 'none';
     } else {
-        els.tabMp4.classList.add('active');    els.tabMp3.classList.remove('active');
-        els.optAudio.style.display = 'none';   els.optVideo.style.display = '';
+        els.tabMp4.classList.add('active');  els.tabMp3.classList.remove('active');
+        els.optAudio.style.display = 'none'; els.optVideo.style.display = '';
     }
 }
 
 function extractYoutubeId(input) {
     const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
     return m ? m[1] : null;
-}
-
-function elapsedStr() {
-    if (!state.startTime) return '';
-    const s = Math.round((Date.now() - state.startTime) / 1000);
-    return s > 5 ? ` (${s}s)` : '';
 }
 
 function setStatus(label, showLoader, showTick = false) {
@@ -254,13 +247,14 @@ function setStatus(label, showLoader, showTick = false) {
 
 function stopPolling() {
     state.running = false;
-    if (state.retryTimer) { clearTimeout(state.retryTimer); state.retryTimer = null; }
+    if (state.pollTimer) { clearTimeout(state.pollTimer); state.pollTimer = null; }
 }
 
 window.resetUI = function(keepMode = false) {
     stopPolling();
-    state.attempts    = 0;
     state.downloadUrl = null;
+    state.pollCount   = 0;
+    state.pollUrl     = null;
     state.startTime   = null;
     els.downloadBtn.classList.remove('visible');
     els.downloadBtn.style.display = 'none';
@@ -289,17 +283,21 @@ function applyTitle(t) {
     if (!t) return;
     state.title    = t;
     state.filename = makeFilename(t, state.mode === 'mp4' ? 'mp4' : 'mp3');
-    if (['—','Loading…',''].includes(els.title.textContent)) els.title.textContent = t;
+    if (['—', 'Loading…', ''].includes(els.title.textContent)) els.title.textContent = t;
+}
+
+function elapsedSec() {
+    return state.startTime ? Math.round((Date.now() - state.startTime) / 1000) : 0;
 }
 
 async function fetchMeta(youtubeId, url) {
     els.thumb.src = `https://img.youtube.com/vi/${youtubeId}/mqdefault.jpg`;
-    els.title.textContent = 'Loading…';
+    els.title.textContent   = 'Loading…';
     els.channel.textContent = '';
     els.preview.classList.add('visible');
     try {
-        const res  = await fetch(BASE + 'get_video_data', {
-            method: 'POST', headers: {'Content-Type':'application/json'},
+        const res  = await fetch(PHP_BASE + 'get_video_data', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ url }),
         });
         const data = await res.json();
@@ -311,46 +309,163 @@ async function fetchMeta(youtubeId, url) {
     } catch { els.title.textContent = '—'; }
 }
 
-// ── Core convert — single call, waits up to ~75s for PHP to finish polling ────
-async function doConvert() {
-    const controller = new AbortController();
-    // 100s timeout — PHP set_time_limit is 90s, add 10s buffer
-    const tid = setTimeout(() => controller.abort(), 100_000);
-    try {
-        const res = await fetch(BASE + 'r7q', {
-            method:  'POST',
-            headers: {'Content-Type': 'application/json'},
-            signal:  controller.signal,
-            body: JSON.stringify({
-                youtube_id:  state.youtubeId,
-                title:       state.title,
-                formatValue: state.formatValue,
-            }),
-        });
-        clearTimeout(tid);
-        if (!res.ok) {
-            const text = await res.text().catch(() => '');
-            console.warn('[doConvert] HTTP', res.status, text.slice(0, 200));
-            return { success: false, status: 'converting', message: `Server error ${res.status}` };
+// ── Gamma API calls directly from browser ─────────────────────────────────────
+
+async function gammaInit() {
+    const url = `https://gamma.gammacloud.net/api/v1/init?m=${encodeURIComponent(GAMMA_KEY)}&t=${Date.now()}`;
+    const res = await fetch(url, {
+        headers: {
+            'Accept': '*/*',
+            'Origin':  'https://v1.y2mate.nu',
+            'Referer': 'https://v1.y2mate.nu/',
         }
-        const text = await res.text();
-        try {
-            return JSON.parse(text);
-        } catch(e) {
-            console.warn('[doConvert] JSON parse failed:', text.slice(0, 200));
-            // If PHP died mid-response, treat as 'converting' not error
-            return { success: false, status: 'converting', message: 'Conversion in progress…' };
-        }
-    } catch (e) {
-        clearTimeout(tid);
-        if (e.name === 'AbortError') {
-            console.warn('[doConvert] fetch aborted (timeout)');
-            return { success: false, status: 'converting', message: 'Taking longer than expected…' };
-        }
-        console.warn('[doConvert] fetch error:', e.message);
-        return { success: false, status: 'converting', message: 'Network error, retrying…' };
-    }
+    });
+    if (!res.ok) throw new Error(`Init HTTP ${res.status}`);
+    return await res.json();
 }
+
+async function gammaPoll(pollUrl) {
+    // Refresh timestamp
+    const url = pollUrl.replace(/&t=\d+/, `&t=${Date.now()}`);
+    const res = await fetch(url, {
+        headers: {
+            'Accept': '*/*',
+            'Origin':  'https://v1.y2mate.nu',
+            'Referer': 'https://v1.y2mate.nu/',
+        }
+    });
+    if (!res.ok) throw new Error(`Poll HTTP ${res.status}`);
+    return await res.json();
+}
+
+function buildConvertUrl(baseUrl, youtubeId, format) {
+    let url = baseUrl;
+    // Remove existing v/f/t params
+    url = url.replace(/[&?]v=[^&]*/g, '');
+    url = url.replace(/[&?]f=[^&]*/g, '');
+    url = url.replace(/[&?]t=[^&]*/g, '');
+    url += `&v=${encodeURIComponent(youtubeId)}&f=${encodeURIComponent(format)}&t=${Date.now()}`;
+    return url;
+}
+
+async function startConvert() {
+    const format = state.formatValue === 0 ? 'mp4' : 'mp3';
+
+    // Step 1: Init
+    setStatus('Connecting to converter…', true);
+    let initData;
+    try {
+        initData = await gammaInit();
+    } catch(e) {
+        console.warn('[gamma init error]', e);
+        showError('Could not reach converter. Check your connection and try again.');
+        return;
+    }
+
+    let pollUrl = initData?.convertURL;
+    if (!pollUrl) {
+        showError('Auth error from converter. Please try again.');
+        return;
+    }
+
+    pollUrl = buildConvertUrl(pollUrl, state.youtubeId, format);
+    state.pollUrl   = pollUrl;
+    state.pollCount = 0;
+
+    setStatus('Converting… (0s)', true);
+    schedulePoll(pollUrl, format);
+}
+
+function schedulePoll(pollUrl, format) {
+    if (!state.running) return;
+    state.pollTimer = setTimeout(() => doPoll(pollUrl, format), state.pollCount === 0 ? 0 : POLL_MS);
+}
+
+async function doPoll(pollUrl, format) {
+    if (!state.running) return;
+    state.pollCount++;
+
+    const elapsed = elapsedSec();
+    setStatus(`Converting… (${elapsed}s)`, true);
+
+    if (state.pollCount > MAX_POLLS) {
+        showError('Conversion timed out. The video may be too long or the server is busy. Please try again.');
+        return;
+    }
+
+    let data;
+    try {
+        data = await gammaPoll(pollUrl);
+    } catch(e) {
+        console.warn('[gamma poll error]', e);
+        // Network blip — retry
+        schedulePoll(pollUrl, format);
+        return;
+    }
+
+    console.log(`[gamma poll ${state.pollCount}]`, data);
+
+    const errCode  = parseInt(data?.error  ?? -1);
+    const redirect = parseInt(data?.redirect ?? 0);
+    const redirURL = data?.redirectURL ?? '';
+
+    // Follow redirect to new worker
+    if (redirect === 1 && redirURL) {
+        const newUrl = buildConvertUrl(redirURL, state.youtubeId, format);
+        state.pollUrl = newUrl;
+        schedulePoll(newUrl, format);
+        return;
+    }
+
+    // Success
+    if (errCode === 0) {
+        let dlUrl = '';
+        for (const k of ['downloadURL', 'download_link', 'download', 'url', 'link']) {
+            if (data[k] && typeof data[k] === 'string' && data[k].startsWith('http')) {
+                dlUrl = data[k];
+                break;
+            }
+        }
+        if (dlUrl) {
+            stopPolling();
+            state.downloadUrl = dlUrl;
+            if (data.title) applyTitle(data.title);
+            setStatus('Ready!', false, true);
+            const ext = format === 'mp4' ? 'mp4' : 'mp3';
+            els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
+            els.downloadBtn.style.display = 'block';
+            setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
+            els.btnGo.disabled    = false;
+            els.btnGo.textContent = 'Convert';
+            return;
+        }
+        // error:0 but no URL yet — keep polling
+        schedulePoll(pollUrl, format);
+        return;
+    }
+
+    // Still processing
+    if (errCode === 2 || errCode === 3) {
+        schedulePoll(pollUrl, format);
+        return;
+    }
+
+    // Queue full — wait longer then retry
+    if (errCode === 4) {
+        setStatus(`Server queue busy… retrying (${elapsed}s)`, true);
+        setTimeout(() => schedulePoll(pollUrl, format), 8000);
+        return;
+    }
+
+    // Any other error — retry unless too many attempts
+    if (state.pollCount >= MAX_POLLS) {
+        showError('Conversion failed. Please try again.');
+        return;
+    }
+    schedulePoll(pollUrl, format);
+}
+
+// ── UI events ─────────────────────────────────────────────────────────────────
 
 els.btnGo.addEventListener('click', startFlow);
 els.urlInput.addEventListener('keydown', e => { if (e.key === 'Enter') startFlow(); });
@@ -362,15 +477,12 @@ async function startFlow() {
     if (!id)  { alert('Invalid YouTube URL'); return; }
 
     stopPolling();
-    state.attempts   = 0;
     state.youtubeId  = id;
     state.url        = raw;
     state.title      = '';
     state.running    = true;
     state.startTime  = Date.now();
-    state.quality    = state.mode === 'mp3'
-        ? parseInt(els.audioQuality.value)
-        : parseInt(els.videoQuality.value);
+    state.pollCount  = 0;
 
     els.mainCard.style.display       = 'none';
     els.rahulContainer.style.display = 'block';
@@ -381,75 +493,9 @@ async function startFlow() {
     els.btnGo.disabled    = true;
     els.btnGo.textContent = '…';
 
-    setStatus('Converting… this may take up to 2 minutes', true);
-
     // Meta + convert in parallel
-    const [, result] = await Promise.all([fetchMeta(id, raw), doConvert()]);
-    handleResult(result);
-}
-
-function handleResult(data) {
-    if (!state.running) return;
-    console.log('[handleResult]', data);
-
-    // ── SUCCESS ───────────────────────────────────────────────────────────────
-    if (data?.success && data?.status === 'ready') {
-        const dl = data.download_link || data.server_path || '';
-        if (!dl) { showError('Got empty download link. Please convert again.'); return; }
-
-        stopPolling();
-        state.downloadUrl = dl;
-        if (data.title) applyTitle(data.title);
-
-        setStatus('Ready!', false, true);
-        const ext = state.mode === 'mp4' ? 'mp4' : 'mp3';
-        els.downloadBtn.textContent = `Download ${ext.toUpperCase()}`;
-        els.downloadBtn.style.display = 'block';
-        setTimeout(() => els.downloadBtn.classList.add('visible'), 10);
-        els.btnGo.disabled    = false;
-        els.btnGo.textContent = 'Convert';
-        return;
-    }
-
-    // ── STILL CONVERTING — keep polling, don't count as a failed attempt ──────
-    if (data?.status === 'converting') {
-        const elapsed = Math.round((Date.now() - state.startTime) / 1000);
-        const msg = data.message || 'Converting…';
-        setStatus(`${msg} (${elapsed}s elapsed)`, true);
-
-        state.retryTimer = setTimeout(async () => {
-            if (!state.running) return;
-            setStatus(`Converting… (${Math.round((Date.now() - state.startTime)/1000)}s elapsed)`, true);
-            const result = await doConvert();
-            handleResult(result);
-        }, RETRY_DELAY_MS);
-        return;
-    }
-
-    // ── HARD ERROR ────────────────────────────────────────────────────────────
-    if (data?.status === 'error') {
-        // Only give up after MAX_ATTEMPTS even on 'error' in case it's transient
-        state.attempts++;
-        if (state.attempts >= MAX_ATTEMPTS) {
-            showError(data.message || 'Conversion failed. Please try again.');
-            return;
-        }
-        setStatus(`Error, retrying… (${state.attempts}/${MAX_ATTEMPTS})`, true);
-        state.retryTimer = setTimeout(async () => {
-            if (!state.running) return;
-            const result = await doConvert();
-            handleResult(result);
-        }, RETRY_DELAY_MS);
-        return;
-    }
-
-    // ── NULL / UNEXPECTED ─────────────────────────────────────────────────────
-    // PHP may have returned garbage — treat as 'converting'
-    state.retryTimer = setTimeout(async () => {
-        if (!state.running) return;
-        const result = await doConvert();
-        handleResult(result);
-    }, RETRY_DELAY_MS);
+    fetchMeta(id, raw); // fire and forget
+    startConvert();
 }
 
 function showError(msg) {
@@ -459,24 +505,14 @@ function showError(msg) {
     els.btnGo.textContent = 'Convert';
 }
 
-// ── Download ───────────────────────────────────────────────────────────────────
+// ── Download ──────────────────────────────────────────────────────────────────
 els.downloadBtn.addEventListener('click', async () => {
     if (!state.downloadUrl) return;
-    setStatus('Starting download…', true);
-
-    // Re-fetch from cache (instant) to get fresh URL
-    const fresh  = await doConvert();
-    const dlUrl  = (fresh?.success && fresh?.download_link) ? fresh.download_link : state.downloadUrl;
-    if (!dlUrl) { setStatus('Link expired. Please convert again.', false); return; }
-
-    state.downloadUrl = dlUrl;
-    if (fresh?.title) applyTitle(fresh.title);
-
-    const ext      = state.mode === 'mp4' ? 'mp4' : 'mp3';
-    const proxyUrl = BASE + '_k3z'
+    const ext      = state.formatValue === 0 ? 'mp4' : 'mp3';
+    const proxyUrl = PHP_BASE + '_k3z'
         + '?format=' + encodeURIComponent(ext)
         + '&title='  + encodeURIComponent(state.title || '')
-        + '&url='    + encodeURIComponent(dlUrl)
+        + '&url='    + encodeURIComponent(state.downloadUrl)
         + '&_='      + Date.now();
 
     const a = document.createElement('a');
@@ -494,7 +530,7 @@ els.downloadBtn.addEventListener('click', async () => {
 });
 
 function updateGoal() {
-    fetch(BASE + 'total')
+    fetch(PHP_BASE + 'total')
         .then(r => r.json())
         .then(d => {
             const pct = Math.min(((parseFloat(d.total) || 0) / 50) * 100, 100);
@@ -503,6 +539,6 @@ function updateGoal() {
         })
         .catch(() => { els.goalPercent.textContent = '0%'; });
 }
-    </script>
+</script>
 </body>
 </html>
