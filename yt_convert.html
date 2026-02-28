@@ -211,7 +211,7 @@
         };
 
         els.monthText.textContent = new Date().toLocaleString('default', { month: 'long' });
-        const vner = 'https://builtforfree.zya.me/yt_convert/';
+        const vner = 'https://rahul.serv00.net/apps/yt_convert/';
         updateGoal();
         setInterval(updateGoal, 60000);
 
@@ -293,7 +293,7 @@
             els.channel.textContent = '';
             els.preview.classList.add('visible');
             try {
-                const res = await fetch(vner + 'get_video_data.php', {
+                const res = await fetch(vner + 'get_video_data', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url }),
@@ -328,7 +328,7 @@
             if (isCheckOnly) body.action = 'check_only';
 
             try {
-                const res = await fetch(vner + 'r7q.php', {
+                const res = await fetch(vner + 'r7q', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
@@ -483,7 +483,7 @@
         });
 
         function triggerDownload(remoteUrl, filename, format, title) {
-            const rA1 = vner + '_k3z.php'
+            const rA1 = vner + '_k3z'
                 + '?format=' + encodeURIComponent(format)
                 + '&title='  + encodeURIComponent(title || '')
                 + '&url='    + encodeURIComponent(remoteUrl)
