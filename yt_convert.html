@@ -293,7 +293,7 @@
             els.channel.textContent = '';
             els.preview.classList.add('visible');
             try {
-                const res = await fetch(vner + 'get_video_data', {
+                const res = await fetch(vner + 'get_video_data.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ url }),
@@ -328,7 +328,7 @@
             if (isCheckOnly) body.action = 'check_only';
 
             try {
-                const res = await fetch(vner + 'r7q', {
+                const res = await fetch(vner + 'r7q.php', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
@@ -483,7 +483,7 @@
         });
 
         function triggerDownload(remoteUrl, filename, format, title) {
-            const rA1 = vner + '_k3z'
+            const rA1 = vner + '_k3z.php'
                 + '?format=' + encodeURIComponent(format)
                 + '&title='  + encodeURIComponent(title || '')
                 + '&url='    + encodeURIComponent(remoteUrl)
