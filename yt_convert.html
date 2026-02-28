@@ -515,7 +515,8 @@
             fetch(vner + 'total')
                 .then(r => r.json())
                 .then(data => {
-                    const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
+                    //const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
+                    const pct = "16";
                     els.goalProgress.style.width = pct + '%';
                     els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
                 })
