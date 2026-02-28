@@ -511,16 +511,22 @@
             els.urlInput.focus();
         };
 
-        function updateGoal() {
-            fetch(vner + 'total')
-                .then(r => r.json())
-                .then(data => {
+        //function updateGoal() {
+           // fetch(vner + 'total')
+                //.then(r => r.json())
+               // .then(data => {
                     //const pct = Math.min(((parseFloat(data.total) || 0) / 50) * 100, 100);
-                    const pct = 16;
-                    els.goalProgress.style.width = pct + '%';
-                    els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
-                })
-                .catch(() => { els.goalPercent.textContent = '0%'; });
+                 //   const pct = 16;
+               //     els.goalProgress.style.width = pct + '%';
+               //     els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
+            //    })
+            //    .catch(() => { els.goalPercent.textContent = '0%'; });
+        //}
+        function updateGoal() {
+    const pct = 16; // <-- change this number manually whenever needed
+    
+    els.goalProgress.style.width = pct + '%';
+    els.goalPercent.textContent = Math.floor(pct) + '% of Goal';
         }
     </script>
 </body>
