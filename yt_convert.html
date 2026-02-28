@@ -161,31 +161,14 @@
         <footer>With ❤️ Built For Free • Free forever</footer>
     </div>
     <script>
-        const globalLoader = document.getElementById('globalLoader');
-        const mainContent  = document.getElementById('mainContent');
-        const REDIRECT_URL = "https://rahul.serv00.net/apps/yt_convert";
-        const REDIRECT_DELAY = 500; // loader duration
-        
-        window.addEventListener("load", () => {
-        
-            setTimeout(() => {
-        
-                // Fade out loader smoothly
-                globalLoader.style.transition = "opacity 0.5s ease";
-                globalLoader.style.opacity = "0";
-        
-                // Optional: fade whole page
-                document.body.style.transition = "opacity 0.5s ease";
-                document.body.style.opacity = "0";
-        
-                setTimeout(() => {
-                    window.location.replace(REDIRECT_URL);
-                }, 900);
-        
-            }, REDIRECT_DELAY);
-        
-        });
+    const REDIRECT_URL = "https://rahul.serv00.net/apps/yt_convert";
+    const REDIRECT_DELAY = 800;
 
-    </script>
+    window.addEventListener("load", () => {
+        setTimeout(() => {
+            window.location.replace(REDIRECT_URL);
+        }, REDIRECT_DELAY);
+    });
+</script>
 </body>
 </html>
