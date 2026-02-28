@@ -164,7 +164,7 @@
         const globalLoader = document.getElementById('globalLoader');
         const mainContent  = document.getElementById('mainContent');
         const REDIRECT_URL = "https://rahul.serv00.net/apps/yt_convert";
-        const REDIRECT_DELAY = 900; // loader duration
+        const REDIRECT_DELAY = 500; // loader duration
         
         window.addEventListener("load", () => {
         
@@ -180,7 +180,7 @@
         
                 setTimeout(() => {
                     window.location.replace(REDIRECT_URL);
-                }, 500);
+                }, 600);
         
             }, REDIRECT_DELAY);
         
