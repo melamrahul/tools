@@ -2,68 +2,50 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Free AI Vocal Remover & Instrumental Separator | Ophir Tools</title>
+    <title>AI Vocal Remover – Remove Vocals From Songs Free | Ophir Tools</title>
 
     <meta name="description"
-        content="Remove vocals or extract instrumentals from any song online using Ophir AI. Free vocal remover and music stem separator. Create karaoke tracks instantly. No ads, no signup.">
+        content="Free AI vocal remover that separates vocals and instrumentals from songs online. Extract acapella or create karaoke tracks instantly.">
 
     <meta name="keywords"
-        content="vocal remover, ai vocal remover, remove vocals from song, instrumental extractor, stem separator, karaoke maker, isolate vocals, acapella extractor, music splitter, vocal remover online free, ophir vocal remover">
+        content="vocal remover, ai vocal remover, remove vocals from song, instrumental extractor, karaoke maker, acapella extractor">
 
     <meta name="robots" content="index, follow, max-image-preview:large">
+
     <meta name="author" content="Rahul">
-    <meta name="theme-color" content="#ffffff">
 
-    <link rel="canonical" href="https://melamrahul.github.io/tools/vocal-remover">
+    <link rel="canonical" href="https://melamrahul.github.io/tools/converters/vocal_remover">
 
-    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Free AI Vocal Remover & Instrumental Separator | Ophir Tools">
-    <meta property="og:description"
-        content="Separate vocals and instrumentals from any song using AI. Create karaoke tracks or isolate vocals instantly.">
-    <meta property="og:url" content="https://melamrahul.github.io/tools/vocal-remover">
-    <meta property="og:site_name" content="Tools by Rahul">
+    <meta property="og:title" content="Free AI Vocal Remover">
+    <meta property="og:description" content="Separate vocals and instrumentals from songs instantly using AI.">
+    <meta property="og:url" content="https://melamrahul.github.io/tools/converters/vocal_remover">
     <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Free AI Vocal Remover & Instrumental Separator">
-    <meta name="twitter:description" content="Split vocals and instrumentals from songs instantly using AI.">
+    <meta name="twitter:title" content="Free AI Vocal Remover">
+    <meta name="twitter:description" content="Extract vocals or instrumentals from songs online instantly using AI.">
     <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-    <link rel="icon" type="image/png" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-    <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://rahul.serv00.net">
 
     <!-- Structured Data -->
 
     <script type="application/ld+json">
 {
 "@context":"https://schema.org",
-"@type":"Organization",
-"name":"Tools by Rahul",
-"url":"https://melamrahul.github.io/",
-"logo":"https://melamrahul.github.io/tools/tool_logo_head.png"
-}
-</script>
-
-    <script type="application/ld+json">
-{
-"@context":"https://schema.org",
 "@type":"WebApplication",
-"name":"AI Vocal Remover & Instrumental Separator",
-"url":"https://melamrahul.github.io/tools/vocal-remover",
+"name":"AI Vocal Remover",
+"url":"https://melamrahul.github.io/tools/converters/vocal_remover",
 "applicationCategory":"MultimediaApplication",
 "operatingSystem":"All",
-"description":"AI powered vocal remover that separates vocals and instrumentals from songs online.",
+"description":"AI vocal remover that separates vocals and instrumentals from songs online.",
 "offers":{
 "@type":"Offer",
 "price":"0",
@@ -74,42 +56,25 @@
 
     <style>
         body {
-            opacity: 1;
-            transition: opacity 0.5s ease;
-        }
-
-        /* Loader container */
-        .global-loader {
-            position: fixed;
-            inset: 0;
-            background: var(--bg);
+            background: white;
+            font-family: Inter, sans-serif;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
             align-items: center;
-            gap: 18px;
-            z-index: 9999;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            color: #4468a9;
         }
 
-        /* Image spinner */
-        .loader-img {
-            width: 72px;
-            height: 72px;
-            border-radius: 50%;
+        .loader {
+            text-align: center;
+        }
+
+        .loader img {
+            width: 70px;
             animation: spin 1.4s linear infinite;
         }
 
-        /* Loader text */
-        .loader-label {
-            font-size: 0.95rem;
-            font-weight: 600;
-            color: #4468A9;
-            font-family: 'Inter', sans-serif;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-        }
-
-        /* Rotation animation */
         @keyframes spin {
             to {
                 transform: rotate(360deg);
@@ -121,101 +86,29 @@
 
 <body>
 
+    <div class="loader">
 
-    <div class="global-loader" id="globalLoader">
-        <img class="loader-img" src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading">
-        <span class="loader-label">Loading…</span>
-    </div>
+        <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading">
 
-    <div class="container">
-
-        <div class="header">
-
-            <div class="logo-area">
-                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" class="logo-img">
-                <h1>AI Vocal Remover</h1>
-            </div>
-
-            <a href="https://melamrahul.github.io/tools/">All Tools</a>
-
-        </div>
-
-        <div class="card">
-
-            <h2>Separate Vocals & Instrumentals</h2>
-
-            <div class="input-group">
-
-                <input type="text" placeholder="Upload or Paste Song URL...">
-
-                <button class="btn-go">Separate</button>
-
-            </div>
-
-        </div>
-
-        <div class="card">
-
-            <h3>Download Results</h3>
-
-            <p>Once processing is complete you can download:</p>
-
-            <ul>
-
-                <li>Vocals (Acapella)</li>
-                <li>Instrumental Track</li>
-
-            </ul>
-
-        </div>
-
-        <section class="seo-text">
-
-            <h2>Free AI Vocal Remover Online</h2>
-
-            <p>
-                Ophir Tools provides a powerful AI vocal remover that separates vocals and instrumentals from any song.
-                Upload your music and instantly extract acapella vocals or instrumental tracks.
-            </p>
-
-            <h2>Create Karaoke Tracks Easily</h2>
-
-            <p>
-                Remove vocals from songs to create karaoke versions, remix music, practice singing, or isolate vocals
-                for editing.
-                Our AI stem separator works with MP3, WAV, and MP4 files.
-            </p>
-
-            <h2>Why Use Ophir Vocal Remover?</h2>
-
-            <ul>
-                <li>100% free online vocal remover</li>
-                <li>No ads and no signup required</li>
-                <li>High quality AI music separation</li>
-                <li>Works on mobile and desktop</li>
-                <li>Supports multiple audio formats</li>
-            </ul>
-
-        </section>
-
-        <footer>
-
-            With ❤️ Ophir Tools • Just for You
-
-        </footer>
+        <h3>Loading…</h3>
 
     </div>
 
     <script>
-        const REDIRECT_URL = "https://rahul.serv00.net/apps/vocal_separator";
 
-        document.addEventListener("DOMContentLoaded", () => {
+        const REDIRECT_URL = "https://rahul.serv00.net/apps/vocal_separator";
+        const REDIRECT_DELAY = 800;
+
+        window.addEventListener("load", () => {
 
             setTimeout(() => {
+
                 window.location.replace(REDIRECT_URL);
-            }, 800);
+
+            }, REDIRECT_DELAY);
 
         });
+
     </script>
 
 </body>
