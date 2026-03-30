@@ -1,251 +1,285 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Eden Tools by Rahul</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eden Tools - Free Online Tools by Rahul</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <meta name="description"
+        content="A collection of free, simple, and reliable online tools by Rahul, including a YouTube to MP3/MP4 converter, Vocal Remover, Background Remover, and QR Code Generator.">
+    <meta name="keywords"
+        content="eden tools, online tools, free tools, youtube converter, vocal remover, background remover, qr code generator, rahul tools">
 
-<style>
-:root {
-    --bg: #ffffff;
-    --text: #000000;
-    --border: #4468a9;
-    --accent: #ff5e5b;
-    --secondary: #f3f3f3;
-    --border-width: 2px;
-}
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Rahul">
+    <meta name="theme-color" content="#ffffff">
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
+    <link rel="canonical" href="https://melamrahul.github.io/tools/">
 
-body{
-    font-family:'Inter',sans-serif;
-    background:var(--bg);
-    color:var(--border);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
-    padding-bottom:70px;
-}
+    <meta property="og:title" content="Eden Tools - Free Online Tools by Rahul">
+    <meta property="og:description"
+        content="A collection of free, simple, and reliable online tools, including converters, AI tools, and utilities.">
+    <meta property="og:url" content="https://melamrahul.github.io/tools/">
+    <meta property="og:site_name" content="Eden Tools">
+    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
 
-/* Container */
-.container{
-    max-width:640px;
-    margin:20px auto;
-    padding:15px;
-}
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Eden Tools - Free Online Tools by Rahul">
+    <meta name="twitter:description"
+        content="A collection of free, simple, and reliable online tools, including converters, AI tools, and utilities.">
+    <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-/* Header */
-.header{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    border:var(--border-width) solid var(--border);
-    padding:15px;
-    margin-bottom:25px;
-}
+    <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
 
-.logo img{
-    width:40px;
-    height:40px;
-}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-.header h2{
-    font-size:1.1rem;
-    font-weight:800;
-}
+    <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css">
 
-.header p{
-    font-size:0.75rem;
-    font-weight:600;
-}
+    <style>
+        :root {
+            --primary-color: #4a69bd;
+            --card-bg: #ffffff;
+            --body-bg: #f9fafb;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            --shadow-hover: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
 
-/* Tool Cards */
-.tool-card{
-    border:var(--border-width) solid var(--border);
-    margin-bottom:20px;
-    background:white;
-}
+        body {
+            background-color: var(--body-bg);
+            font-family: 'Inter', sans-serif;
+        }
 
-.tool-header{
-    background:var(--border);
-    color:white;
-    padding:10px 15px;
-    font-weight:800;
-    font-size:0.85rem;
-    text-transform:uppercase;
-}
+        .container {
+            max-width: 1200px;
+        }
 
-.tool-body{
-    padding:18px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+        /* Loader Styles */
+        .global-loader {
+            position: fixed;
+            inset: 0;
+            background: white;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
 
-.tool-body h3{
-    font-size:1rem;
-    font-weight:800;
-}
+        .global-loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
 
-.tool-body p{
-    font-size:0.8rem;
-    opacity:0.7;
-    margin-top:4px;
-}
+        .spinner-ring img {
+            animation: spin 1.5s linear infinite;
+        }
 
-.open-btn{
-    background:var(--secondary);
-    color:var(--text);
-    border:var(--border-width) solid var(--border);
-    padding:10px 18px;
-    font-weight:800;
-    text-decoration:none;
-    text-transform:uppercase;
-    box-shadow:3px 3px 0px var(--border);
-    transition:all 0.1s;
-}
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-.open-btn:hover{
-    transform:translate(-2px,-2px);
-    box-shadow:5px 5px 0px var(--border);
-}
+        #mainContent {
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
 
-/* Loader */
-.global-loader{
-    position:fixed;
-    inset:0;
-    background:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    z-index:999;
-}
+        #mainContent.visible {
+            opacity: 1;
+        }
 
-.global-spinner{
-    width:80px;
-    height:80px;
-    border-radius:50%;
-    border:6px solid var(--secondary);
-    border-top:6px solid var(--border);
-    animation:spin 1s linear infinite;
-}
+        /* Responsive Tools Grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 25px 0;
+        }
 
-@keyframes spin{
-    to{transform:rotate(360deg);}
-}
+        .tool-card-new {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            text-decoration: none;
+            color: var(--text-dark);
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
 
-/* Footer */
-footer{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    text-align:center;
-    font-size:1rem;
-    font-weight:600;
-    color:#09759c;
-    padding:10px 0;
-    border-top:var(--border-width) solid var(--border);
-    background:white;
-}
-</style>
+        .tool-card-new:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
+        }
+
+        .tool-icon-svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            transition: color 0.3s ease;
+        }
+
+        .tool-card-new:hover .tool-icon-svg {
+            color: #3b5998;
+        }
+
+        .tool-card-new h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .tool-card-new p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        .tool-category {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--primary-color);
+            background-color: #eff2f7;
+            padding: 6px 14px;
+            border-radius: 999px;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card-new:hover .tool-category {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-light);
+            padding: 2rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            background: var(--card-bg);
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="global-loader" id="globalLoader">
-    <div class="global-spinner"></div>
-</div>
-
-<div class="container" id="mainContent" style="display:none;">
-
-    <div class="header">
-        <div class="logo">
-            <img src="https://melamrahul.github.io/tools/tool_logo_head.png" />
+    <div class="global-loader" id="globalLoader" aria-hidden="true">
+        <div class="spinner-ring">
+            <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading" width="62" height="62">
         </div>
-        <div>
-            <h2>Eden Tools - By Rahul</h2>
-            <p>Simple • Easy • Reliable</p>
-        </div>
+        <span class="loader-label">Loading Tools…</span>
     </div>
 
-    <!-- YT Converter -->
-    <div class="tool-card">
-        <div class="tool-header">Multimedia Tool</div>
-        <div class="tool-body">
-            <div>
+    <div class="container" id="mainContent">
+        <div class="header">
+            <div class="logo-area">
+                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Eden Tools Logo"
+                    class="logo-img">
+                <div class="header-title">
+                    <h1>Eden Tools - by Rahul</h1>
+                </div>
+            </div>
+        </div>
+
+        <main class="tools-grid">
+            <a href="https://melamrahul.github.io/tools/yt_convert" class="tool-card-new">
+                <svg class="tool-icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 15V3m0 12l-4-4m4 4l4-4"/>
+                    <path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17"/>
+                </svg>
                 <h3>YT Converter</h3>
-                <p>MP3 • MP4 • Download</p>
-            </div>
-            <a href="https://melamrahul.github.io/tools/yt_convert" class="open-btn">
-                Open
+                <p>Convert YouTube videos to MP3 or MP4 format for free.</p>
+                <span class="tool-category">Multimedia Tool</span>
             </a>
-        </div>
-    </div>
 
-    <!-- Vocal Remover -->
-    <div class="tool-card">
-        <div class="tool-header">Multimedia Tool</div>
-        <div class="tool-body">
-            <div>
+            <a href="https://melamrahul.github.io/tools/converters/vocal_remover" class="tool-card-new">
+                <svg class="tool-icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                    <line x1="12" x2="12" y1="19" y2="22"/>
+                </svg>
                 <h3>Vocal Remover</h3>
-                <p>Original • Vocals • Instruments</p>
-            </div>
-            <a href="https://melamrahul.github.io/tools/converters/vocal_remover" class="open-btn">
-                Open
+                <p>Separate vocals from music to create karaoke tracks.</p>
+                <span class="tool-category">Multimedia Tool</span>
             </a>
-        </div>
-    </div>
 
-    <!-- Remove BG -->
-    <div class="tool-card">
-        <div class="tool-header">AI Tool</div>
-        <div class="tool-body">
-            <div>
+            <a href="https://melamrahul.github.io/tools/remove_bg" class="tool-card-new">
+                <svg class="tool-icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21.93,10.2a2.83,2.83,0,0,0-3.18-4.4,2.83,2.83,0,0,0-4.4-3.18,2.83,2.83,0,0,0-4.4,3.18A2.83,2.83,0,0,0,5.77,10.2a2.83,2.83,0,0,0,3.18,4.4,2.83,2.83,0,0,0,4.4,3.18,2.83,2.83,0,0,0,4.4-3.18A2.83,2.83,0,0,0,21.93,10.2Z"/>
+                    <path d="M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0-6 0"/>
+                    <path d="M22 2 12 12"/>
+                </svg>
                 <h3>Remove Background</h3>
-                <p>AI • Clean • Instant</p>
-            </div>
-            <a href="https://melamrahul.github.io/tools/remove_bg" class="open-btn">
-                Open
+                <p>Instantly remove the background from any image with AI.</p>
+                <span class="tool-category">AI Tool</span>
             </a>
-        </div>
-    </div>
 
-    <!-- QR Generator -->
-    <div class="tool-card">
-        <div class="tool-header">Utility Tool</div>
-        <div class="tool-body">
-            <div>
+            <a href="https://melamrahul.github.io/tools/qr_gen" class="tool-card-new">
+                <svg class="tool-icon-svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="5" height="5" x="3" y="3" rx="1"/>
+                    <rect width="5" height="5" x="16" y="3" rx="1"/>
+                    <rect width="5" height="5" x="3" y="16" rx="1"/>
+                    <path d="M21 16h-3a2 2 0 0 0-2 2v3"/>
+                    <path d="M21 21v.01"/>
+                    <path d="M12 7v3a2 2 0 0 1-2 2H7"/>
+                    <path d="M3 12h.01"/>
+                    <path d="M12 3h.01"/>
+                    <path d="M12 16v.01"/>
+                    <path d="M16 12h.01"/>
+                    <path d="M21 12h.01"/>
+                    <path d="M12 21v-1"/>
+                </svg>
                 <h3>QR Code Generator</h3>
-                <p>Enter • Create • Download</p>
-            </div>
-            <a href="https://melamrahul.github.io/tools/qr_gen" class="open-btn">
-                Open
+                <p>Create and download custom QR codes for URLs or text.</p>
+                <span class="tool-category">Utility Tool</span>
             </a>
-        </div>
+        </main>
+
+        <footer>
+            With ❤️ Eden Tools • Just for you
+        </footer>
     </div>
 
-</div>
+    <script>
+        const globalLoader = document.getElementById('globalLoader');
+        const mainContent = document.getElementById('mainContent');
 
-<footer>
-    With ❤️ Eden Tools • Just for you
-</footer>
-
-<script>
-const loader = document.getElementById("globalLoader");
-const content = document.getElementById("mainContent");
-
-setTimeout(()=>{
-    loader.style.display="none";
-    content.style.display="block";
-},1000);
-</script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                globalLoader.classList.add('hidden');
+                mainContent.classList.add('visible');
+            }, 500);
+        });
+    </script>
 
 </body>
+
 </html>
