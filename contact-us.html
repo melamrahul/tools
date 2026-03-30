@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — Eden Tools</title>
+    <meta name="description"
+        content="Contact Eden Tools for support, feedback, or inquiries. We are here to help you with our free YouTube to MP3 and MP4 converter.">
+
+    <meta name="keywords" content="eden tools contact, eden tools support, contact us, feedback">
+
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Rahul">
+    <meta name="theme-color" content="#080808">
+
+    <link rel="canonical" href="https://rahul.serv00.net/apps/yt_convert/contact.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Contact Us — Eden Tools">
+    <meta property="og:description" content="Contact Eden Tools for support, feedback, or inquiries. We are here to help.">
+    <meta property="og:url" content="https://rahul.serv00.net/apps/yt_convert/contact.html">
+    <meta property="og:site_name" content="Eden Tools">
+    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Contact Us — Eden Tools">
+    <meta name="twitter:description" content="Contact Eden Tools for support, feedback, or inquiries. We are here to help.">
+    <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+
+    <link rel="preload" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css" as="style">
+    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js" defer=""></script>
+    <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://rahul.serv00.net/apps/yt_convert/">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="dns-prefetch" href="https://rahul.serv00.net">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        .main-content {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+            height: 100vh;
+            padding: 0;
+            background-color: white;
+        }
+
+        .iframe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin-top: 5rem;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            overflow: visible;
+            z-index: 1;
+        }
+
+        iframe {
+            position: absolute;
+            inset: 0;
+            background-color: white;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .mask-bottom {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5rem;
+            background: white;
+            z-index: 10;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="global-loader" id="globalLoader" aria-hidden="true">
+        <div class="spinner-ring">
+            <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading" width="62" height="62">
+        </div>
+        <span class="loader-label">Loading…</span>
+    </div>
+
+    <div class="container" id="mainContent">
+        <div class="header">
+            <div class="logo-area">
+                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Eden Tools Logo" class="logo-img">
+                <div class="header-title">
+                    <h1>Contact Us</h1>
+                </div>
+            </div>
+            <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
+        </div>
+
+        <main class="main-content">
+            <div class="iframe-container">
+                <iframe src="https://minform.io/f/dp3lXVO" loading="lazy"></iframe>
+                <div class="mask-bottom"></div> <!-- Hides bottom 5rem -->
+            </div>
+        </main>
+
+        <footer style="background-color: white; z-index: 1100; position: fixed; bottom: 0; width: 100%; text-align: center;">With ❤️ Eden Tools • To save your time</footer>
+    </div>
+
+    <script>
+        const globalLoader = document.getElementById('globalLoader');
+        const mainContent = document.getElementById('mainContent');
+        setTimeout(() => {
+            globalLoader.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+            mainContent.classList.add('visible');
+        }, 0);
+    </script>
+</body>
+
+</html>
