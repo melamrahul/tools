@@ -3,195 +3,285 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Support Eden Tools</title>
+<title>Donate Eden Tools</title>
+<link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.2">
+<script src="https://rahul.serv00.net/apps/vgrs.js?v=3.2" defer=""></script>
 <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
-    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+<link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
 <style>
-:root{
-    --bg:#ffffff;
-    --text:#000000;
-    --border:#4468a9;
-    --accent:#ff5e5b;
-    --success:#107225;
-    --border-width:2px;
+:root {
+  --blue: #4468a9;
+  --red:  #ff5e5b;
+  --bw:   2px;
 }
 
-*{box-sizing:border-box;margin:0;padding:0;}
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-body{
-    font-family:'Inter',sans-serif;
-    background:var(--bg);
-    color:var(--border);
-    min-height:100vh;
-    display:flex;
-    flex-direction:column;
+body {
+  font-family: 'Inter', sans-serif;
+  background: #fff;
+  color: var(--blue);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 16px 80px;
 }
 
-.container{
-    max-width:720px;
-    margin:0 auto;
-    padding:30px 15px 100px 15px;
+.wrap {
+  width: 100%;
+  max-width: 520px;
 }
 
-.hero{
-    border:var(--border-width) solid var(--border);
-    padding:25px;
-    margin-bottom:25px;
-    text-align:center;
+/* HEART */
+.heart-wrap {
+  text-align: center;
+  margin-bottom: 20px;
+  animation: fadeUp 0.35s ease both;
 }
 
-.hero h1{
-    font-size:1.6rem;
-    font-weight:800;
-    margin-bottom:10px;
+.heart {
+  display: inline-block;
+  font-size: 3rem;
+  animation: heartbeat 1.6s ease infinite;
+  filter: drop-shadow(0 0 0px #ff5e5b);
+  transition: filter 0.3s;
 }
 
-.hero p{
-    font-size:0.85rem;
-    line-height:1.5;
+.heart.glow {
+  filter: drop-shadow(0 0 16px #ff5e5baa);
 }
 
-.payment-grid{
-    display:grid;
-    gap:20px;
+@keyframes heartbeat {
+  0%,100% { transform: scale(1); }
+  12%     { transform: scale(1.22); }
+  24%     { transform: scale(1); }
+  36%     { transform: scale(1.12); }
+  48%     { transform: scale(1); }
 }
 
-.payment-card{
-    border:var(--border-width) solid var(--border);
-    padding:20px;
-    background:white;
-    transition:all 0.15s ease;
+/* COPY */
+.copy {
+  border: var(--bw) solid var(--blue);
+  padding: 22px 24px 20px;
+  text-align: center;
+  animation: fadeUp 0.35s 0.07s ease both;
 }
 
-.payment-card:hover{
-    transform:translate(-3px,-3px);
-    box-shadow:6px 6px 0px var(--border);
+.copy h1 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  line-height: 1.35;
+  margin-bottom: 10px;
 }
 
-.payment-title{
-    font-weight:800;
-    font-size:1rem;
-    margin-bottom:8px;
+.copy h1 .hi { color: var(--red); }
+
+.copy p {
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: #556080;
 }
 
-.payment-desc{
-    font-size:0.85rem;
-    margin-bottom:15px;
+/* BUTTONS */
+.btn-group {
+  display: flex;
+  flex-direction: column;
+  animation: fadeUp 0.35s 0.14s ease both;
 }
 
-.payment-btn{
-    display:block;
-    width:100%;
-    padding:14px;
-    font-size: 1.1rem;
-    font-weight:800;
-    text-align:center;
-    text-decoration:none;
-    border:var(--border-width) solid rgb(64, 104, 212);
-    box-shadow:3px 3px 0px #5293ac;
-    transition:all 0.1s;
+.pay-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 17px 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  border: var(--bw) solid var(--blue);
+  background: #fff;
+  color: var(--blue);
+  transition: background 0.11s, color 0.11s, transform 0.1s, box-shadow 0.1s, border-color 0.11s;
+  position: relative;
+  z-index: 0;
 }
 
-.payment-btn:hover{
-    transform:translate(-2px,-2px);
-    box-shadow:5px 5px 0px var(--border);
+.pay-btn:hover {
+  background: var(--blue);
+  color: #fff;
+  transform: translate(-3px,-3px);
+  box-shadow: 5px 5px 0 var(--blue);
+  z-index: 1;
 }
 
-.primary{
-    background: transparent;
-    color:rgb(0, 119, 255);
-}
-.primary:hover{
-    background: rgb(0, 119, 255);
-    color:white;
+.pay-btn.kofi:hover {
+  background: var(--red);
+  border-color: var(--red);
+  box-shadow: 5px 5px 0 #c93f3d;
+  color: #fff;
 }
 
-.secondary{
-    background: transparent;
-    color:var(--accent);
+.pay-btn:active { transform: translate(1px,1px); box-shadow: 2px 2px 0 var(--blue); }
+
+.btn-left  { display: flex; align-items: center; gap: 11px; }
+.btn-icon  { font-size: 1.2rem; }
+.btn-name  { display: block; line-height: 1.1; font-size: 1rem }
+.btn-sub   { display: block; font-size: 0.66rem; font-weight: 400; opacity: 0.55; margin-top: 3px; }
+
+.btn-arrow {
+  font-size: 2rem;
+  opacity: 1;
+  transition: transform 0.13s, opacity 0.13s;
+}
+.pay-btn:hover .btn-arrow { transform: translateX(5px); opacity: 1; }
+
+/* PULSE HINT */
+.pulse-hint {
+  text-align: center;
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--red);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-top: 14px;
+  opacity: 0;
+  animation: fadeUp 0.4s 1.4s ease forwards, blink 1.8s 1.8s ease 3;
 }
 
-.secondary:hover{
-    background: var(--accent);
-    color:white;
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50%     { opacity: 0.2; }
 }
 
-.note{
-    margin-top:30px;
-    font-size:0.9rem;
-    text-align:center;
-    line-height:1.5;
+/* NOTE */
+.note {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 0.73rem;
+  color: #aaa;
+  line-height: 1.65;
+  animation: fadeUp 0.35s 0.22s ease both;
 }
 
-footer{
-    position:fixed;
-    bottom:0;
-    left:0;
-    width:100%;
-    text-align:center;
-    font-size:0.9rem;
-    font-weight:600;
-    color:#09759c;
-    padding:10px 0;
-    border-top:var(--border-width) solid var(--border);
-    background:white;
+/* FOOTER */
+footer {
+  position: fixed;
+  bottom: 0; left: 0;
+  width: 100%;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: #09759c;
+  padding: 10px 0;
+  border-top: var(--bw) solid var(--blue);
+  background: #fff;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="wrap">
 
-    <h2 style="text-align: center;">Eden Tools</h2><br>
-    <div class="hero" style="text-align: left;">
-        <h2 style="text-align: left; margin-bottom: 10px; font-size: 1.2rem;">💖 Help to keep This tool Free for everyone.</h2>
-        <p>
-            This converter runs on real servers with real costs.<br>
-            If it helped you, consider supporting me.
-        </p>
-    </div>
+  <div class="heart-wrap">
+    <span class="heart" id="heart">❤️</span>
+  </div>
 
-    <div class="payment-grid">
+  <div class="copy">
+    <h1>You Loved this tool.so you came here.<br><span class="hi" style="margin-top: 1.5rem">Continue this love</span></h1>
+    <p>No ads. No paywalls. Just one person keeping this alive for everyone.<br>Your support — any amount — keeps it free.</p>
+  </div>
 
-        <div class="payment-card">
-            <div class="payment-title">💳 Razorpay / UPI</div>
-            <div class="payment-desc">
-                Fast & secure Indian payments via UPI, cards, net banking.
-            </div>
-            <a href="https://razorpay.me/@melamrahul"
-               class="payment-btn primary">
-               Support via Razorpay
-            </a>
+  <br>
+  <div class="btn-group">
+    <a href="https://razorpay.me/@melamrahul"
+       class="pay-btn upi"
+       onclick="handleSupportClick(event,this.href)">
+      <div class="btn-left">
+        <span class="btn-icon">💳</span>
+        <div>
+          <span class="btn-name">Razorpay / UPI</span>
+          <span class="btn-sub">UPI · Cards · Net banking · India</span>
         </div>
-        <div style="text-align: center; border: none; margin-bottom: -15px; margin-top: -10px;">
-            <div class="payment-title" style="font-size: 1.4rem;">(OR)</div>
+      </div>
+      <span class="btn-arrow">→</span>
+    </a><br>
+
+    <a href="https://ko-fi.com/eden_tools"
+       class="pay-btn kofi"
+       onclick="handleSupportClick(event,this.href)">
+      <div class="btn-left">
+        <span class="btn-icon">☕</span>
+        <div>
+          <span class="btn-name">Ko-fi</span>
+          <span class="btn-sub">Buy me a coffee · works worldwide</span>
         </div>
+      </div>
+      <span class="btn-arrow">→</span>
+    </a>
+  </div>
 
-        <div class="payment-card">
-            <div class="payment-title">☕ Ko-fi</div>
-            <div class="payment-desc">
-                Buy me a coffee from anywhere in the world.
-            </div>
-            <a href="https://ko-fi.com/eden_tools"
-               class="payment-btn secondary">
-               Support on Ko-fi
-            </a>
-        </div>
+  <div class="pulse-hint">↑ Show your love ↑</div>
 
-    </div>
-
-    <div class="note">
-        Even a small contribution makes a huge difference ❤️<br>
-        It keeps the tools running for everyone.
-    </div>
+  <div class="note">
+    No pressure. Just your kind love.<br>
+    But thank you for even being here — it truly means a lot. ❤️
+  </div>
 
 </div>
 
-<footer>
-With ❤️ Eden Tools • Just for You
-</footer>
+<div id="google_translate_element" style="display:none"></div>
+<footer>With ❤️ Eden Tools • Just for You</footer>
 
+<script>
+function getDeviceId() {
+  let id = localStorage.getItem("eden_device_id");
+  if (!id) { id = crypto.randomUUID(); localStorage.setItem("eden_device_id", id); }
+  return id;
+}
+async function resetSupportCounter() {
+  try {
+    await fetch("/apps/yt_convert/support_reset", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ device_id: getDeviceId() })
+    });
+  } catch(e) {}
+}
+async function handleSupportClick(e, url) {
+  e.preventDefault();
+  await resetSupportCounter();
+  window.location.href = url;
+}
+
+// Heart glows when user hovers the buttons
+document.querySelectorAll('.pay-btn').forEach(btn => {
+  btn.addEventListener('mouseenter', () => document.getElementById('heart').classList.add('glow'));
+  btn.addEventListener('mouseleave', () => document.getElementById('heart').classList.remove('glow'));
+});
+</script>
+
+<script>
+var _paq = window._paq = window._paq || [];
+_paq.push(['trackPageView']);
+_paq.push(['enableLinkTracking']);
+(function () {
+  var u = "https://mrahul.matomo.cloud/";
+  _paq.push(['setTrackerUrl', u + 'matomo.php']);
+  _paq.push(['setSiteId', '2']);
+  var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+  g.async = true; g.src = 'https://cdn.matomo.cloud/mrahul.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g, s);
+})();
+</script>
 </body>
 </html>
