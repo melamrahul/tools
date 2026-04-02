@@ -28,12 +28,50 @@
     <meta name="twitter:title" content="QR Code Generator – Eden Tools">
     <meta name="twitter:description" content="Free QR Code generator. Create QR codes instantly. No ads, no signup.">
     <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Force re-apply translation on page load from cookie
+        function restoreGoogTrans() {
+            // Read from cookie
+            const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
+            if (!match) return;
+
+            const val = decodeURIComponent(match[1]); // e.g. "/en/ar"
+            const parts = val.split('/').filter(Boolean);
+            const targetLang = parts[parts.length - 1];
+
+            if (!targetLang || targetLang === 'en') return;
+
+            // Wait for Google Translate iframe/select to be ready, then switch
+            const interval = setInterval(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    select.value = targetLang;
+                    select.dispatchEvent(new Event('change'));
+                    clearInterval(interval);
+                }
+            }, 300);
+
+            // Give up after 10 seconds
+            setTimeout(() => clearInterval(interval), 10000);
+        }
+
+        document.addEventListener('DOMContentLoaded', restoreGoogTrans);
+    </script>
 
     <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
     <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.4">
+    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.4" defer=""></script>
     <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css?v=3.4">
 
     <script type="application/ld+json">
@@ -565,7 +603,7 @@
         }
 
         // ── Donate link by location ──────────────────────────────────────
-        fetch('/apps/location', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        fetch('https://rahul.serv00net/apps/location', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(r => r.json())
             .then(data => {
                 const url = data.country_code === 'IN'
