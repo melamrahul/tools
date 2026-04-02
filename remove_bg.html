@@ -202,6 +202,17 @@
                     <h1>Background Remover</h1>
                 </div>
             </div>
+            <div id="et-translate-wrapper">
+                <button id="et-lang-btn" onclick="etTogglePicker()">
+                    <img src="https://melamrahul.github.io/tools/trans.png" class="et-translate-icon" alt="Translate">
+                    <span class="et-translate-text">Translate</span>
+                    <span id="et-lang-label"></span>
+                </button>
+                <div id="et-lang-picker" style="display:none"></div>
+                <div id="et-lang-overlay" onclick="etClosePicker()" style="display:none"></div>
+            </div>
+            <div id="et-lang-overlay" onclick="etClosePicker()" style="display:none"></div>
+            <div id="google_translate_element" style="display:none"></div>
             <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
         </div>
 
@@ -341,6 +352,8 @@
 
     <!-- Support dialog backdrop -->
     <div id="supportBackdrop" onclick="closeSupportDialog()"></div>
+    <!-- Google Translate Element (hidden) -->
+    <div id="google_translate_element" style="display:none"></div>
 
     <!-- Support dialog -->
     <div id="supportDialog">
