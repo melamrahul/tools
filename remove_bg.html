@@ -4,259 +4,483 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Background Remover – Tools by Rahul</title>
+    <title>Background Remover – Free AI Tool | Eden Tools</title>
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="Background Remover – Tools by Rahul" />
-    <meta property="og:description"
-        content="Remove image backgrounds instantly using AI. Free, fast and clean Background Remover Tool by Rahul." />
-    <meta property="og:url" content="https://melamrahul.github.io/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Tools by Rahul" />
-    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
-
-    <!-- Icons -->
-    <link rel="icon" type="image/png" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" sizes="192x192" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <link rel="icon" sizes="512x512" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-
-    <!-- SEO -->
-    <meta name="robots" content="index, follow" />
+    <meta name="description"
+        content="Eden Tools — free AI Background Remover. Remove image backgrounds instantly, no signup required. Get a clean transparent PNG in seconds.">
     <meta name="keywords"
-        content="background remover, remove bg, melam, rahul, by, melam rahul, bg remove, bg remove by rahul, remove background online, Rahul tools, melam rahul, free background tool, AI background remover" />
-    <meta name="theme-color" content="auto" />
+        content="background remover, remove bg, AI background remover, remove background online, free background tool, eden tools, rahul tools">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Rahul">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://melamrahul.github.io/tools/remove_bg">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet" />
+    <meta property="og:title" content="Background Remover – Eden Tools">
+    <meta property="og:description"
+        content="Remove image backgrounds instantly using AI. Free, fast and clean. No signup required.">
+    <meta property="og:url" content="https://melamrahul.github.io/tools/remove_bg">
+    <meta property="og:site_name" content="Eden Tools">
+    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Background Remover – Eden Tools">
+    <meta name="twitter:description" content="Remove image backgrounds instantly using AI. Free, no signup.">
+    <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Force re-apply translation on page load from cookie
+        function restoreGoogTrans() {
+            // Read from cookie
+            const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
+            if (!match) return;
+
+            const val = decodeURIComponent(match[1]); // e.g. "/en/ar"
+            const parts = val.split('/').filter(Boolean);
+            const targetLang = parts[parts.length - 1];
+
+            if (!targetLang || targetLang === 'en') return;
+
+            // Wait for Google Translate iframe/select to be ready, then switch
+            const interval = setInterval(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    select.value = targetLang;
+                    select.dispatchEvent(new Event('change'));
+                    clearInterval(interval);
+                }
+            }, 300);
+
+            // Give up after 10 seconds
+            setTimeout(() => clearInterval(interval), 10000);
+        }
+
+        document.addEventListener('DOMContentLoaded', restoreGoogTrans);
+    </script>
+
+    <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.4">
+    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.4" defer=""></script>
+    <link rel="dns-prefetch" href="https://rahul.serv00.net">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css?v=3.4">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Eden Tools — Background Remover",
+      "url": "https://melamrahul.github.io/tools/remove_bg",
+      "description": "Free AI background remover by Eden Tools. Remove image backgrounds instantly. No ads, no signup required.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is the Background Remover free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100% free with no registration and no usage limits." }
+        },
+        {
+          "@type": "Question",
+          "name": "What image formats are supported?",
+          "acceptedAnswer": { "@type": "Answer", "text": "JPG, PNG, and WEBP images are supported. The output is always a transparent PNG." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work on mobile?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Eden Tools works in any mobile browser without installing any app." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my image stored or shared?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. Your image is processed instantly and never stored on our servers." }
+        }
+      ]
+    }
+    </script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow: hidden;
-        }
-
-        /* Global container */
-        .container {
-            max-width: 650px;
-            margin: 20px auto;
-            margin-bottom: 60px;
-            padding: 10px;
+        #mainContent {
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        /* Header */
-        .header {
-            background: black;
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid #2a2a2a;
+        #mainContent.visible {
+            opacity: 1;
+        }
+
+        /* iframe wrapper */
+        .iframe-wrap {
+            border-top: var(--border-width) solid var(--border);
+            background: #f9faff;
+            min-height: 420px;
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            align-items: stretch;
         }
 
-        .logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-        }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-            border-radius: 10px;
-        }
-
-        /* Tools Button */
-        .tools-btn {
-            background: linear-gradient(135deg, #ff4d8d, #8f46ff, #3d9dff, #22e3c5);
-            color: #fff;
-            padding: 10px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            background-size: 200%;
-            animation: gradientFlow 6s ease infinite;
-            transition: 0.3s;
-        }
-
-        .tools-btn:hover {
-            filter: brightness(1.15);
-        }
-
-        @keyframes gradientFlow {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Card */
-        .content-card {
-            background: black;
-            border-radius: 16px;
-            border: 1px dashed #fff;
-            overflow: hidden;
-            padding-top: 22px;
-            padding-bottom: 22px;
-            padding-left: 10px;
-            padding-right: 10px;
-            text-align: center;
-        }
-
-        /* Frame */
         iframe {
             width: 100%;
-            height: 700px;
+            min-height: 680px;
             border: none;
-            display: none;
-            border-radius: 14px;
-            margin-top: 15px;
+            display: block;
         }
 
-        /* Global Big Loader */
-        .global-loader {
-            position: fixed;
-            inset: 0;
-            background: #000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .global-spinner {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            padding: 6px;
-            background: conic-gradient(#ff6a00, #ff0077, #6a00ff, #00d1ff, #ff6a00);
-            animation: spin 2.4s linear infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .global-spinner img {
-            width: 85%;
-            filter: brightness(0) invert(1);
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
+        /* Share */
+        .share-section {
             text-align: center;
-            color: #aaa;
-            background-color: black;
-            padding: 10px 0;
-            z-index: 10;
+            padding: 15px;
         }
 
-        footer a {
-            color: #22e3c5;
-            text-decoration: underline;
+        .share-icons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .share-icons img {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .share-icons img:hover {
+            transform: scale(1.15);
+        }
+
+        #moreShare {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: var(--border-width) solid var(--border);
+            background: white;
+            color: var(--border);
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: 800;
+            line-height: 1;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Global Loader -->
-    <div class="global-loader" id="globalLoader">
-        <div class="global-spinner">
-            <img src="https://melamrahul.github.io/tools/tools_logo.png" />
+    <div class="global-loader" id="globalLoader" aria-hidden="true">
+        <div class="spinner-ring">
+            <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading" width="62" height="62">
         </div>
+        <span class="loader-label">Loading…</span>
     </div>
 
     <div class="container" id="mainContent">
 
         <!-- Header -->
         <div class="header">
-            <div class="logo">
-                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" />
+            <div class="logo-area">
+                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Eden Tools Logo" class="logo-img">
+                <div class="header-title">
+                    <h1>Background Remover</h1>
+                </div>
             </div>
-
-            <div>
-                <h2>Remove bg</h2>
-                <p style="color:#aaa; font-size:14px;">AI • Clean • Instant</p>
-            </div>
-
             <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
         </div>
 
-        <!-- Card -->
-        <div class="content-card">
-            <h3>Remove Background Instantly</h3>
-            <p style="color:#aaa; font-size:14px; margin-top:5px;">
-                Upload your image and get a clean transparent background in seconds.
-            </p>
+        <!-- Main card -->
+        <div class="card">
+            <div class="card-header">
+                <span>Remove Background</span>
+                <span style="font-size:0.7em;opacity:0.7;">AI · Free · No Sign-up</span>
+            </div>
 
-            <!-- <iframe id="contentFrame" src="https://ephemeral-hummingbird-dcb797.netlify.app/"> </iframe>-->
-            <!-- <iframe id="contentFrame" src="https://easyremover.netlify.app/"> </iframe> -->
-            <iframe id="contentFrame" src="https://tyo.netlify.app/"> </iframe>
+            <div class="iframe-wrap">
+                <iframe id="contentFrame" src="https://tyo.netlify.app/" title="AI Background Remover"></iframe>
+            </div>
+        </div>
+
+        <!-- Goal pill -->
+        <div class="fixed-footer" style="margin-top:-10px;">
+            <a href="#" id="goalDonateBtn" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                <div class="goal-pill">
+                    <div class="goal-pill-top">
+                        <div class="goal-pill-label">
+                            <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" class="goal-icon" alt="Ko-fi">
+                            <span id="goalMainText">Help reach this month's server goal</span>
+                        </div>
+                        <div class="goal-pill-pct" id="goalPercent">…</div>
+                    </div>
+                    <div class="goal-track">
+                        <div class="goal-fill-bar" id="goalFillBar"></div>
+                    </div>
+                    <div class="goal-subline" id="goalSubline">Loading…</div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Share -->
+        <div class="share-section">
+            <h4>Share this tool with your friends :)</h4>
+            <div class="share-icons">
+                <a id="whatsapp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+                <a id="facebook" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
+                <a id="reddit" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111589.png"></a>
+                <a id="x" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
+                <a id="telegram" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+                <button id="moreShare">+</button>
+            </div>
+        </div>
+
+        <!-- Server note -->
+        <div class="server-note">
+            <strong style="color: var(--accent);">💙 A quick note from the admin:</strong>
+            <strong>Eden Tools is completely free to use</strong> and built to help people remove image backgrounds
+            instantly.
+            Keeping the service running requires <strong>servers, bandwidth, and ongoing maintenance</strong>.
+            If you find the tool useful, <strong>your contribution helps cover costs and future improvements</strong>.
+        </div>
+
+        <!-- About block -->
+        <div class="youtube-block">
+            <div class="youtube-block-header">
+                <span>About Eden Tools</span>
+                <span style="font-size:0.7em;opacity:0.7;">Background Remover</span>
+            </div>
+            <div class="youtube-block-body">
+                <h2>Free AI Background Remover — by Eden Tools</h2>
+                <p>
+                    <strong>Eden Tools</strong> offers a fast, free <strong>AI-powered Background Remover</strong> — no
+                    registration, no ads, no limits.
+                    Upload any image and get a clean transparent PNG in seconds, ready to use anywhere.
+                </p>
+                <p>
+                    Works on <strong>any device</strong> — Android, iPhone, tablet, or desktop — right in your browser.
+                    No app to install, no account needed.
+                </p>
+                <h2>What can I use it for?</h2>
+                <p>
+                    Remove backgrounds from <strong>product photos, profile pictures, portraits, logos</strong>, or any
+                    image.
+                    The result is a transparent PNG you can place on any background — perfect for e-commerce, social
+                    media, presentations, and design work.
+                    <br><br><strong>✅ Powered by AI — fast, accurate, and completely free.</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="youtube-block-body">
+            <h2>Frequently Asked Questions</h2>
+            <div class="youtube-faq">
+                <details>
+                    <summary>Is the Background Remover free?</summary>
+                    <p>Yes — 100% free, no registration, no ads, and no limits. Eden Tools is free for everyone,
+                        forever.</p>
+                </details>
+                <details>
+                    <summary>What image formats are supported?</summary>
+                    <p>JPG, PNG, and WEBP images are supported. The output is always a transparent PNG file.</p>
+                </details>
+                <details>
+                    <summary>Does it work on mobile?</summary>
+                    <p>Yes. Eden Tools works in any mobile browser — Chrome, Safari, Firefox — without installing any
+                        app.</p>
+                </details>
+                <details>
+                    <summary>Is my image stored or shared?</summary>
+                    <p>No. Your image is processed instantly and is never stored or shared on our servers.</p>
+                </details>
+                <details>
+                    <summary>How accurate is the AI background removal?</summary>
+                    <p>The AI works best on images with a clear subject — portraits, products, and objects against
+                        distinct backgrounds. Results are clean and ready to use in seconds.</p>
+                </details>
+            </div>
+        </div>
+
+        <br>
+        <hr>
+        <div class="youtube-block-body">
+            <h2>Contact Us</h2>
+            <p>
+                If you have any issues or questions, please contact us at
+                <strong><a href="https://rahul.serv00.net/apps/contact-us" target="_blank"
+                        rel="noopener noreferrer">Contact Page</a></strong>.
+            </p>
+        </div>
+        <br><br><br>
+
+    </div>
+
+    <!-- Float support -->
+    <a href="https://razorpay.me/@melamrahul" class="float-support" aria-label="Support" target="_blank"
+        rel="noopener noreferrer">
+        <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" alt="Donate" width="20" height="20">
+        Donate
+    </a>
+
+    <footer style="background-color:white;z-index:1100;">With ❤️ Eden Tools • Just for you</footer>
+
+    <!-- Support dialog backdrop -->
+    <div id="supportBackdrop" onclick="closeSupportDialog()"></div>
+
+    <!-- Support dialog -->
+    <div id="supportDialog">
+        <div class="sd-banner">
+            <button class="sd-close" onclick="closeSupportDialog()">✕</button>
+            <span class="sd-banner-emoji">💙</span>
+            <h3>Glad you love Eden Tools!</h3>
+            <p>This tool runs on love — and a bit of server money 😊</p>
+        </div>
+        <div class="sd-body">
+            <div class="sd-story">
+                <p>If you find <strong>Eden Tools helpful</strong>, even a small contribution means a lot and helps keep
+                    the tool available for everyone. 🌍</p>
+                <p>Your donation goes to:</p>
+            </div>
+            <div class="sd-costs">
+                <span class="sd-cost-tag">🖥️ Server Hosting</span>
+                <span class="sd-cost-tag">🤖 AI Processing</span>
+                <span class="sd-cost-tag">🌐 Bandwidth</span>
+                <span class="sd-cost-tag">⚙️ Maintenance</span>
+            </div>
+            <a href="https://razorpay.me/@melamrahul" target="_blank" class="sd-btn-support">I love this tool 💙</a>
+            <button class="sd-btn-later" onclick="closeSupportDialog()">Remind Me Later</button>
+            <div class="sd-note">Thank you for using Eden Tools 🙏</div>
         </div>
     </div>
 
-    <footer style="background-color: black; padding-bottom: 10px;">
-        © Designed ❤️ by <a href="/">M. Rahul</a>
-    </footer>
+    <script>
+        // ── Loader ───────────────────────────────────────────────────────
+        const globalLoader = document.getElementById('globalLoader');
+        const mainContent = document.getElementById('mainContent');
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                globalLoader.classList.add('hidden');
+                mainContent.classList.add('visible');
+            }, 500);
+        });
+
+        // ── Goal bar ─────────────────────────────────────────────────────
+        async function updateGoal() {
+            try {
+                const res = await fetch('https://rahul.serv00.net/apps/yt_convert/update_progress');
+                const data = await res.json();
+                const pct = Math.min(100, Math.max(0, parseInt(data.percent) || 0));
+                const month = new Date().toLocaleString('default', { month: 'long' });
+
+                document.getElementById('goalFillBar').style.width = pct + '%';
+                document.getElementById('goalPercent').textContent = pct + '% of goal';
+                document.getElementById('goalSubline').textContent = data.label || 'Click here to donate 💙';
+
+                if (pct >= 80) document.getElementById('goalMainText').textContent = `Almost there! Help finish ${month}'s goal 🙌`;
+                else if (pct >= 40) document.getElementById('goalMainText').textContent = `Help reach ${month}'s server goal`;
+                else document.getElementById('goalMainText').textContent = `Donate for ${month} month costs`;
+            } catch {
+                const month = new Date().toLocaleString('default', { month: 'long' });
+                document.getElementById('goalFillBar').style.width = '3%';
+                document.getElementById('goalPercent').textContent = '3%';
+                document.getElementById('goalMainText').textContent = `Donate for ${month} month costs`;
+                document.getElementById('goalSubline').textContent = 'Click here to donate 💙';
+            }
+        }
+        updateGoal();
+        setInterval(updateGoal, 60000);
+
+        // ── Dialog cooldown ──────────────────────────────────────────────
+        const COOLDOWN = 12 * 60 * 60 * 1000;
+        function canShowDialog() {
+            const last = localStorage.getItem('eden_bg_dialog_last');
+            return !last || (Date.now() - parseInt(last)) > COOLDOWN;
+        }
+        function markDialogShown() { localStorage.setItem('eden_bg_dialog_last', Date.now()); }
+
+        function closeSupportDialog() {
+            markDialogShown();
+            const dialog = document.getElementById('supportDialog');
+            dialog.classList.remove('sd-open');
+            setTimeout(() => {
+                dialog.style.display = 'none';
+                document.getElementById('supportBackdrop').style.display = 'none';
+            }, 300);
+        }
+
+        // Show dialog after 30s of use (user is engaged with the tool)
+        setTimeout(() => {
+            if (canShowDialog()) {
+                markDialogShown();
+                document.getElementById('supportBackdrop').style.display = 'block';
+                const dialog = document.getElementById('supportDialog');
+                dialog.style.display = 'block';
+                requestAnimationFrame(() => requestAnimationFrame(() => dialog.classList.add('sd-open')));
+            }
+        }, 30000);
+
+        // ── Donate link by location ──────────────────────────────────────
+        fetch('https://rahul.serv00.net/apps/location', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(data => {
+                const url = data.country_code === 'IN'
+                    ? 'https://razorpay.me/@melamrahul'
+                    : 'https://rahul.serv00.net/apps/yt_convert/support-me';
+                const floatBtn = document.querySelector('.float-support');
+                const goalBtn = document.getElementById('goalDonateBtn');
+                const sdBtn = document.querySelector('.sd-btn-support');
+                if (floatBtn) floatBtn.href = url;
+                if (goalBtn) goalBtn.href = url;
+                if (sdBtn) sdBtn.href = url;
+            }).catch(() => { });
+
+        // ── Share links ──────────────────────────────────────────────────
+        const shareUrl = encodeURIComponent(window.location.href);
+        const shareTitle = encodeURIComponent('Free AI Background Remover — Eden Tools');
+        document.getElementById('whatsapp').href = `https://wa.me/?text=${shareTitle}%20${shareUrl}`;
+        document.getElementById('facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+        document.getElementById('reddit').href = `https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}`;
+        document.getElementById('x').href = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`;
+        document.getElementById('telegram').href = `https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`;
+        document.getElementById('moreShare').addEventListener('click', async () => {
+            if (navigator.share) {
+                await navigator.share({ title: document.title, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied!');
+            }
+        });
+    </script>
 
     <script>
-        /* Splash loader */
-        const globalLoader = document.getElementById("globalLoader");
-        const mainContent = document.getElementById("mainContent");
-
-        setTimeout(() => {
-            globalLoader.style.display = "none";
-            document.body.style.overflow = "auto";
-            mainContent.style.opacity = "1";
-        }, 1500);
-
-        /* iframe loader */
-        const iframe = document.getElementById('contentFrame');
-
-        iframe.onload = () => {
-            iframe.style.display = "block";
-        };
-
-        /* Disable inspect */
-        document.oncontextmenu = () => false;
-        document.onkeydown = e => {
-            if (e.ctrlKey && (e.key === "U" || e.key === "I" || e.key === "J"))
-                return false;
-        };
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "https://mrahul.matomo.cloud/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.async = true; g.src = 'https://cdn.matomo.cloud/mrahul.matomo.cloud/matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
     </script>
+
 </body>
+
 </html>
