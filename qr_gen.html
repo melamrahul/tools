@@ -603,7 +603,7 @@
         }
 
         // ── Donate link by location ──────────────────────────────────────
-        fetch('https://rahul.serv00net/apps/location', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+        fetch('https://rahul.serv00.net/apps/location', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(r => r.json())
             .then(data => {
                 const url = data.country_code === 'IN'
