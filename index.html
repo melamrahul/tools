@@ -28,11 +28,52 @@
     <meta name="twitter:title" content="Eden Tools - Free Online Tools by Rahul">
     <meta name="twitter:description" content="A collection of free, simple, and reliable online tools.">
     <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+
+        // Force re-apply translation on page load from cookie
+        function restoreGoogTrans() {
+            // Read from cookie
+            const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
+            if (!match) return;
+
+            const val = decodeURIComponent(match[1]); // e.g. "/en/ar"
+            const parts = val.split('/').filter(Boolean);
+            const targetLang = parts[parts.length - 1];
+
+            if (!targetLang || targetLang === 'en') return;
+
+            // Wait for Google Translate iframe/select to be ready, then switch
+            const interval = setInterval(() => {
+                const select = document.querySelector('.goog-te-combo');
+                if (select) {
+                    select.value = targetLang;
+                    select.dispatchEvent(new Event('change'));
+                    clearInterval(interval);
+                }
+            }, 300);
+
+            // Give up after 10 seconds
+            setTimeout(() => clearInterval(interval), 10000);
+        }
+
+        document.addEventListener('DOMContentLoaded', restoreGoogTrans);
+    </script>
+
 
     <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
     <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.4" defer=""></script>
+    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.4">
+    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.4" defer=""></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css?v=3.4">
 
@@ -139,6 +180,17 @@
                     <h1>Eden Tools — by Rahul</h1>
                 </div>
             </div>
+            <div id="et-translate-wrapper">
+                <button id="et-lang-btn" onclick="etTogglePicker()">
+                    <img src="https://melamrahul.github.io/tools/trans.png" class="et-translate-icon" alt="Translate">
+                    <span class="et-translate-text">Translate</span>
+                    <span id="et-lang-label"></span>
+                </button>
+                <div id="et-lang-picker" style="display:none"></div>
+                <div id="et-lang-overlay" onclick="etClosePicker()" style="display:none"></div>
+            </div>
+            <div id="et-lang-overlay" onclick="etClosePicker()" style="display:none"></div>
+            <div id="google_translate_element" style="display:none"></div>
         </div>
 
         <div class="tools-grid">
@@ -211,6 +263,8 @@
 
     </div>
 
+    <!-- Google Translate Element (hidden) -->
+    <div id="google_translate_element" style="display:none"></div>
     <footer>With ❤️ Eden Tools &nbsp;·&nbsp; To save your time</footer>
 
     <script>
