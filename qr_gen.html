@@ -4,381 +4,611 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QR Code Generator – Tools by Rahul</title>
+    <title>QR Code Generator – Free & Instant | Eden Tools</title>
 
-    <!-- Open Graph -->
-    <meta property="og:title" content="QR Code Generator – Tools by Rahul" />
-    <meta property="og:description"
-        content="Generate QR Codes instantly. Simple, fast, clean QR generator with download support." />
-    <meta property="og:url" content="https://melamrahul.github.io/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Tools by Rahul" />
-    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
-
-    <!-- Icons -->
-    <link rel="icon" type="image/png" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="icon" sizes="192x192" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-    <link rel="icon" sizes="512x512" href="https://melamrahul.github.io/tools/tool_logo_head.png" />
-
-    <!-- SEO -->
-    <meta name="robots" content="index, follow" />
+    <meta name="description"
+        content="Eden Tools — free QR Code generator. Create custom QR codes for any URL or text instantly. No ads, no signup, download as PNG.">
     <meta name="keywords"
-        content="qr generator, qr code, text to qr, qr download, qr tool, melam, rahul, tools, melam rahul, melam rahul tools, online tools" />
-    <meta name="theme-color" content="auto" />
+        content="qr code generator, free qr code, qr code maker, url to qr, text to qr, eden tools qr generator">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Rahul">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://melamrahul.github.io/tools/qr_gen">
 
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet" />
+    <meta property="og:title" content="QR Code Generator – Eden Tools">
+    <meta property="og:description"
+        content="Free QR Code generator. Create QR codes for any URL or text instantly. No ads, no signup.">
+    <meta property="og:url" content="https://melamrahul.github.io/tools/qr_gen">
+    <meta property="og:site_name" content="Eden Tools">
+    <meta property="og:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="QR Code Generator – Eden Tools">
+    <meta name="twitter:description" content="Free QR Code generator. Create QR codes instantly. No ads, no signup.">
+    <meta name="twitter:image" content="https://melamrahul.github.io/tools/tool_logo_head.png">
+
+    <link rel="icon" type="image/png" sizes="32x32" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="apple-touch-icon" href="https://melamrahul.github.io/tools/tool_logo_head.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css?v=3.4">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Eden Tools — QR Code Generator",
+      "url": "https://melamrahul.github.io/tools/qr_gen",
+      "description": "Free QR Code generator by Eden Tools. Create custom QR codes for any URL or text. No ads, no signup required.",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is Eden Tools QR Code Generator free?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100% free with no registration, no ads, and no limits. Eden Tools is free for everyone." }
+        },
+        {
+          "@type": "Question",
+          "name": "What can I encode in a QR code?",
+          "acceptedAnswer": { "@type": "Answer", "text": "You can encode any text or URL — website links, contact info, Wi-Fi passwords, phone numbers, or plain text messages." }
+        },
+        {
+          "@type": "Question",
+          "name": "Can I download the QR code?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. After generating, click the Download PNG button to save a clean, high-quality QR code image with a white border." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it work on mobile?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes, it works on all devices including Android and iPhone browsers without any app installation." }
+        }
+      ]
+    }
+    </script>
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Quicksand', sans-serif;
-            background: #0a0a0a;
-            color: #fff;
-            overflow: hidden;
-            -webkit-tap-highlight-color: transparent;
-            user-select: none;
-        }
-
-        .container {
-            max-width: 650px;
-            margin: 20px auto;
-            margin-bottom: 60px;
-            padding: 10px;
+        #mainContent {
             opacity: 0;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease-in-out;
         }
 
-        /* Header */
-        .header {
-            background: black;
-            padding: 25px;
-            border-radius: 16px;
-            border: 1px solid #2a2a2a;
-            display: flex;
+        #mainContent.visible {
+            opacity: 1;
+        }
+
+        /* QR output */
+        #qr-output {
+            display: none;
+            flex-direction: column;
             align-items: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            padding: 20px;
+            gap: 0;
+            border-top: var(--border-width) solid var(--border);
         }
 
-        .logo {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
+        #qr-output.visible {
+            display: flex;
         }
-
-        .logo img {
-            width: 100%;
-            height: 100%;
-        }
-
-        .tools-btn {
-            background: linear-gradient(135deg, #ff4d8d, #8f46ff, #3d9dff, #22e3c5);
-            color: #fff;
-            padding: 10px 16px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
-            background-size: 200%;
-            animation: gradientFlow 6s ease infinite;
-            transition: 0.3s;
-        }
-
-        .tools-btn:hover {
-            filter: brightness(1.15);
-        }
-
-        @keyframes gradientFlow {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
-        }
-
-        /* Card */
-        .content-card {
-            background: black;
-            border-radius: 16px;
-            border: 1px dashed #fff;
-            padding: 22px;
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-top: 15px;
-            font-size: 18px;
-            border-radius: 8px;
-            border: 1px solid #ff008c;
-            background: #111;
-            color: #fff;
-            outline: none;
-        }
-
-        input:focus {
-            border-color: #ff008c;
-        }
-
-        .action-btn {
-            display: block;
-            width: 220px;
-            margin: 15px auto;
-            padding: 14px;
-            border-radius: 10px;
-            border: none;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            background: #cc0000;
-            color: #fff;
-            transition: 0.3s;
-        }
-
-        .action-btn:hover {
-            background: #ff0000;
-        }
-
 
         #qrcode {
-            margin-top: 25px;
-            display: flex;
+            border: var(--border-width) solid var(--border);
             padding: 10px;
-            justify-content: center;
+            background: white;
+            display: inline-block;
+            margin-bottom: 0;
         }
 
         #qrcode canvas {
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
+            display: block;
         }
 
-        #downloadBtn {
+        /* Download / Reset row */
+        #action-row {
             display: none;
         }
 
-        .small-btn {
-            margin-top: 15px;
-            border: none;
-            background: none;
-            color: #1cbfff;
-            font-size: 15px;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-
-        /* Global Splash Loader */
-        .global-loader {
-            position: fixed;
-            inset: 0;
-            background: #000;
+        .dl-row {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999;
-        }
-
-        .global-spinner {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            padding: 6px;
-            background: conic-gradient(#ff6a00, #ff0077, #6a00ff, #00d1ff, #ff6a00);
-            animation: spin 2.4s linear infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .global-spinner img {
-            width: 85%;
-            filter: brightness(0) invert(1);
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
             width: 100%;
-            text-align: center;
-            color: #aaa;
-            background-color: black;
-            padding: 10px 0;
-            z-index: 10;
         }
 
-        footer a {
-            color: #22e3c5;
-            text-decoration: underline;
+        .btn-download {
+            flex: 1;
+            padding: 14px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-top: var(--border-width) solid var(--border);
+            font-size: 0.9rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            letter-spacing: 0.04em;
+        }
+
+        .btn-download:hover {
+            opacity: 0.9;
+        }
+
+        .btn-reset {
+            padding: 14px 18px;
+            background: white;
+            color: var(--border);
+            border: none;
+            border-top: var(--border-width) solid var(--border);
+            border-left: var(--border-width) solid var(--border);
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-reset:hover {
+            background: #d7e0fb;
+        }
+
+        /* Share */
+        .share-section {
+            text-align: center;
+            padding: 15px;
+        }
+
+        .share-icons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .share-icons img {
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .share-icons img:hover {
+            transform: scale(1.15);
+        }
+
+        #moreShare {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: var(--border-width) solid var(--border);
+            background: white;
+            color: var(--border);
+            font-size: 18px;
+            cursor: pointer;
+            font-weight: 800;
+            line-height: 1;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- Splash Loader -->
-    <div class="global-loader" id="globalLoader">
-        <div class="global-spinner">
-            <img src="https://melamrahul.github.io/tools/tools_logo.png" />
+    <div class="global-loader" id="globalLoader" aria-hidden="true">
+        <div class="spinner-ring">
+            <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading" width="62" height="62">
         </div>
+        <span class="loader-label">Loading…</span>
     </div>
 
     <div class="container" id="mainContent">
 
         <!-- Header -->
         <div class="header">
-            <div class="logo">
-                <!-- <img src="https://img.freepik.com/premium-vector/qr-code-icon_946691-780.jpg" /> -->
-                <img src="https://melamrahul.github.io/tools/tool_logo_head.png">
+            <div class="logo-area">
+                <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Eden Tools Logo" class="logo-img">
+                <div class="header-title">
+                    <h1>QR Code Generator</h1>
+                </div>
             </div>
-
-            <div>
-                <h2>QR Code Gen</h2>
-                <p style="color:#aaa; font-size:14px;">Create • Scan • Download</p>
-            </div>
-
             <a href="https://melamrahul.github.io/tools/" class="tools-btn">All Tools</a>
         </div>
 
-        <!-- Card -->
-        <div class="content-card">
-            <h3>Create Instant QR Codes</h3>
-            <p style="color:#aaa; margin-top:5px;">Enter any text or URL below</p>
+        <!-- Download count strip -->
+        <!-- <div class="server-note">
+            <h3 id="qrCount">Loading stats…</h3>
+        </div> -->
 
-            <input id="qrInput" type="text" placeholder="Enter text or URL…" />
+        <!-- Main card -->
+        <div class="card">
+            <div class="card-header">
+                <span>Create QR Code</span>
+                <span style="font-size:0.7em;opacity:0.7;">Free · No Sign-up</span>
+            </div>
 
-            <button class="action-btn" onclick="generateQR()">Generate QR Code</button>
+            <div class="input-section">
+                <div class="input-group">
+                    <input type="text" id="qrInput" placeholder="Paste a URL or enter any text…" autocomplete="off"
+                        style="color:var(--border);" />
+                    <button class="btn-go" id="btnGenerate">Generate</button>
+                </div>
+            </div>
 
-            <div id="qrcode"></div>
+            <!-- QR Output -->
+            <div id="qr-output">
+                <div id="qrcode"></div>
+            </div>
 
-            <button id="downloadBtn" class="action-btn" onclick="downloadQR()">Download QR Code</button>
+            <!-- Download / Reset -->
+            <div id="action-row">
+                <div class="dl-row">
+                    <button class="btn-download" onclick="downloadQR()">⬇ Download PNG</button>
+                    <button class="btn-reset" onclick="resetQR()">Reset</button>
+                </div>
+            </div>
+        </div>
 
-            <button class="small-btn" onclick="clearQR()">Reset QR Code</button> &emsp;|&emsp;
-            <button class="small-btn"
-                onclick="window.location.href='https://razorpay.com/payment-button/pl_NxfbmRQ4Y7J9El/view'">Donate</button>
+        <!-- Goal pill -->
+        <div class="fixed-footer" style="margin-top:-10px;">
+            <a href="#" id="goalDonateBtn" style="text-decoration:none;" target="_blank" rel="noopener noreferrer">
+                <div class="goal-pill">
+                    <div class="goal-pill-top">
+                        <div class="goal-pill-label">
+                            <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" class="goal-icon" alt="Ko-fi">
+                            <span id="goalMainText">Help reach this month's server goal</span>
+                        </div>
+                        <div class="goal-pill-pct" id="goalPercent">…</div>
+                    </div>
+                    <div class="goal-track">
+                        <div class="goal-fill-bar" id="goalFillBar"></div>
+                    </div>
+                    <div class="goal-subline" id="goalSubline">Loading…</div>
+                </div>
+            </a>
+        </div>
 
+        <!-- Share -->
+        <div class="share-section">
+            <h4>Share this tool with your friends :)</h4>
+            <div class="share-icons">
+                <a id="whatsapp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+                <a id="facebook" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
+                <a id="reddit" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111589.png"></a>
+                <a id="x" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
+                <a id="telegram" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+                <button id="moreShare">+</button>
+            </div>
+        </div>
+
+        <!-- Server note -->
+        <div class="server-note">
+            <strong style="color: var(--accent);">💙 A quick note from the admin:</strong>
+            <strong>Eden Tools is completely free to use</strong> and built to help people quickly create and share QR
+            codes.
+            Keeping the service running requires <strong>servers, bandwidth, and ongoing maintenance</strong>.
+            If you find the tool useful, <strong>your contribution helps cover server costs and future
+                improvements</strong>.
+        </div>
+
+        <!-- About block -->
+        <div class="youtube-block">
+            <div class="youtube-block-header">
+                <span>About Eden Tools</span>
+                <span style="font-size:0.7em;opacity:0.7;">QR Code Generator</span>
+            </div>
+            <div class="youtube-block-body">
+                <h2>Free QR Code Generator — by Eden Tools</h2>
+                <p>
+                    <strong>Eden Tools</strong> offers a fast, free <strong>QR Code Generator</strong> — no
+                    registration, no ads, no limits.
+                    Paste any URL or text and get a clean, scannable QR code in seconds. Download it as a PNG with a
+                    white border, ready to print or share.
+                </p>
+                <p>
+                    Works on <strong>any device</strong> — Android, iPhone, tablet, or desktop — right in your browser.
+                    No app to install.
+                </p>
+                <h2>What can I use it for?</h2>
+                <p>
+                    You can encode <strong>website links, Wi-Fi passwords, contact info, phone numbers, plain
+                        text</strong>, or anything else into a QR code.
+                    The generated code can be scanned by any standard camera app or QR scanner.
+                    <br><br><strong>✅ Trusted by users worldwide — completely free.</strong>
+                </p>
+            </div>
+        </div>
+
+        <!-- FAQ -->
+        <div class="youtube-block-body">
+            <h2>Frequently Asked Questions</h2>
+            <div class="youtube-faq">
+                <details>
+                    <summary>Is Eden Tools QR Code Generator free?</summary>
+                    <p>Yes — 100% free, no registration, no ads, and no limits. Eden Tools is free for everyone,
+                        forever.</p>
+                </details>
+                <details>
+                    <summary>What can I encode in a QR code?</summary>
+                    <p>Anything — website URLs, Wi-Fi credentials, phone numbers, contact cards (vCard), or plain text
+                        messages.</p>
+                </details>
+                <details>
+                    <summary>Can I download the QR code?</summary>
+                    <p>Yes. After generating your QR code, click the Download PNG button to save a high-quality image
+                        with a clean white border.</p>
+                </details>
+                <details>
+                    <summary>Does it work on mobile?</summary>
+                    <p>Yes. Eden Tools works in any mobile browser — Chrome, Safari, Firefox — without installing any
+                        app.</p>
+                </details>
+                <details>
+                    <summary>How do I scan the QR code I created?</summary>
+                    <p>Open your phone's camera and point it at the QR code. Most modern phones will automatically
+                        detect and open the link or text.</p>
+                </details>
+            </div>
+        </div>
+
+        <br>
+        <hr>
+        <div class="youtube-block-body">
+            <h2>Contact Us</h2>
+            <p>
+                If you have any issues or questions, please contact us at
+                <strong><a href="https://rahul.serv00.net/apps/contact-us" target="_blank"
+                        rel="noopener noreferrer">Contact Page</a></strong>.
+            </p>
+        </div>
+        <br><br><br>
+
+    </div>
+
+    <!-- Float support -->
+    <a href="https://razorpay.me/@melamrahul" class="float-support" aria-label="Support" target="_blank"
+        rel="noopener noreferrer">
+        <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" alt="Donate" width="20" height="20">
+        Donate
+    </a>
+
+    <footer style="background-color:white;z-index:1100;">With ❤️ Eden Tools • Just for you</footer>
+
+    <!-- Support dialog backdrop -->
+    <div id="supportBackdrop" onclick="closeSupportDialog()"></div>
+
+    <!-- Support dialog -->
+    <div id="supportDialog">
+        <div class="sd-banner">
+            <button class="sd-close" onclick="closeSupportDialog()">✕</button>
+            <span class="sd-banner-emoji">💙</span>
+            <h3>Glad you love Eden Tools!</h3>
+            <p>This tool runs on love — and a bit of server money 😊</p>
+        </div>
+        <div class="sd-body">
+            <div class="sd-story">
+                <p>If you find <strong>Eden Tools helpful</strong>, even a small contribution means a lot and helps keep
+                    the tool available for everyone. 🌍</p>
+                <p>Your donation goes to:</p>
+            </div>
+            <div class="sd-costs">
+                <span class="sd-cost-tag">🖥️ Server Hosting</span>
+                <span class="sd-cost-tag">🌐 Bandwidth</span>
+                <span class="sd-cost-tag">🔒 Cloudflare</span>
+                <span class="sd-cost-tag">⚙️ Maintenance</span>
+            </div>
+            <div class="sd-stat">
+                <span class="sd-stat-icon">📲</span>
+                <div class="sd-stat-text">
+                    <span>You've generated <strong id="sd-since-count">—</strong> QR codes</span>
+                    <span class="sd-sub">Total all time: <strong id="sd-total-count">—</strong> codes generated
+                        💛</span>
+                </div>
+            </div>
+            <a href="https://razorpay.me/@melamrahul" target="_blank" class="sd-btn-support">I love this tool 💙</a>
+            <button class="sd-btn-later" onclick="closeSupportDialog()">Remind Me Later</button>
+            <div class="sd-note">Thank you for using Eden Tools 🙏</div>
         </div>
     </div>
 
-    <footer style="background-color: black; padding-bottom: 10px;">
-        © Designed ❤️ by <a href="/">M. Rahul</a>
-    </footer>
-
-    <!-- QR Library -->
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 
     <script>
-        /* Splash Loader */
-        const globalLoader = document.getElementById("globalLoader");
-        const mainContent = document.getElementById("mainContent");
-
-        setTimeout(() => {
-            globalLoader.style.display = "none";
-            document.body.style.overflow = "auto";
-            mainContent.style.opacity = "1";
-        }, 1500);
-
-        let qr;
-
-        function generateQR() {
-            const input = document.getElementById("qrInput");
-            const qrBox = document.getElementById("qrcode");
-            const downloadBtn = document.getElementById("downloadBtn");
-
-            if (!input.value.trim()) return;
-
-            qrBox.innerHTML = "";
-
-            // Generate temporary QR first
-            qr = new QRCode(qrBox, {
-                text: input.value,
-                width: 256,
-                height: 256
-            });
-
-            // Wait a moment for canvas to be added to the DOM
+        // ── Loader ───────────────────────────────────────────────────────
+        const globalLoader = document.getElementById('globalLoader');
+        const mainContent = document.getElementById('mainContent');
+        window.addEventListener('load', () => {
             setTimeout(() => {
-                const originalCanvas = qrBox.querySelector("canvas");
-                if (!originalCanvas) return;
+                globalLoader.classList.add('hidden');
+                mainContent.classList.add('visible');
+            }, 500);
+        });
 
-                const border = 20; // thickness of white border
-                const borderedCanvas = document.createElement("canvas");
-                borderedCanvas.width = originalCanvas.width + border * 2;
-                borderedCanvas.height = originalCanvas.height + border * 2;
+        // ── Goal bar ─────────────────────────────────────────────────────
+        async function updateGoal() {
+            try {
+                const res = await fetch('https://rahul.serv00.net/apps/yt_convert/update_progress');
+                const data = await res.json();
+                const pct = Math.min(100, Math.max(0, parseInt(data.percent) || 0));
+                const month = new Date().toLocaleString('default', { month: 'long' });
 
-                const ctx = borderedCanvas.getContext("2d");
+                document.getElementById('goalFillBar').style.width = pct + '%';
+                document.getElementById('goalPercent').textContent = pct + '% of goal';
+                document.getElementById('goalSubline').textContent = data.label || 'Click here to donate 💙';
 
-                // Fill border area with white
-                ctx.fillStyle = "white";
-                ctx.fillRect(0, 0, borderedCanvas.width, borderedCanvas.height);
+                if (pct >= 80) document.getElementById('goalMainText').textContent = `Almost there! Help finish ${month}'s goal 🙌`;
+                else if (pct >= 40) document.getElementById('goalMainText').textContent = `Help reach ${month}'s server goal`;
+                else document.getElementById('goalMainText').textContent = `Donate for ${month} month costs`;
+            } catch (e) {
+                const month = new Date().toLocaleString('default', { month: 'long' });
+                document.getElementById('goalFillBar').style.width = '3%';
+                document.getElementById('goalPercent').textContent = '3%';
+                document.getElementById('goalMainText').textContent = `Donate for ${month} month costs`;
+                document.getElementById('goalSubline').textContent = 'Click here to donate 💙';
+            }
+        }
+        updateGoal();
+        setInterval(updateGoal, 60000);
 
-                // Draw the original QR in the center
-                ctx.drawImage(originalCanvas, border, border);
+        // ── QR count (local session) ─────────────────────────────────────
+        // function getQRCount() { return parseInt(sessionStorage.getItem('qr_count') || '0'); }
+        // function incQRCount() {
+        //     const n = getQRCount() + 1;
+        //     sessionStorage.setItem('qr_count', n);
+        //     return n;
+        // }
 
-                // Replace the original QR with bordered version
-                qrBox.innerHTML = "";
-                qrBox.appendChild(borderedCanvas);
+        // function renderCount(n) {
+        //     document.getElementById('qrCount').innerHTML =
+        //         `QR codes generated this session: <b style="font-size:22px;color:#4468a9;">${n}</b> 🎉`;
+        // }
 
-                downloadBtn.style.display = "block";
-            }, 50);
+        // renderCount(getQRCount());
+
+        // ── Dialog cooldown ──────────────────────────────────────────────
+        const COOLDOWN = 12 * 60 * 60 * 1000;
+        function canShowDialog() {
+            const last = localStorage.getItem('eden_qr_dialog_last');
+            return !last || (Date.now() - parseInt(last)) > COOLDOWN;
+        }
+        function markDialogShown() { localStorage.setItem('eden_qr_dialog_last', Date.now()); }
+
+        function openSupportDialog(since, total) {
+            document.getElementById('sd-since-count').textContent = since;
+            document.getElementById('sd-total-count').textContent = total;
+            markDialogShown();
+            document.getElementById('supportBackdrop').style.display = 'block';
+            const dialog = document.getElementById('supportDialog');
+            dialog.style.display = 'block';
+            requestAnimationFrame(() => requestAnimationFrame(() => dialog.classList.add('sd-open')));
         }
 
+        function closeSupportDialog() {
+            markDialogShown();
+            const dialog = document.getElementById('supportDialog');
+            dialog.classList.remove('sd-open');
+            setTimeout(() => {
+                dialog.style.display = 'none';
+                document.getElementById('supportBackdrop').style.display = 'none';
+            }, 300);
+        }
+
+        // ── QR logic ─────────────────────────────────────────────────────
+        let qrInstance = null;
+
+        document.getElementById('qrInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter') generateQR();
+        });
+        document.getElementById('btnGenerate').addEventListener('click', generateQR);
+
+        function generateQR() {
+            const val = document.getElementById('qrInput').value.trim();
+            if (!val) { alert('Please enter a URL or text.'); return; }
+
+            const qrBox = document.getElementById('qrcode');
+            const output = document.getElementById('qr-output');
+            const actionRow = document.getElementById('action-row');
+
+            qrBox.innerHTML = '';
+            qrInstance = null;
+
+            qrInstance = new QRCode(qrBox, { text: val, width: 240, height: 240 });
+
+            output.classList.add('visible');
+            actionRow.style.display = 'block';
+
+            // Count + maybe show dialog
+            const session = incQRCount();
+            const allTime = parseInt(localStorage.getItem('qr_all_time') || '0') + 1;
+            localStorage.setItem('qr_all_time', allTime);
+            renderCount(session);
+
+            if (session >= 5 && canShowDialog()) {
+                setTimeout(() => openSupportDialog(session, allTime), 800);
+            }
+        }
 
         function downloadQR() {
-            if (!qr) return;
-
             const canvas = document.querySelector('#qrcode canvas');
-            const tempCanvas = document.createElement('canvas');
-            const ctx = tempCanvas.getContext('2d');
+            if (!canvas) return;
 
-            tempCanvas.width = canvas.width + 20;
-            tempCanvas.height = canvas.height + 20;
+            const border = 20;
+            const out = document.createElement('canvas');
+            out.width = canvas.width + border * 2;
+            out.height = canvas.height + border * 2;
 
+            const ctx = out.getContext('2d');
             ctx.fillStyle = 'white';
-            ctx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-            ctx.drawImage(canvas, 10, 10);
+            ctx.fillRect(0, 0, out.width, out.height);
+            ctx.drawImage(canvas, border, border);
 
             const link = document.createElement('a');
-            link.href = tempCanvas.toDataURL();
-            link.download = 'qrcode.png';
+            link.href = out.toDataURL('image/png');
+            link.download = 'eden-qrcode.png';
             link.click();
         }
 
-        function clearQR() {
-            document.getElementById("qrcode").innerHTML = "";
-            document.getElementById("qrInput").value = "";
-            document.getElementById("downloadBtn").style.display = "none";
+        function resetQR() {
+            document.getElementById('qrcode').innerHTML = '';
+            document.getElementById('qrInput').value = '';
+            document.getElementById('qr-output').classList.remove('visible');
+            document.getElementById('action-row').style.display = 'none';
+            qrInstance = null;
         }
 
-        /* Disable inspecting */
-        document.oncontextmenu = () => false;
-        document.onkeydown = e => {
-            if (e.ctrlKey && (e.key === "U" || e.key === "I" || e.key === "J")) return false;
-        };
+        // ── Donate link by location ──────────────────────────────────────
+        fetch('/apps/location', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(r => r.json())
+            .then(data => {
+                const url = data.country_code === 'IN'
+                    ? 'https://razorpay.me/@melamrahul'
+                    : '/apps/yt_convert/support-me';
+                const floatBtn = document.querySelector('.float-support');
+                const goalBtn = document.getElementById('goalDonateBtn');
+                if (floatBtn) floatBtn.href = url;
+                if (goalBtn) goalBtn.href = url;
+            }).catch(() => { });
+
+        // ── Share links ──────────────────────────────────────────────────
+        const shareUrl = encodeURIComponent(window.location.href);
+        const shareTitle = encodeURIComponent('Free QR Code Generator — Eden Tools');
+        document.getElementById('whatsapp').href = `https://wa.me/?text=${shareTitle}%20${shareUrl}`;
+        document.getElementById('facebook').href = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+        document.getElementById('reddit').href = `https://www.reddit.com/submit?url=${shareUrl}&title=${shareTitle}`;
+        document.getElementById('x').href = `https://twitter.com/intent/tweet?url=${shareUrl}&text=${shareTitle}`;
+        document.getElementById('telegram').href = `https://t.me/share/url?url=${shareUrl}&text=${shareTitle}`;
+        document.getElementById('moreShare').addEventListener('click', async () => {
+            if (navigator.share) {
+                await navigator.share({ title: document.title, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert('Link copied!');
+            }
+        });
     </script>
+
+    <script>
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "https://mrahul.matomo.cloud/";
+            _paq.push(['setTrackerUrl', u + 'matomo.php']);
+            _paq.push(['setSiteId', '2']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.async = true; g.src = 'https://cdn.matomo.cloud/mrahul.matomo.cloud/matomo.js';
+            s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+
 </body>
+
 </html>
