@@ -15,8 +15,8 @@
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="Rahul">
     <meta name="theme-color" content="#5b87ff">
-    <meta property="article:modified_time" content="2026-04-17T14:35:00+05:30">
-    <meta name="last-modified" content="2026-04-17">
+    <meta property="article:modified_time" content="2026-04-19T14:35:00+05:30">
+    <meta name="last-modified" content="2026-04-19">
     <link rel="canonical" href="https://melamrahul.github.io/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Ruvs Tools — YouTube to MP3 & MP4 Converter GitHub | Free, No Ads">
@@ -117,7 +117,7 @@
       "name":"Ruvs Tools",
       "url":"https://melamrahul.github.io/tools/",
       "datePublished":"2025-05-10",
-      "dateModified":"2026-04-17",
+      "dateModified":"2026-04-19",
       "applicationCategory":"MultimediaApplication"
     }
     </script>
@@ -205,7 +205,8 @@
                 <img src="https://ruvs.in/resos/common/icons/ruvs-icon.png" height="40px" width="40px"
                     style="margin-left: 10px">
                 <div class="header-title">
-                    <h1 translate="no" class="notranslate">ruvs.in<span class="logo-ruvs"></span><span class="logo-tag"></span></h1>
+                    <h1 translate="no" class="notranslate">ruvs.in<span class="logo-ruvs"></span><span
+                            class="logo-tag"></span></h1>
                 </div>
             </div>
 
@@ -262,7 +263,7 @@
                 padding:6px 10px;font-size:clamp(1rem,3vw,1.3rem);
                 border-radius:8px;text-decoration:none;
                 display:inline-flex;align-items:center;gap:4px;
-                margin-left:px;flex-wrap:wrap;">
+                margin-left:px;flex-wrap:wrap;" translate="no" class="notranslate">
                         ruvs.in <span style="font-size:0.9em;">↗</span>
                     </a>
                 </h2>
@@ -352,9 +353,13 @@
         <!-- Donate nudge -->
         <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none">
             <div style="border:none;text-align:center;">
-                <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.85rem;" translate="no" class="notranslate">
-                    If this tool saves your time, please <a href="https://ko-fi.com/ruvsin" target="_blank"
-                        id="give-tip" style="background-color: #ff5e5b; color: white">Donate</a>
+                <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.85rem;">
+                    If this tool saves your time, please
+                    <a href="https://ko-fi.com/ruvsin" target=" _blank" id="donate-btn" translate="no"
+                        class="notranslate"
+                        style="background-color:#ff5e5b;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;">
+                        Donate
+                    </a>
                 </h5>
             </div>
         </div>
@@ -402,7 +407,8 @@
                 style="text-align:center;margin:1rem 0;" id="bookmark-msg"></div>
             <br>
             <!-- Issue link -->
-            <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none" translate="no" class="notranslate">
+            <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none"
+                translate="no" class="notranslate">
                 <div style="border:none;text-align:center;" translate="no" class="notranslate">
                     <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.85rem;">
                         Facing any issue? let us know <a href="/apps/contact" target="_blank" class="tab-btn active"
@@ -437,11 +443,6 @@
             themeIcon.innerHTML = next === 'dark' ? sunPath : moonPath;
         });
 
-        const link = document.getElementById("give-tip");
-        const locale = navigator.language || navigator.userLanguage;
-        if (locale && locale.toLowerCase().includes("in")) {
-            link.href = "https://razorpay.me/@melamrahul";
-        }
         // ── Config ─────────────────────────────────────────────────────────────
         const v83es = "https://rahul.serv00.net/apps/yt_convert/_n5se";
         const POLL_MIN = 2000, POLL_MAX = 5000, POLL_STEP = 500, MAX_ATTEMPTS = 35;
@@ -453,6 +454,45 @@
             mode: 'mp3', quality: '192kbps',
         };
 
+        fetch("https://www.ruvs.in/tools/geo")
+            .then(res => res.json())
+            .then(data => {
+                const btn = document.getElementById("donate-btn");
+
+                if (data.country_code === "IN") {
+                    // 🇮🇳 Show Razorpay button
+                    btn.href = "https://razorpay.me/@melamrahul";
+                    btn.textContent = "Donate (₹)";
+                    btn.style.display = "block";
+                } else {
+                    // 🌍 Load Ko-fi widget dynamically
+                    const script = document.createElement("script");
+                    script.src = "https://storage.ko-fi.com/cdn/scripts/overlay-widget.js";
+                    script.onload = () => {
+                        kofiWidgetOverlay.draw('ruvsin', {
+                            type: 'floating-chat',
+                            'floating-chat.donateButton.text': 'Support Me',
+                            'floating-chat.donateButton.background-color': '#00b9fe',
+                            'floating-chat.donateButton.text-color': '#fff'
+                        });
+                    };
+                    document.body.appendChild(script);
+                }
+            })
+            .catch(() => {
+                // 🌍 Fallback → show Ko-fi
+                const script = document.createElement("script");
+                script.src = "https://storage.ko-fi.com/cdn/scripts/overlay-widget.js";
+                script.onload = () => {
+                    kofiWidgetOverlay.draw('ruvsin', {
+                        type: 'floating-chat',
+                        'floating-chat.donateButton.text': 'Support Me',
+                        'floating-chat.donateButton.background-color': '#00b9fe',
+                        'floating-chat.donateButton.text-color': '#fff'
+                    });
+                };
+                document.body.appendChild(script);
+            });
         const els = {
             rahulContainer: document.getElementById('rahul-container'),
             urlInput: document.getElementById('yt-url'),
@@ -735,15 +775,6 @@
             else if (p.includes("mac")) b.innerHTML = "Press <b>⌘ + D</b> to bookmark ⭐ this site for easy access.";
             else b.innerHTML = "Bookmark ⭐ this site for easy access.";
         })();
-    </script>
-    <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-    <script>
-        kofiWidgetOverlay.draw('ruvsin', {
-            'type': 'floating-chat',
-            'floating-chat.donateButton.text': 'Support Me',
-            'floating-chat.donateButton.background-color': '#00b9fe',
-            'floating-chat.donateButton.text-color': '#fff'
-        });
     </script>
     <script>
         var _paq = window._paq = window._paq || [];
