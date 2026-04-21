@@ -15,7 +15,7 @@
     <meta name="robots" content="index, follow, max-image-preview:large">
     <meta name="author" content="Rahul">
     <meta name="theme-color" content="#5b87ff">
-    <meta property="article:modified_time" content="2026-04-21T10:20:00+05:30">
+    <meta property="article:modified_time" content="2026-04-21T20:20:00+05:30">
     <meta name="last-modified" content="2026-04-21">
     <link rel="canonical" href="https://melamrahul.github.io/">
     <meta property="og:type" content="website">
@@ -68,10 +68,10 @@
         }
         document.addEventListener('DOMContentLoaded', restoreGoogTrans);
     </script>
-    <script src="https://rahul.serv00.net/apps/vgrs.js?v=2.2" defer=""></script>
-    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=2.2">
+    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.1" defer=""></script>
+    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.1">
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=2.2" defer=""></script>
+    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.1" defer=""></script>
     <link rel="icon" type="image/png" sizes="32x32" href="https://ruvs.in/resos/common/icons/ruvs-icon.png">
     <link rel="apple-touch-icon" href="https://ruvs.in/resos/common/icons/ruvs-icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -576,7 +576,7 @@
         });
 
         // ── Config ─────────────────────────────────────────────────────────────
-        const v83es = "https://rahul.serv00.net/apps/yt_convert/_n5se";
+        const v83es = "https://rahul.serv00.net/apps/yt_convert/_w54n";
         const POLL_MIN = 2000, POLL_MAX = 5000, POLL_STEP = 500, MAX_ATTEMPTS = 35;
 
         let state = {
@@ -586,6 +586,25 @@
             mode: 'mp3', quality: '192kbps',
         };
 
+        // ── Juice Shop ───────────────────────────────────────────────
+        async function signRequest(bodyString) {
+            const tokenRes = await fetch(v83es + '?action=juice');
+            if (!tokenRes.ok) throw new Error('Try again after sometime.');
+            const { timestamp, nonce, juice } = await tokenRes.json();
+
+            const enc       = new TextEncoder();
+            const cryptoKey = await crypto.subtle.importKey(
+                'raw', enc.encode(juice),
+                { name: 'HMAC', hash: 'SHA-256' },
+                false, ['sign']
+            );
+            const sigBuffer = await crypto.subtle.sign('HMAC', cryptoKey, enc.encode(bodyString));
+            const sigHex    = Array.from(new Uint8Array(sigBuffer))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+
+            return { timestamp, nonce, sig: sigHex };
+        }
+
         fetch("https://www.ruvs.in/tools/geo")
             .then(res => res.json())
             .then(data => {
@@ -593,7 +612,6 @@
                 const coffeebtn = document.getElementById("buy-me-coffee");
 
                 if (data.country_code === "IN") {
-                    // 🇮🇳 Show Razorpay button
                     btn.href = "https://razorpay.me/@ruvs";
                     btn.textContent = "Donate (₹)";
                     coffeebtn.href = "https://razorpay.me/@ruvs"
@@ -624,6 +642,7 @@
                 };
                 document.body.appendChild(script);
             });
+
         const els = {
             rahulContainer: document.getElementById('rahul-container'),
             urlInput: document.getElementById('yt-url'),
@@ -674,25 +693,6 @@
         function closeCdDialog() { cdDialog.classList.remove("cd-open"); setTimeout(() => { cdBackdrop.style.display = "none"; cdDialog.style.display = "none"; document.getElementById("cd-title").textContent = "Clipboard Permission"; }, 250); }
         function showCdHelp() { cdMessage.style.display = "none"; cdHelp.style.display = "block"; }
         function showCdError(msg) { document.getElementById("cd-title").textContent = "Error"; cdMessage.style.display = "block"; cdHelp.style.display = "none"; cdMessage.innerHTML = msg; document.getElementById("cd-continue").textContent = "OK"; document.getElementById("cd-cancel").style.display = "none"; openCdDialog(); }
-
-        // ── Goal bar ───────────────────────────────────────────────────────────
-        async function updateGoal() {
-            try {
-                const res = await fetch('https://rahul.serv00.net/apps/yt_convert/update_progress'), data = await res.json();
-                const pct = Math.min(100, Math.max(0, parseInt(data.percent) || 0));
-                const month = new Date().toLocaleString('default', { month: 'long' });
-                els.goalFillBar.style.width = pct + '%';
-                els.goalPercent.textContent = pct + '% of goal';
-                els.goalSubline.textContent = data.label || 'Built on sleepless nights 💙';
-                els.goalMainText.textContent = pct >= 80 ? `Almost there! Help finish ${month}'s goal 🙌` : `Server Costs for ${month}`;
-            } catch {
-                const month = new Date().toLocaleString('default', { month: 'long' });
-                els.goalFillBar.style.width = '3%'; els.goalPercent.textContent = '3%';
-                els.goalMainText.textContent = `Server Costs for ${month}`;
-                els.goalSubline.textContent = 'Built on sleepless nights 💙';
-            }
-        }
-        //updateGoal(); setInterval(updateGoal, 120000);
 
         // ── Mode switch ────────────────────────────────────────────────────────
         function switchMode(mode) {
@@ -757,7 +757,6 @@
         // ── Proxy poll ─────────────────────────────────────────────────────────
         async function pollStatus(statusUrl, fname) {
             for (let i = 1; i <= MAX_ATTEMPTS; i++) {
-                //setStatus(`Processing… (${i}/${MAX_ATTEMPTS})`, true);
                 setStatus(`Processing…`, true);
                 await new Promise(r => setTimeout(r, Math.min(POLL_MIN + (i - 1) * POLL_STEP, POLL_MAX)));
                 if (state.aborted) return;
@@ -816,7 +815,21 @@
             };
 
             try {
-                const res = await fetch(v83es, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                // ── Sign the request before sending ───────────────────────────
+                const bodyString = JSON.stringify(payload);
+                const { timestamp, nonce, sig } = await signRequest(bodyString);
+
+                const res = await fetch(v83es, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type':        'application/json',
+                        'X-Request-Timestamp': timestamp,
+                        'X-Request-Nonce':     nonce,
+                        'X-Request-Sig':       sig,
+                    },
+                    body: bodyString,
+                });
+
                 const data = await res.json();
 
                 if (!res.ok || data.error) { setStatus("Error: " + (data.error || res.status) + (data.detail ? " — " + data.detail : ""), false); enableBtn(); return; }
@@ -920,5 +933,4 @@
         })();
     </script>
 </body>
-
 </html>
