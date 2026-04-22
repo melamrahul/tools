@@ -827,7 +827,7 @@
 
         // ── Helpers ────────────────────────────────────────────────────────────
         function extractYoutubeId(input) {
-            const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+            const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/|\/live\/)([a-zA-Z0-9_-]{11})/);
             return m ? m[1] : null;
         }
         function setStatus(label, loading) {
