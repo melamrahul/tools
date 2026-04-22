@@ -287,9 +287,9 @@
     <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
     <!-- ── SCRIPTS ────────────────────────────────────────────── -->
-    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.3" defer></script>
-    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.3">
-    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.3" defer></script>
+    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.4" defer></script>
+    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.4">
+    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.4" defer></script>
 
 </head>
 
@@ -928,42 +928,42 @@
 
         // ── Main flow ──────────────────────────────────────────────────────────────────
         async function _go() {
-        const raw = _e.ui.value.trim();
-        if (!raw) { alert('Please paste a YouTube link'); return; }
-        const id = _xid(raw);
-        if (!id) { _showCdErr('Invalid YouTube URL'); return; }
-    
-        _st = { ..._st, ab: false, att: 0, pd: _PM, dlUrl: null, yid: id, url: raw, ttl: '', q: _st.mode === 'mp3' ? _e.aq.value : _e.vq.value };
-        _stopRot();
-        if (_e.il) _e.il.style.display = 'none';
-        _e.db.classList.remove('visible'); _e.db.style.display = 'none';
-        _e.sb.classList.remove('visible'); _e.sv.classList.remove('visible');
-        _e.rc.style.display = 'block'; _e.rc.classList.remove('fade-out');
-        _e.mc.style.display = 'none'; _e.bg.disabled = true; _e.bg.textContent = '…';
-        _e.pv.classList.remove('visible'); _e.vt.textContent = '—'; _e.vc.textContent = '';
-    
-        _startRot('Fetching video info…');
-    
-        await Promise.race([_meta(id, raw), new Promise(r => setTimeout(r, 6000))]);
-        if (_st.ab) return;
-        _st.ax = 'a';
-        try {
-            await _runA();
-        } catch (pe) {
-            _rec('a', true);
+            const raw = _e.ui.value.trim();
+            if (!raw) { _showCdErr('Please paste a YouTube link'); return; }
+            const id = _xid(raw);
+            if (!id) { _showCdErr('Invalid YouTube URL'); return; }
+
+            _st = { ..._st, ab: false, att: 0, pd: _PM, dlUrl: null, yid: id, url: raw, ttl: '', q: _st.mode === 'mp3' ? _e.aq.value : _e.vq.value };
+            _stopRot();
+            if (_e.il) _e.il.style.display = 'none';
+            _e.db.classList.remove('visible'); _e.db.style.display = 'none';
+            _e.sb.classList.remove('visible'); _e.sv.classList.remove('visible');
+            _e.rc.style.display = 'block'; _e.rc.classList.remove('fade-out');
+            _e.mc.style.display = 'none'; _e.bg.disabled = true; _e.bg.textContent = '…';
+            _e.pv.classList.remove('visible'); _e.vt.textContent = '—'; _e.vc.textContent = '';
+
+            _startRot('Fetching video info…');
+            _meta(id, raw);
             if (_st.ab) return;
-            _st.ax = 'b';
-            _ss('Switching to backup server…', true);
+            _st.ax = 'a';
+
             try {
-                await _runB();
-            } catch (fe) {
-                _rec('b', true);
-                _stopRot();
-                _ss('Both servers busy — please try again in a moment.', false);
-                _enb();
+                await _runA();
+            } catch (pe) {
+                _rec('a', true);
+                if (_st.ab) return;
+                _st.ax = 'b';
+                _ss('Switching to backup server…', true);
+                try {
+                    await _runB();
+                } catch (fe) {
+                    _rec('b', true);
+                    _stopRot();
+                    _ss('Both servers busy — please try again in a moment.', false);
+                    _enb();
+                }
             }
         }
-    }
 
         // ── Download trigger + success screen ─────────────────────────────────────────
         function _dl(url, fn) {
