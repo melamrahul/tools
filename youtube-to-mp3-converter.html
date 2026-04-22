@@ -929,7 +929,7 @@
         // ── Main flow ──────────────────────────────────────────────────────────────────
         async function _go() {
             const raw = _e.ui.value.trim();
-            if (!raw) { alert('Please paste a YouTube link'); return; }
+            if (!raw) { _showCdErr('Please paste a YouTube link'); return; }
             const id = _xid(raw);
             if (!id) { _showCdErr('Invalid YouTube URL'); return; }
 
@@ -1025,7 +1025,7 @@
         document.getElementById('reddit').href = `https://www.reddit.com/submit?url=${_su}&title=${_st2}`;
         document.getElementById('x').href = `https://twitter.com/intent/tweet?url=${_su}&text=${_st2}`;
         document.getElementById('telegram').href = `https://t.me/share/url?url=${_su}&text=${_st2}`;
-        document.getElementById('moreShare').addEventListener('click', async () => { if (navigator.share) await navigator.share({ title: document.title, url: window.location.href }); else { navigator.clipboard.writeText(window.location.href); alert('Link copied!'); } });
+        document.getElementById('moreShare').addEventListener('click', async () => { if (navigator.share) await navigator.share({ title: document.title, url: window.location.href }); else { navigator.clipboard.writeText(window.location.href); _showCdErr('Link copied!'); } });
 
         // ── Bookmark hint ──────────────────────────────────────────────────────────────
         (() => { const p = navigator.platform.toLowerCase(), b = document.getElementById('bookmark-msg'); if (!b) return; if (p.includes('win')) b.innerHTML = 'Press &ensp;<b>Ctrl + D</b>&ensp; to bookmark ⭐ this site for easy access.'; else if (p.includes('mac')) b.innerHTML = 'Press <b>⌘ + D</b> to bookmark ⭐ this site for easy access.'; else b.innerHTML = 'Bookmark ⭐ this site for easy access.'; })();
