@@ -456,6 +456,12 @@
 
             <button id="download-btn">Download File</button>
 
+             <div class="header" id="user-known"
+                style="padding:12px; display: none; background-color: transparent; margin:10px auto;max-width:fit-content;border:none;text-align:center;">
+                <h2 style="margin:0;color:var(--text);line-height:1.4rem;font-size:1.1rem;">If you feel stuck in the queue, please refresh the page and try again.
+                </h2>
+            </div>
+
             <!-- Success -->
             <div id="success-view">
                 <div class="success-title">Download Started! 🎉</div>
@@ -762,6 +768,7 @@
 
         const els = {
             rahulContainer: document.getElementById('rahul-container'),
+            userKnown: document.getElementById('user-known'),
             urlInput: document.getElementById('yt-url'),
             btnGo: document.getElementById('btn-go'),
             audioQuality: document.getElementById('audio-quality'),
@@ -911,6 +918,8 @@
             els.successView.classList.remove('visible');
             els.rahulContainer.style.display = 'block';
             els.rahulContainer.classList.remove('fade-out');
+            els.userKnown.style.display = 'none';
+            setTimeout(() => els.userKnown.style.display = 'block', 5000);
             els.mainCard.style.display = 'none';
             els.btnGo.disabled = true; els.btnGo.textContent = '…';
             els.preview.classList.remove('visible');
