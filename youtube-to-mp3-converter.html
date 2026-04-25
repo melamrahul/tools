@@ -423,7 +423,7 @@
                                 <span>Paste</span>
                             </button>
                         </div>
-                        <button class="btn-go" id="btn-go">Convert to MP3</button>
+                        <button class="btn-go" id="btn-go">Download MP3</button>
                     </div>
                     <div class="options-row" style="align-items:center;justify-content:center;">
                         <div class="opt-group" id="opt-audio-quality">
@@ -902,11 +902,11 @@
             if (mode === 'mp3') {
                 els.tabMp3.classList.add('active'); els.tabMp4.classList.remove('active');
                 els.optAudio.style.display = ''; els.optVideo.style.display = 'none';
-                els.btnGo.textContent = "Convert to MP3";
+                els.btnGo.textContent = "Download MP3";
             } else {
                 els.tabMp3.classList.remove('active'); els.tabMp4.classList.add('active');
                 els.optAudio.style.display = 'none'; els.optVideo.style.display = '';
-                els.btnGo.textContent = "Convert to MP4";
+                els.btnGo.textContent = "Download MP4";
             }
         }
 
@@ -922,7 +922,7 @@
         }
         function enableBtn() {
             els.btnGo.disabled = false;
-            els.btnGo.textContent = state.mode === 'mp3' ? 'Convert to MP3' : 'Convert to MP4';
+            els.btnGo.textContent = state.mode === 'mp3' ? 'Download MP3' : 'Download MP4';
         }
         function makeFilename(title, ext) {
             if (!title) return ext === 'mp4' ? 'video.mp4' : 'audio.mp3';
