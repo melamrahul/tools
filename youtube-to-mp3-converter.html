@@ -786,7 +786,7 @@
             themeIcon.innerHTML = next === 'dark' ? sunPath : moonPath;
         });
 
-        fetch("/tools/geo")
+        fetch("https://ruvs.in/tools/geo")
             .then(res => res.json())
             .then(data => {
                 const btn = document.getElementById("donate-btn");
