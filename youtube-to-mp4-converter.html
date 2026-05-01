@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
 
@@ -41,7 +41,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Ruvs Tools — YouTube to MP3 Converter on GitHub">
     <meta property="og:locale" content="en_US">
-    <meta property="article:modified_time" content="2026-04-26T00:20:00+05:30">
+    <meta property="article:modified_time" content="2026-05-01T16:04:00+05:30">
 
     <!-- ── TWITTER / X CARD ──────────────────────────────────── -->
     <meta name="twitter:card" content="summary_large_image">
@@ -123,8 +123,8 @@
     "description": "Free YouTube to MP3 (320kbps) or MP4 (1080p) converter by Ruvs Tools on GitHub. No ads, no signup.",
     "isPartOf": { "@id": "https://melamrahul.github.io/#website" },
     "about": { "@id": "https://ruvs.in/#organization" },
-    "datePublished": "2025-05-10",
-    "dateModified": "2026-04-26",
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-05-01",
     "inLanguage": "en-US",
     "breadcrumb": {
       "@type": "BreadcrumbList",
@@ -162,13 +162,6 @@
       "@type": "Offer",
       "price": "0",
       "priceCurrency": "USD"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.8",
-      "ratingCount": "2400",
-      "bestRating": "5",
-      "worstRating": "1"
     },
     "featureList": [
       "YouTube to MP3 up to 320kbps",
@@ -256,39 +249,6 @@
     ]
   }
   </script>
-
-    <!-- ── GOOGLE TRANSLATE ───────────────────────────────────── -->
-    <!-- <script>
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'en',
-        autoDisplay: false
-      }, 'google_translate_element');
-    }
-    function restoreGoogTrans() {
-      const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
-      if (!match) return;
-      const val = decodeURIComponent(match[1]);
-      const parts = val.split('/').filter(Boolean);
-      const targetLang = parts[parts.length - 1];
-      if (!targetLang || targetLang === 'en') return;
-      const interval = setInterval(() => {
-        const select = document.querySelector('.goog-te-combo');
-        if (select) {
-          select.value = targetLang;
-          select.dispatchEvent(new Event('change'));
-          clearInterval(interval);
-        }
-      }, 300);
-      setTimeout(() => clearInterval(interval), 10000);
-    }
-    document.addEventListener('DOMContentLoaded', restoreGoogTrans);
-  </script>
-  <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>-->
-
-    <!-- ── SCRIPTS ────────────────────────────────────────────── -->
-    <!--<script src="https://rahul.serv00.net/apps/vgrs.js?v=3.2" defer></script>
-  <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.2"> -->
     <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.2" defer></script>
 
 </head>
@@ -382,19 +342,17 @@
             </h2>
         </div>
 
-        <div class="header" style="padding:12px;margin:10px auto;display:flex;justify-content:center;max-width:600px;">
-            <div style="text-align:center;max-width:100%;">
-                <h2
-                    style="font-weight:500;font-size:clamp(1rem,4vw,1.6rem);line-height:1.4;margin:0;word-wrap:break-word;">
-                    This website <strong>shifted</strong> to
-                    <a href="https://ruvs.in" target="_blank" rel="noopener noreferrer" style="background-color:#168918;color:white;font-weight:700;
-                padding:6px 10px;font-size:clamp(1rem,3vw,1.3rem);
-                border-radius:8px;text-decoration:none;
-                display:inline-flex;align-items:center;gap:4px;
-                margin-left:px;flex-wrap:wrap;" translate="no" class="notranslate">
-                        ruvs.in <span style="font-size:0.9em;">↗</span>
+        <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none">
+            <div style="text-align:center;">
+
+                <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.9rem; font-weight: 400;">
+                    For fast access, Visit our short domain
+                    <a href="https://ruvs.in" target="_blank" id="donate-btn"
+                        style="background-color:#168918;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;">
+                        ruvs.in ↗
                     </a>
-                </h2>
+                </h5>
+
             </div>
         </div>
 
@@ -472,7 +430,8 @@
 
             <div class="header" id="user-known"
                 style="padding:12px; display: none; background-color: transparent; margin:10px auto;max-width:fit-content;border:none;text-align:center;">
-                <h2 style="margin:0;color:white;line-height:1.4rem;font-size:1.1rem;">If you feel stuck in the queue, please refresh the page and try again. or wait.
+                <h2 style="margin:0;color:white;line-height:1.4rem;font-size:1.1rem;">If you feel stuck in the queue,
+                    please refresh the page and try again. or wait.
                 </h2>
             </div>
 
@@ -494,19 +453,6 @@
         </span>
 
         <div id="after-download-section" style="display:none;">
-            <!-- <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none">
-                <div style="text-align:center;">
-
-                    <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.9rem;">
-                        If this tool saves your time, please
-                        <a href="#" target="_blank" id="donate-btn"
-                            style="background-color:#ff5e5b;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;">
-                            Donate
-                        </a>
-                    </h5>
-
-                </div>
-            </div> -->
 
             <div class="donation-card">
 
@@ -764,8 +710,11 @@
         </span>
 
     </div>
-    <p class="last-update">Last updated:
-        <?= date('H:i') ?>
+    <p class="last-update">
+        Last updated:
+        <time datetime="2026-05-01T18:04">
+            May 1, 2026 – 18:04
+        </time>
     </p>
 
     <script>
@@ -775,7 +724,7 @@
         const themeIcon = document.getElementById('theme-icon');
         const moonPath = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
         const sunPath = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-        const saved = localStorage.getItem('theme') || 'light';
+        const saved = localStorage.getItem('theme') || 'dark';
         document.documentElement.dataset.theme = saved;
         themeIcon.innerHTML = saved === 'dark' ? sunPath : moonPath;
         themeBtn.addEventListener('click', () => {
@@ -786,7 +735,7 @@
             themeIcon.innerHTML = next === 'dark' ? sunPath : moonPath;
         });
 
-        fetch("/tools/geo")
+        fetch("https://ruvs.in/tools/geo")
             .then(res => res.json())
             .then(data => {
                 const btn = document.getElementById("donate-btn");
@@ -823,6 +772,7 @@
                 };
                 document.body.appendChild(script);
             });
+
         // ── Enjoy pandagoww ─────────────────────────────────────────────────────────────
         const POLL_MIN = 2000, POLL_MAX = 5000, POLL_STEP = 500, MAX_ATTEMPTS = 35;
 
@@ -832,6 +782,18 @@
             youtubeId: null, url: null, title: '',
             mode: 'mp3', quality: '192kbps',
         };
+
+        // ── Detect OS ────────────────────────────────────────────────────────
+        function detectOS() {
+            const p = (navigator.platform || navigator.userAgentData?.platform || '').toLowerCase();
+            const ua = navigator.userAgent.toLowerCase();
+            if (p.includes('win') || ua.includes('windows')) return 'windows';
+            if (p.includes('mac') || ua.includes('mac os')) return 'mac';
+            if (p.includes('linux') || ua.includes('linux')) return 'linux';
+            if (/android/i.test(ua)) return 'android';
+            if (/iphone|ipad|ipod/i.test(ua)) return 'ios';
+            return 'windows'; // safe default
+        }
 
         // ── Juice Shop ───────────────────────────────────────────────
         async function signRequest(bodyString) {
@@ -875,6 +837,10 @@
             goalPercent: document.getElementById('goalPercent'),
             goalMainText: document.getElementById('goalMainText'),
             goalSubline: document.getElementById('goalSubline'),
+            // Progress bar elements — add these to your HTML if not present
+            progressBar: document.getElementById('progress-bar'),
+            progressWrap: document.getElementById('progress-wrap'),
+            progressLabel: document.getElementById('progress-label'),
         };
 
         // ── Clipboard dialog ───────────────────────────────────────────────────
@@ -922,11 +888,26 @@
             const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/|\/live\/)([a-zA-Z0-9_-]{11})/);
             return m ? m[1] : null;
         }
+
         function setStatus(label, loading) {
             els.statusBox.classList.add('visible');
             els.statusLabel.textContent = label;
             if (els.infinityLoader) els.infinityLoader.style.display = loading === false ? 'none' : 'block';
         }
+
+        // ── Progress bar helper ───────────────────────────────────────────────
+        function setProgress(pct) {
+            if (!els.progressWrap) return; // graceful no-op if element not in HTML
+            if (pct === null || pct === undefined) {
+                els.progressWrap.style.display = 'none';
+                return;
+            }
+            els.progressWrap.style.display = 'block';
+            const clamped = Math.max(0, Math.min(100, pct));
+            if (els.progressBar) els.progressBar.style.width = clamped + '%';
+            if (els.progressLabel) els.progressLabel.textContent = clamped + '%';
+        }
+
         function enableBtn() {
             els.btnGo.disabled = false;
             els.btnGo.textContent = state.mode === 'mp3' ? 'Download MP3' : 'Download MP4';
@@ -963,18 +944,23 @@
             } catch { els.title.textContent = '—'; return ''; }
         }
 
-        // ── Proxy poll ─────────────────────────────────────────────────────────
+        // ── Proxy poll — now reads progress ───────────────────────────────────
         async function pollStatus(statusUrl, fname) {
+            let elapsed = 0;
+            const timer = setInterval(() => {
+                elapsed++;
+                setStatus(`Processing… ${elapsed}s`, true);
+            }, 1000);
+
             for (let i = 1; i <= MAX_ATTEMPTS; i++) {
-                //setStatus(`Processing… (${i}/${MAX_ATTEMPTS})`, true);
-                //setStatus(`Processing…`, true);
-                await new Promise(r => setTimeout(r, Math.min(POLL_MIN + (i - 1) * POLL_STEP, POLL_MAX)));
-                if (state.aborted) return;
+                if (state.aborted) { clearInterval(timer); return; }
                 try {
                     const res = await fetch(`${v83es}?status=${encodeURIComponent(statusUrl)}`);
                     const data = await res.json();
-                    if (data.error) { setStatus("Try again - refresh page: " + data.error, false); enableBtn(); return; }
+                    if (data.error) { clearInterval(timer); setStatus("Try again - refresh page: " + data.error, false); enableBtn(); return; }
+
                     if (data.status === "completed" || data.status === "done") {
+                        clearInterval(timer);
                         const raw = data.url || data.downloadUrl || data.link || data.download;
                         const hash = data.id || data.hash;
                         let abs = resolveUrl(raw, statusUrl);
@@ -982,13 +968,16 @@
                         if (abs) { doDownload(`${v83es}?dl=${encodeURIComponent(abs)}&filename=${encodeURIComponent(data.filename || fname)}`, data.filename || fname); return; }
                     }
                 } catch (e) { console.error("Poll:", e); }
+
+                await new Promise(r => setTimeout(r, Math.min(POLL_MIN + (i - 1) * POLL_STEP, POLL_MAX)));
             }
+            clearInterval(timer);
             setStatus("Timed out. Please try again.", false); enableBtn();
         }
 
         function startProcessingMessages(baseMsg) {
             const messages = [
-                "⚙️ Crunching your video…",
+                "⚙️ Processing your video…",
                 "🎵 Extracting the good stuff…",
                 "🚀 Almost there, hang tight…",
                 "🔧 Converting at full speed…",
@@ -1002,12 +991,18 @@
                 "🎯 Locking in your quality settings…",
             ];
             let i = 0;
-            // Show first message immediately
             setStatus(messages[i], true);
             return setInterval(() => {
                 i = (i + 1) % messages.length;
                 setStatus(messages[i], true);
             }, 3000);
+        }
+
+        // ── Audio bitrate map ─────────────────────────────────────────────────
+        function getAudioBitrate(quality) {
+            // quality is like "128kbps", "192kbps", "320kbps"
+            const match = quality.match(/^(\d+)/);
+            return match ? match[1] + 'k' : '128k';
         }
 
         // ── Main convert flow ──────────────────────────────────────────────────
@@ -1029,18 +1024,27 @@
             els.rahulContainer.style.display = 'block';
             els.rahulContainer.classList.remove('fade-out');
             els.userKnown.style.display = 'none';
-            setTimeout(() => els.userKnown.style.display = 'block', 5000);
+            setTimeout(() => els.userKnown.style.display = 'block', 8000);
             els.mainCard.style.display = 'none';
             els.btnGo.disabled = true; els.btnGo.textContent = '…';
             els.preview.classList.remove('visible');
             els.title.textContent = '—'; els.channel.textContent = '';
+            setProgress(null);
 
             setStatus('Starting conversion…', true);
             await Promise.race([fetchMeta(id), new Promise(r => setTimeout(r, 6000))]);
             if (state.aborted) return;
 
+            // ── Build payload matching API contract ──────────────────────────
+            const audioQualityValue = state.mode === 'mp3' ? state.quality : els.audioQuality.value;
+            const audioBitrate = getAudioBitrate(audioQualityValue);
+
             const payload = {
                 url: raw,
+                os: detectOS(),
+                audio: {
+                    bitrate: audioBitrate
+                },
                 output: {
                     type: state.mode === 'mp3' ? 'audio' : 'video',
                     format: state.mode === 'mp3' ? 'mp3' : 'mp4',
@@ -1066,14 +1070,21 @@
                 if (!res.ok || data.error) { setStatus("Error: " + (data.error || res.status) + (data.detail ? " — " + data.detail : ""), false); enableBtn(); return; }
                 if (data.title) applyTitle(data.title);
 
+                // Warn user if quality was adjusted by server
+                if (data.qualityChanged && data.selectedQuality) {
+                    setStatus(`Quality adjusted to ${data.selectedQuality} (best available)`, true);
+                }
+
                 // Async job
                 if (data.statusUrl) {
                     const fname = makeFilename(data.title || state.title || 'download', state.mode === 'mp3' ? 'mp3' : 'mp4');
                     const msgInterval = startProcessingMessages();
+                    setProgress(0);
                     await pollStatus(data.statusUrl, fname);
                     clearInterval(msgInterval);
                     return;
                 }
+
                 // Immediate link
                 const link = data.url || data.downloadUrl || data.link || data.download;
                 const hash = data.id || data.hash;
@@ -1090,6 +1101,7 @@
         }
 
         function doDownload(url, filename) {
+            setProgress(null);
             setStatus('Preparing virus-free download…', true);
             const a = document.createElement('a');
             a.href = url; a.download = filename; a.style.display = 'none';
@@ -1127,6 +1139,7 @@
             document.getElementById("after-download-section").style.display = "none";
             els.downloadBtn.classList.remove('visible'); els.downloadBtn.style.display = 'none';
             els.statusBox.classList.remove('visible');
+            setProgress(null);
             els.urlInput.value = '';
             els.urlInput.focus();
         };
