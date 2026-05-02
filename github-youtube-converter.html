@@ -1,170 +1,256 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en" data-theme="dark">
 
 <head>
+
+    <!-- Core -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Cache control -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <title>YouTube to MP3 &amp; MP4 Converter GitHub — Free downloads | Ruvs Tools</title>
+
+    <!-- ── PRIMARY SEO ────────────────────────────────────────── -->
+    <title>YouTube to MP3 Converter GitHub (Ad-free)</title>
+
     <meta name="description"
-        content="Ruvs Tools — free YouTube to MP3 downloader on GitHub. Convert any YouTube video to 320kbps MP3 or 1080p MP4 instantly. No ads, no signup, Cloudflare protected.">
+        content="Free YouTube to MP3 (320kbps) or MP4 (1080p) converter by Ruvs Tools on GitHub. No ads, no signup, Cloudflare protected. Works on Android & iPhone instantly.">
+
     <meta name="keywords"
-        content="youtube to mp3 converter github, yt to mp3 github, youtube to mp4 github, youtube mp3 download github, youtube downloader mp3 github, free youtube converter github, youtube link to mp3 converter github, ruvs, ruvs tools youtube converter, cnvmp3, youtube video to mp3 converter github">
-    <meta name="robots" content="index, follow, max-image-preview:large">
-    <meta name="author" content="Rahul">
-    <meta name="theme-color" content="#5b87ff">
-    <meta property="article:modified_time" content="2026-04-21T20:20:00+05:30">
-    <meta name="last-modified" content="2026-04-21">
-    <link rel="canonical" href="https://melamrahul.github.io/">
+        content="youtube to mp3 converter github, yt to mp3 github, youtube to mp4 github, youtube mp3 download github, free youtube converter github, youtube downloader github, cnvmp3, ruvs tools, ytmp3 github, youtube link to mp3 github">
+
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+    <meta name="author" content="Ruvs Tools">
+
+    <!-- Canonical — always point to ruvs.in as the master -->
+    <link rel="canonical" href="https://ruvs.in/">
+
+    <!-- ── OPEN GRAPH ─────────────────────────────────────────── -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ruvs Tools — YouTube to MP3 & MP4 Converter GitHub | Free, No Ads">
-    <meta property="og:description"
-        content="Free YouTube to MP3 (320kbps) or MP4 (1080p) converter by Ruvs Tools. No signup, Cloudflare protected. Works on all devices.">
-    <meta property="og:url" content="https://melamrahul.github.io/tools/">
     <meta property="og:site_name" content="Ruvs Tools">
-    <meta property="og:image" content="">
+    <meta property="og:title" content="YouTube to MP3 Converter GitHub (Ad-free)">
+    <meta property="og:description"
+        content="Free YouTube to MP3 (320kbps) or MP4 (1080p) by Ruvs Tools. No signup, Cloudflare protected. Works on all devices.">
+    <meta property="og:url" content="https://melamrahul.github.io/">
+    <meta property="og:image" content="https://ruvs.in/resos/common/icons/ruvs-og.png">
     <meta property="og:image:type" content="image/png">
-    <meta property="og:image:width" content="512">
-    <meta property="og:image:height" content="512">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Ruvs Tools — YouTube to MP3 Converter on GitHub">
+    <meta property="og:locale" content="en_US">
+    <meta property="article:modified_time" content="2026-05-01T16:04:00+05:30">
+
+    <!-- ── TWITTER / X CARD ──────────────────────────────────── -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ruvs Tools — YouTube to MP3 & MP4 Converter GitHub | Free, No Ads">
+    <meta name="twitter:site" content="@ruvs_in">
+    <meta name="twitter:title" content="YouTube to MP3 Converter GitHub (Ad-free)">
     <meta name="twitter:description"
-        content="Free YouTube to MP3 (320kbps) or MP4 (1080p) by Ruvs Tools. No signup, works on mobile.">
-    <meta name="twitter:image" content="https://ruvs.in/resos/common/icons/ruvs-icon.png">
-    <link rel="stylesheet" href="https://ruvs.in/resos/paint/tools/youtube/index.v3.css">
-    <script>
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                autoDisplay: false
-            }, 'google_translate_element');
-        }
-        // Force re-apply translation on page load from cookie
-        function restoreGoogTrans() {
-            // Read from cookie
-            const match = document.cookie.match(/(?:^|;\s*)googtrans=([^;]+)/);
-            if (!match) return;
+        content="Free YouTube to MP3 (320kbps) or MP4 (1080p) on GitHub. No ads, no signup, works on mobile.">
+    <meta name="twitter:image" content="https://ruvs.in/resos/common/icons/ruvs-og.png">
+    <meta name="twitter:image:alt" content="Ruvs Tools — YouTube to MP3 Converter GitHub">
 
-            const val = decodeURIComponent(match[1]); // e.g. "/en/ar"
-            const parts = val.split('/').filter(Boolean);
-            const targetLang = parts[parts.length - 1];
+    <!-- ── ICONS & PWA ────────────────────────────────────────── -->
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ruvs.in/resos/common/icons/ruvs-icon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://ruvs.in/resos/common/icons/ruvs-icon-16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="https://ruvs.in/resos/common/icons/ruvs-icon-96.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://ruvs.in/resos/common/icons/ruvs-apple-touch.png">
+    <!-- <link rel="manifest" href="/manifest.json"> -->
+    <meta name="theme-color" content="#5b87ff">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Ruvs YTMP3">
+    <meta name="application-name" content="Ruvs Tools">
 
-            if (!targetLang || targetLang === 'en') return;
-
-            // Wait for Google Translate iframe/select to be ready, then switch
-            const interval = setInterval(() => {
-                const select = document.querySelector('.goog-te-combo');
-                if (select) {
-                    select.value = targetLang;
-                    select.dispatchEvent(new Event('change'));
-                    clearInterval(interval);
-                }
-            }, 300);
-
-            // Give up after 10 seconds
-            setTimeout(() => clearInterval(interval), 10000);
-        }
-        document.addEventListener('DOMContentLoaded', restoreGoogTrans);
-    </script>
-    <script src="https://rahul.serv00.net/apps/vgrs.js?v=3.1" defer=""></script>
-    <link rel="stylesheet" href="https://rahul.serv00.net/apps/weer.css?v=3.1">
-    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.1" defer=""></script>
-    <link rel="icon" type="image/png" sizes="32x32" href="https://ruvs.in/resos/common/icons/ruvs-icon.png">
-    <link rel="apple-touch-icon" href="https://ruvs.in/resos/common/icons/ruvs-icon.png">
+    <!-- ── PERFORMANCE ───────────────────────────────────────── -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://rahul.serv00.net/apps/yt_convert/">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://ruvs.in">
+    <link rel="dns-prefetch" href="https://ruvs.in">
     <link rel="dns-prefetch" href="https://rahul.serv00.net">
+
+    <!-- ── FONTS ─────────────────────────────────────────────── -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "Ruvs Tools",
-      "url": "https://melamrahul.github.io/tools/",
-      "logo": "https://ruvs.in/resos/common/icons/ruvs-icon.png"
-    }
-    </script>
+    <!-- ── STYLES ────────────────────────────────────────────── -->
+    <link rel="stylesheet" href="https://ruvs.in/resos/paint/tools/youtube/index.v4.css?v=2.5">
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "Ruvs Tools — YouTube to MP3 Converter",
-      "url": "https://melamrahul.github.io/tools/",
-      "description": "Free YouTube to MP3 and MP4 converter by Ruvs Tools. No ads, no signup, up to 320kbps MP3 and 1080p MP4. Protected by Cloudflare Workers.",
-      "applicationCategory": "MultimediaApplication",
-      "operatingSystem": "All",
-      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-      "featureList": [
-        "YouTube to MP3 up to 320kbps",
-        "YouTube to MP4 up to 1080p",
-        "No ads or registration required",
-        "Works on Android and iPhone",
-        "Protected by Cloudflare Workers",
-        "Unlimited virus-free downloads"
-      ]
-    }
-    </script>
-    <script type="application/ld+json">
-    {
-      "@context":"https://schema.org",
-      "@type":"WebApplication",
-      "name":"Ruvs Tools",
-      "url":"https://melamrahul.github.io/tools/",
-      "datePublished":"2025-05-10",
-      "dateModified":"2026-04-21",
-      "applicationCategory":"MultimediaApplication"
-    }
-    </script>
+    <!-- ── STRUCTURED DATA / SCHEMA ─────────────────────────── -->
 
+    <!-- 1. Organization -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "FAQPage",
-      "mainEntity": [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://ruvs.in/#organization",
+    "name": "Ruvs Tools",
+    "url": "https://ruvs.in/",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://ruvs.in/resos/common/icons/ruvs-icon.png",
+      "width": 512,
+      "height": 512
+    }
+  }
+  </script>
+
+    <!-- 2. WebSite -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": "https://melamrahul.github.io/#website",
+    "url": "https://melamrahul.github.io/",
+    "name": "Ruvs Tools on GitHub",
+    "description": "Free YouTube to MP3 and MP4 converter hosted on GitHub by Ruvs Tools.",
+    "publisher": {
+      "@id": "https://ruvs.in/#organization"
+    }
+  }
+  </script>
+
+    <!-- 3. WebPage -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": "https://melamrahul.github.io/#webpage",
+    "url": "https://melamrahul.github.io/",
+    "name": "YouTube to MP3 Converter GitHub (Ad-free)",
+    "description": "Free YouTube to MP3 (320kbps) or MP4 (1080p) converter by Ruvs Tools on GitHub. No ads, no signup.",
+    "isPartOf": { "@id": "https://melamrahul.github.io/#website" },
+    "about": { "@id": "https://ruvs.in/#organization" },
+    "datePublished": "2026-04-10",
+    "dateModified": "2026-05-01",
+    "inLanguage": "en-US",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
         {
-          "@type": "Question",
-          "name": "Is Ruvs Tools YouTube to MP3 converter free?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes, 100% free with no registration, no ads, and no usage limits. Ruvs Tools is free for everyone." }
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Ruvs Tools",
+          "item": "https://ruvs.in/"
         },
         {
-          "@type": "Question",
-          "name": "What is the maximum MP3 quality available?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Up to 320kbps MP3 — the highest quality available for YouTube audio conversion." }
-        },
-        {
-          "@type": "Question",
-          "name": "Can I download YouTube videos as MP4 using Ruvs Tools?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Switch to the Video tab and choose from 144p, 360p, 480p, 720p, or 1080p resolution before converting." }
-        },
-        {
-          "@type": "Question",
-          "name": "Does this YouTube downloader work on mobile?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes, it works on all devices including Android and iPhone browsers without any app installation." }
-        },
-        {
-          "@type": "Question",
-          "name": "Is Ruvs Tools safe and virus free?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Yes. All downloads are protected by Cloudflare Workers — no malware, no tracking, no viruses." }
-        },
-        {
-          "@type": "Question",
-          "name": "How do I convert a YouTube video to MP3?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Copy the YouTube URL, paste it into the input box, select your quality (up to 320kbps), and click Convert. Your MP3 will be ready in seconds." }
-        },
-        {
-          "@type": "Question",
-          "name": "What YouTube link formats does Ruvs Tools support?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Standard YouTube links (youtube.com/watch?v=...), short links (youtu.be/...), YouTube Shorts, and embed links are all supported." }
+          "@type": "ListItem",
+          "position": 2,
+          "name": "YouTube to MP3",
+          "item": "https://melamrahul.github.io/"
         }
       ]
     }
-    </script>
+  }
+  </script>
+
+    <!-- 4. WebApplication -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "@id": "https://melamrahul.github.io/#webapp",
+    "name": "Ruvs Tools — YouTube to MP3 Converter",
+    "url": "https://melamrahul.github.io/",
+    "description": "Free YouTube to MP3 and MP4 converter by Ruvs Tools. No ads, no signup, up to 320kbps MP3 and 1080p MP4. Protected by Cloudflare Workers.",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "All",
+    "browserRequirements": "Requires JavaScript. Works in Chrome, Firefox, Safari, Edge.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": [
+      "YouTube to MP3 up to 320kbps",
+      "YouTube to MP4 up to 1080p",
+      "No ads or registration required",
+      "Works on Android and iPhone",
+      "Protected by Cloudflare Workers",
+      "Unlimited virus-free downloads",
+      "Supports YouTube Shorts",
+      "Supports youtu.be short links"
+    ]
+  }
+  </script>
+
+    <!-- 5. FAQPage -->
+    <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is Ruvs Tools YouTube to MP3 converter free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, 100% free with no registration, no ads, and no usage limits. Ruvs Tools is free for everyone."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What is the maximum MP3 quality available?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Up to 320kbps MP3 — the highest quality available for YouTube audio conversion."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I download YouTube videos as MP4 using Ruvs Tools?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Switch to the Video tab and choose from 144p, 360p, 480p, 720p, or 1080p resolution before converting."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does this YouTube downloader work on mobile?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, it works on all devices including Android and iPhone browsers without any app installation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is Ruvs Tools safe and virus free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. All downloads are protected by Cloudflare Workers — no malware, no tracking, no viruses."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do I convert a YouTube video to MP3?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Copy the YouTube URL, paste it into the input box on Ruvs Tools, select your quality (up to 320kbps), and click Convert. Your MP3 will be ready in seconds."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What YouTube link formats does Ruvs Tools support?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard YouTube links (youtube.com/watch?v=...), short links (youtu.be/...), YouTube Shorts, and embed links are all supported."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Do I need to install any software or app?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No installation needed. Ruvs Tools runs entirely in your browser on any device — desktop, Android, or iPhone."
+        }
+      }
+    ]
+  }
+  </script>
+    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.2" defer></script>
+
 </head>
 
 <body>
@@ -190,47 +276,44 @@
         </div>
     </div>
 
+
+    <style>
+        @font-face {
+            font-family: 'Fredoka';
+            font-style: normal;
+            font-weight: 700;
+            font-display: swap;
+            src: url(https://fonts.gstatic.com/s/fredoka/v17/X7n64b87HvSqjb_WIi2yDCRwoQ_k7367_DWu89U.woff2) format('woff2');
+        }
+    </style>
+
     <div id="mainContent">
 
         <!-- Top header -->
         <div class="header"
-            style="padding:12px;margin:20px auto;width:calc(100% - 32px);max-width:900px;display:flex;border:none;">
+            style="padding:12px;margin: 12px auto; background-color: transparent; color: var(--texter); width:calc(100% - 32px);max-width:650px;display:flex;border:none;">
             <div class="logo-area">
-                <!-- Simple YT-style play icon branded for ruvs.in -->
-                <!--<svg class="yt-icon" width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
-          <rect width="36" height="36" rx="10" fill="#FF0000" />
-          <path d="M25 18L14 24V12L25 18Z" fill="#FFFFFF" />
-        </svg>-->
 
-                <img src="https://ruvs.in/resos/common/icons/ruvs-icon.png" height="40px" width="40px"
-                    style="margin-left: 10px">
+                <img src="https://ruvs.in/resos/common/icons/ruvs-icon.png" height="50px" width="50px"
+                    style="margin-left: 0px" alt="ruvs-logo">
                 <div class="header-title">
-                    <h1 translate="no" class="notranslate">ruvs.in<span class="logo-ruvs"></span><span
-                            class="logo-tag"></span></h1>
+                    <a href="/" style="text-decoration: none; color: white;">
+                        <h1 class="logo-title"
+                            style="font-size: 4rem; font-family: 'Fredoka', sans-serif;  margin-top: -0.8rem;"
+                            translate="no">ruvs.in</h1>
+                    </a>
                 </div>
             </div>
 
-            <div id="et-translate-wrapper">
-                <button id="et-lang-btn" onclick="etTogglePicker()">
-                    <img src="https://melamrahul.github.io/tools/trans.png" class="et-translate-icon" alt="Translate">
-                    <span class="et-translate-text">Translate</span>
-                    <span id="et-lang-label"></span>
-                </button>
-                <div id="et-lang-picker" style="display:none"></div>
-                <div id="et-lang-overlay" onclick="etClosePicker()" style="display:none"></div>
-            </div>
-            <div id="et-lang-overlay" onclick="etClosePicker()" style="display:none"></div>
-            <div id="google_translate_element" style="display:none"></div>
-
             <span style="display: flex; justify-content: space-evenly; gap: 10px">
-                <button id="themeBtn" title="Toggle theme" aria-label="Toggle theme" style="border:none">
-                    <svg id="theme-icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+                <button id="themeBtn" title="Toggle theme" aria-label="Toggle theme" style="border:none; color: white;">
+                    <svg id="theme-icon" width="25" height="25" fill="none" stroke="currentColor" stroke-width="2"
                         stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
                         <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" />
                     </svg>
                 </button>
 
-                <!-- <a href="/" target="_blank" style="border:none;padding-top: 10px;" class="tools-btn">All Tools</a> -->
+                <!--<a href="/" target="_blank" style="border:none;padding-top: 10px;" class="tools-btn">All Tools</a>-->
             </span>
         </div>
 
@@ -240,7 +323,7 @@
                     viewBox="0 0 24 24">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>Ad-free</div>
+                </svg>Ads-free</div>
             <div class="badge"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"
                     viewBox="0 0 24 24">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
@@ -250,23 +333,26 @@
                     viewBox="0 0 24 24">
                     <path d="M22 11.08V12a10 10 0 11-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
-                </svg>Virus free</div>
+                </svg>Trusted</div>
         </div>
 
+        <div class="header"
+            style="padding:12px; background-color: transparent; margin:10px auto;display:flex;max-width:fit-content;border:none;text-align:center;">
+            <h2 style="margin:0;color:white;line-height:1.4rem;font-size:1.1rem;">Youtube to MP3 & MP4 Converter
+            </h2>
+        </div>
 
-        <div class="header" style="padding:12px;margin:10px auto;display:flex;justify-content:center;max-width:600px;">
-            <div style="text-align:center;max-width:100%;">
-                <h2
-                    style="font-weight:500;font-size:clamp(1rem,4vw,1.6rem);line-height:1.4;margin:0;word-wrap:break-word;">
-                    Now access <strong>short domain</strong> Easily
-                    <a href="https://ruvs.in" target="_blank" rel="noopener noreferrer" style="background-color:#168918;color:white;font-weight:700;
-                padding:6px 10px;font-size:clamp(1rem,3vw,1.3rem);
-                border-radius:8px;text-decoration:none;
-                display:inline-flex;align-items:center;gap:4px;
-                margin-left:px;flex-wrap:wrap;" translate="no" class="notranslate">
-                        ruvs.in <span style="font-size:0.9em;">↗</span>
+        <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none">
+            <div style="text-align:center;">
+
+                <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.9rem; font-weight: 400;">
+                    For fast access, Visit our short domain
+                    <a href="https://ruvs.in" target="_blank"
+                        style="background-color:#168918;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;">
+                        ruvs.in ↗
                     </a>
-                </h2>
+                </h5>
+
             </div>
         </div>
 
@@ -295,7 +381,7 @@
                                 <span>Paste</span>
                             </button>
                         </div>
-                        <button class="btn-go" id="btn-go">Convert to MP3</button>
+                        <button class="btn-go" id="btn-go">Download MP3</button>
                     </div>
                     <div class="options-row" style="align-items:center;justify-content:center;">
                         <div class="opt-group" id="opt-audio-quality">
@@ -304,11 +390,14 @@
                                 <option value="320kbps">320 kbps</option>
                                 <option value="192kbps" selected>192 kbps</option>
                                 <option value="128kbps">128 kbps</option>
+                                <option value="64kbps">64 kbps</option>
                             </select>
                         </div>
                         <div class="opt-group" id="opt-video-quality" style="display:none">
                             <label>Resolution</label>
                             <select id="video-quality">
+                                <option value="2160p">2160p(4K)</option>
+                                <option value="1440p">1440p(2K)</option>
                                 <option value="1080p">1080p</option>
                                 <option value="720p" selected>720p</option>
                                 <option value="480p">480p</option>
@@ -325,7 +414,7 @@
                     <img id="video-thumb" src="" alt="" />
                     <div class="video-meta">
                         <div class="video-title" translate="no" class="notranslate" id="video-title"></div>
-                        <div class="video-channel" translate="no" class="notranslate" id="video-channel"></div>
+                        <div class="video-channel" id="video-channel"></div>
                     </div><br>
                 </div>
                 <div id="status-box">
@@ -339,183 +428,242 @@
 
             <button id="download-btn">Download File</button>
 
+            <div class="header" id="user-known"
+                style="padding:12px; display: none; background-color: transparent; margin:10px auto;max-width:fit-content;border:none;text-align:center;">
+                <h2 style="margin:0;color:white;line-height:1.4rem;font-size:1.1rem;">If you feel stuck in the queue,
+                    please refresh the page and try again. or wait.
+                </h2>
+            </div>
+
             <!-- Success -->
             <div id="success-view">
                 <div class="success-title">Download Started! 🎉</div>
-                <p style="margin-bottom:20px;font-weight:600;font-size:0.9rem;">Your file is downloading. Yeeewww..!! 🥳
+                <p style="margin-bottom:20px;font-weight:600;font-size:0.9rem;">Your file is on the way 🚀. <br>Thanks
+                    for choosing <b>ruvs.in</b> 🙌
                 </p>
                 <a href="https://ko-fi.com/ruvsin" class="kofi-btn" id="buy-me-coffee" target="_blank"
-                    rel="noopener noreferrer" style="display:block;">Buy me a Coffee ☕️</a>
+                    rel="noopener noreferrer"
+                    style="display: flex; align-items:center; margin-left: 20px; justify-content:center; gap:6px; padding:10px;">
+                    <img src="https://ruvs.in/resos/common/assets/donation-button.png" alt="support"
+                        style="height:35px; width:35px;">
+                    <span style="position: relative; top: 2px;">Support this website</span>
+                </a>
                 <button class="convert-again-btn" onclick="resetUI()">↺ Convert Another</button>
             </div>
         </span>
 
-        <!-- Donate nudge -->
-        <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none">
-            <div style="border:none;text-align:center;">
-                <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.85rem;">
-                    If this tool saves your time, please
-                    <a href="https://ko-fi.com/ruvsin" target=" _blank" id="donate-btn" translate="no"
-                        class="notranslate"
-                        style="background-color:#ff5e5b;color:white;padding:4px 8px;border-radius:4px;text-decoration:none;">
-                        Donate
-                    </a>
-                </h5>
-            </div>
-        </div>
+        <div id="after-download-section" style="display:none;">
 
-        <!-- Goal bar -->
-        <span class="big-container" style="border:none; display: none">
-            <div class="fixed-footer" style="margin-top:-10px;">
-                <a href="https://ko-fi.com/ruvsin" id="goalDonateBtn"
-                    style="text-decoration:none;box-shadow:0 0 20px #aaa;" target="_blank" rel="noopener noreferrer">
-                    <div class="goal-pill">
-                        <div class="goal-pill-top">
-                            <div class="goal-pill-label">
-                                <img src="https://storage.ko-fi.com/cdn/logomarkLogo.png" class="goal-icon" alt="Ko-fi">
-                                <span id="goalMainText">Help reach this month's server goal</span>
-                            </div>
-                            <div class="goal-pill-pct" id="goalPercent">…</div>
-                        </div>
-                        <div class="goal-track">
-                            <div class="goal-fill-bar" id="goalFillBar"></div>
-                        </div>
-                        <div class="goal-subline" id="goalSubline">Loading…</div>
+            <div class="donation-card">
+
+                <!-- Top row -->
+                <div class="donation-header">
+                    <div class="donation-left">
+                        <img src="https://ruvs.in/resos/common/assets/donation-box-hands.png" alt="support"
+                            class="donation-icon">
+                        <h4>Why we need your support! ❤️</h4>
                     </div>
+                    <a href="https://ko-fi.com/ruvsin" target="_blank" id="donate-btn" class="donate-btn">
+                        Donate ($)↗
+                    </a>
+                </div>
+                <hr>
+
+                <!-- Description -->
+                <p class="donation-desc">
+                    Your support helps to cover monthly server costs, run services smoothly and keep everything fast,
+                    free, and Ad-free.
+                    Thank you for understanding and support 😊.
+                </p>
+
+            </div>
+
+            <div class="header"
+                style="margin-top: 2rem; margin-left: auto; margin-right: auto; display:flex;max-width:fit-content;border:none; cursor: pointer; padding-top: 12px; padding-top: 12px; padding-left: 15px; padding-right: 15px;">
+                <a href="https://www.trustpilot.com/review/ruvs.in" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px;text-decoration: none;
+                    background: transparent; color: var(--text); border-radius:6px; font-weight:700;">
+                    Review us on Trustpilot <img width="30" height="30" style="margin-left: -5px;"
+                        src="https://img.icons8.com/color/96/trustpilot.png" alt="Trustpilot">
+                    <span translate="no" class="notranslate"
+                        style="background-color:#169e28;color:white;padding:4px 8px;margin-left: -0.5rem; border-radius:4px;text-decoration:none;">
+                        Review Now ↗
+                    </span>
                 </a>
             </div>
-        </span>
-        <div class="header"
-          style="margin:15px auto;display:flex;max-width:fit-content;border:none; cursor: pointer; padding-top: 5px; padding-bottom: 5px;">
-           <a href="https://www.trustpilot.com/review/ruvs.in" target="_blank" rel="noopener" style="display:inline-flex; align-items:center; gap:10px;text-decoration: none; 
-             background: transparent; color: var(--text); border-radius:6px; font-weight:700;">
-             Review us on Trustpilot <img width="30" height="30" style="margin-left: -5px;"
-             src="https://img.icons8.com/color/96/trustpilot.png" alt="Trustpilot">
-           </a>
-        </div>
 
-        <span class="container">
-            <div class="share-section">
-                <h4>Share with your friends :)</h4><br>
-                <div class="share-icons">
-                    <a id="whatsapp" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png"
-                            alt="WhatsApp"></a>
-                    <a id="facebook" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png"
-                            alt="Facebook"></a>
-                    <a id="reddit" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111589.png"
-                            alt="Reddit"></a>
-                    <a id="x" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"
-                            alt="X"></a>
-                    <a id="telegram" target="_blank"><img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"
-                            alt="Telegram"></a>
-                    <button id="moreShare">+</button>
+            <span class="container">
+                <div class="share-card">
+
+                    <!-- Top row -->
+                    <div class="share-header">
+                        <div class="share-left">
+                            <img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" style="color: var(--text);"
+                                class="share-icon" alt="share">
+                            <h4>Share with your friends :) 🙂</h4>
+                        </div>
+                    </div>
+
+                    <!-- Icons -->
+                    <div class="share-icons">
+                        <a id="whatsapp" target="_blank"><img
+                                src="https://cdn-icons-png.flaticon.com/512/733/733585.png"></a>
+                        <a id="facebook" target="_blank"><img
+                                src="https://cdn-icons-png.flaticon.com/512/733/733547.png"></a>
+                        <a id="reddit" target="_blank"><img
+                                src="https://cdn-icons-png.flaticon.com/512/2111/2111589.png"></a>
+                        <a id="x" target="_blank"><img
+                                src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png"></a>
+                        <a id="telegram" target="_blank"><img
+                                src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png"></a>
+                        <button id="moreShare">+</button>
+                    </div>
+
                 </div>
-            </div>
-            <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none"
-                style="text-align:center;margin:1rem 0;" id="bookmark-msg"></div>
-            <br>
-            <!-- Issue link -->
-            <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none"
-                translate="no" class="notranslate">
-                <div style="border:none;text-align:center;" translate="no" class="notranslate">
-                    <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.85rem;">
-                        Facing any issue? <a href="/contact-us" target="_blank" class="tab-btn active"
-                            style="font-size:0.75rem;padding:4px 10px; text-decoration: none; text-transform: none;">Leave us a comment</a>
-                    </h5>
+                <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none"
+                    style="text-align:center;margin:1rem 0;" id="bookmark-msg"></div>
+                <br>
+                <!-- Issue link -->
+                <div class="header" style="padding:12px;margin:10px auto;display:flex;max-width:fit-content;border:none"
+                    translate="no" class="notranslate">
+                    <div style="border:none;text-align:center;" translate="no" class="notranslate">
+                        <h5 style="margin:0;color:var(--text);line-height:1.2rem;font-size:0.85rem;">
+                            Facing any issue? <a href="/contact-us" target="_blank" class="tab-btn active"
+                                style="font-size:0.75rem;padding:4px 10px; text-decoration: none; text-transform: none;">Leave
+                                us a comment</a>
+                        </h5>
+                    </div>
                 </div>
-            </div>
+            </span>
+        </div>
+        <span class="container" style="margin-top: -1rem;">
             <div class="text-container main-content-card">
                 <h2>ruvs.in - The best Youtube to MP3 Converter</h2>
                 <p>ruvs.in is a fast YouTube to MP3 converter that converts YouTube videos into high-quality audio
                     formats
-                    including MP3, WAV, OGG, and Opus, with MP3 quality supported up to 320kbps high quality, while also
+                    including MP3, WAV, OGG, and Opus, with MP3 quality supported up to 320kbps high quality, while
+                    also
                     allowing MP4 video
                     downloads in 1080p.</p>
-                <p>Users can convert any YouTube video in seconds by pasting a link, selecting the format and quality,
+                <p>Users can convert any YouTube video in seconds by pasting a link, selecting the format and
+                    quality,
                     and downloading without pop-ups or registration. The service is ad-free, optimized for speed and
                     reliability, and automatically deletes temporary files after each conversion.</p>
                 <h2>How to Convert YouTube to MP3 or MP4</h2>
-                <p>Using ruvs.in is simple: Copy your YouTube link, paste it into the field above, pick either MP3 for
-                    audio or MP4 for video, select your preferred quality, and click Convert. Most downloads are ready
-                    within a few seconds, depending on video length and resolution. This quick three-step process is why
-                    ruvs.in has become one of the easiest ways to convert YouTube to MP3 online - no software, no setup,
+                <p>Using ruvs.in is simple: Copy your YouTube link, paste it into the field above, pick either MP3
+                    for
+                    audio or MP4 for video, select your preferred quality, and click Convert. Most downloads are
+                    ready
+                    within a few seconds, depending on video length and resolution. This quick three-step process is
+                    why
+                    ruvs.in has become one of the easiest ways to convert YouTube to MP3 online - no software, no
+                    setup,
                     no limits.</p>
                 <h2>Why People Choose ruvs.in</h2>
-                <p>Free, ad‑free, and fast. Download unlimited YouTube videos and audio without sign‑ups or pop‑ups. The
+                <p>Free, ad‑free, and fast. Download unlimited YouTube videos and audio without sign‑ups or pop‑ups.
+                    The
                     interface is clean and focused, the 3‑step flow is simple, and files are ready to play on any
                     device. Paste a link, choose quality, and you’re done-on phone or desktop.</p>
                 <h2>What Makes ruvs.in Different</h2>
-                <p>Unlike other converters that push ads or complicated steps, ruvs.in focuses on speed and clarity. No
-                    plugins, no hidden redirects-just a clean page that gets you from link to file quickly. The result
+                <p>Unlike other converters that push ads or complicated steps, ruvs.in focuses on speed and clarity.
+                    No
+                    plugins, no hidden redirects-just a clean page that gets you from link to file quickly. The
+                    result
                     is a smooth, ad‑free experience that works the same on iPhone, Android, Windows, and macOS.</p>
                 <p>We also respect YouTube’s ecosystem - ruvs.in is meant for personal use, educational purposes, or
                     public-domain content. It’s a safe utility, not a piracy tool.</p>
                 <h2>Supported Formats and Quality</h2>
-                <p>ruvs.in converts YouTube to both MP3 and MP4 with multiple quality options. Audio files support 128
-                    kbps, 192 kbps, 256 kbps, and 320kbps high quality, giving you freedom to balance size and clarity.
-                    For video, you can download in 360p, 720p, 1080p, or even 2160p (4K) if the original allows. This
-                    flexibility makes ruvs.in a solid choice whether you’re downloading a short clip or a full-length
-                    concert. In addition, ruvs.in supports downloading age‑restricted videos and audio when the content
+                <p>ruvs.in converts YouTube to both MP3 and MP4 with multiple quality options. Audio files support
+                    128
+                    kbps, 192 kbps, 256 kbps, and 320kbps high quality, giving you freedom to balance size and
+                    clarity.
+                    For video, you can download in 360p, 720p, 1080p, or even 2160p (4K) if the original allows.
+                    This
+                    flexibility makes ruvs.in a solid choice whether you’re downloading a short clip or a
+                    full-length
+                    concert. In addition, ruvs.in supports downloading age‑restricted videos and audio when the
+                    content
                     is
                     publicly available.</p>
                 <h2>Download YouTube Shorts (MP3 &amp; MP4)</h2>
-                <p>Download YouTube Shorts with the same speed and quality you get from regular videos. Paste the Shorts
+                <p>Download YouTube Shorts with the same speed and quality you get from regular videos. Paste the
+                    Shorts
                     link, choose MP3 if you only need the audio or MP4 for the full clip, pick your quality, then
                     convert. Most Shorts finish almost instantly because of their length.</p>
-                <p>Shorts support the same options as other videos on ruvs.in.gg. For audio, you can save MP3 at 128-320
+                <p>Shorts support the same options as other videos on ruvs.in.gg. For audio, you can save MP3 at
+                    128-320
                     kbps. For video, you can download MP4 in 360p, 720p, or 1080p when available. If a specific
-                    resolution doesn’t appear, it’s because the source clip wasn’t uploaded at that quality. On mobile,
+                    resolution doesn’t appear, it’s because the source clip wasn’t uploaded at that quality. On
+                    mobile,
                     this works exactly the same - copy the Shorts URL from the YouTube app, paste it above, and
                     download.</p>
                 <h2>Use ruvs.in on Any Device</h2>
-                <p>Because ruvs.in works entirely online, it’s compatible with almost any modern device or browser. You
-                    can convert YouTube videos to MP3 or MP4 on Windows, macOS, Android, and iPhone without installing
+                <p>Because ruvs.in works entirely online, it’s compatible with almost any modern device or browser.
+                    You
+                    can convert YouTube videos to MP3 or MP4 on Windows, macOS, Android, and iPhone without
+                    installing
                     anything. It runs smoothly on Chrome, Safari, Firefox, Edge, and even mobile browsers. Whether
-                    you’re on a laptop, tablet, or phone, the experience is the same - quick, clean, and consistent.</p>
+                    you’re on a laptop, tablet, or phone, the experience is the same - quick, clean, and consistent.
+                </p>
                 <h2>Safety and Legality</h2>
                 <p>ruvs.in operates with privacy and simplicity at its core. Conversions happen directly in your
                     browser,
-                    and temporary data is erased right after completion. We never collect user information, and we don’t
+                    and temporary data is erased right after completion. We never collect user information, and we
+                    don’t
                     store any video or audio files on our servers.</p>
-                <p>As with all conversion tools, please respect copyright laws and YouTube’s Terms of Service. ruvs.in
+                <p>As with all conversion tools, please respect copyright laws and YouTube’s Terms of Service.
+                    ruvs.in
                     is
-                    built for legitimate uses - saving royalty-free content, educational materials, or your own uploads.
+                    built for legitimate uses - saving royalty-free content, educational materials, or your own
+                    uploads.
                     We strongly discourage downloading copyrighted material without permission.</p>
                 <h2>Troubleshooting and Tips</h2>
-                <p>If a video doesn’t convert, it’s usually because the original is blocked, private, or has restricted
-                    access. Try another link or a different quality setting. For best results, use stable Wi‑Fi and let
-                    the conversion finish before closing the page. Shorter videos under 3 hours convert fastest. If you
+                <p>If a video doesn’t convert, it’s usually because the original is blocked, private, or has
+                    restricted
+                    access. Try another link or a different quality setting. For best results, use stable Wi‑Fi and
+                    let
+                    the conversion finish before closing the page. Shorter videos under 3 hours convert fastest. If
+                    you
                     notice long waiting times, it often means YouTube is throttling that source - just refresh and
                     retry.</p>
                 <h2>Alternatives and Competitors</h2>
                 <p>You might know other platforms like Y2Mate, SaveFrom, or SnapSave. While those tools work, many
                     include aggressive ads or redirect you to unrelated pages. ruvs.in was created as a cleaner
-                    alternative - faster, safer, and built for long‑term reliability. We’re constantly optimizing for
-                    better conversion speed, higher bitrates, and better support for new formats like Opus and WebM.</p>
+                    alternative - faster, safer, and built for long‑term reliability. We’re constantly optimizing
+                    for
+                    better conversion speed, higher bitrates, and better support for new formats like Opus and WebM.
+                </p>
                 <h2>Best Way to Download YouTube Music and Videos</h2>
-                <p>If you love saving songs or learning materials from YouTube, ruvs.in is your one‑stop solution. It
-                    handles both music and video equally well - you can save tracks in MP3 for listening offline or get
+                <p>If you love saving songs or learning materials from YouTube, ruvs.in is your one‑stop solution.
+                    It
+                    handles both music and video equally well - you can save tracks in MP3 for listening offline or
+                    get
                     MP4 copies for watching on TV, car, or mobile devices. No hidden steps, no plug‑ins - just an
                     instant, safe conversion process you can trust.</p>
                 <h2 style="margin-bottom: -1.2rem;">Frequently Asked Questions </h2>
                 <div class="faq-section">
                     <h3>Is ruvs.in free to use?</h3>
-                    <p>Yes - ruvs.in is completely free to use. You can convert and download unlimited YouTube videos in
+                    <p>Yes - ruvs.in is completely free to use. You can convert and download unlimited YouTube
+                        videos in
                         MP3 or MP4 formats-free and ad‑free. The service runs entirely online, so you don’t need to
-                        install anything - just open ruvs.in, paste your YouTube link, and start downloading instantly.
+                        install anything - just open ruvs.in, paste your YouTube link, and start downloading
+                        instantly.
                     </p>
                     <h3>Can I use ruvs.in on my phone or tablet?</h3>
                     <p>Absolutely. ruvs.in is mobile-friendly and works perfectly on iPhone, Android, iPad, or any
                         modern
-                        device with a browser. You don’t need an app - just visit ruvs.in, paste the link, choose your
+                        device with a browser. You don’t need an app - just visit ruvs.in, paste the link, choose
+                        your
                         format, and download directly to your device.</p>
                     <h3>Can I convert YouTube Shorts or long videos?</h3>
-                    <p>Yes - ruvs.in supports both YouTube Shorts and full-length videos up to three hours long. Whether
-                        it’s a short clip, music video, or podcast episode, you can easily convert and download it in
+                    <p>Yes - ruvs.in supports both YouTube Shorts and full-length videos up to three hours long.
+                        Whether
+                        it’s a short clip, music video, or podcast episode, you can easily convert and download it
+                        in
                         high quality within seconds.</p>
                     <h3>Can I choose the quality?</h3>
                     <p>Yes. You can select your preferred bitrate for MP3 (128kbps, 192 kbps, 320kbps) or video
-                        resolution for MP4 (144p, 240p, 360p, 480p, 720p HD, 1080p Full HD, 2160p 4K). In regions with
+                        resolution for MP4 (144p, 240p, 360p, 480p, 720p HD, 1080p Full HD, 2160p 4K). In regions
+                        with
                         limited data, ruvs.in also provides lighter options like 144p MP4 or 3GP, ideal for
                         low-bandwidth
                         mobile users.</p>
@@ -525,27 +673,33 @@
                         <li>Audio: MP3 (128kbps, 192 kbps, 320kbps), OPUS, OGG, and WAV for lossless or high-clarity
                             sound.</li>
                         <li>Video: MP4 at 144p, 240p, 360p, 480p, 720p HD, 1080p Full HD, and 2160p 4K.</li>
-                        <li>Light mode (for low data): Optional 144p / 3GP video available in some regions like India
+                        <li>Light mode (for low data): Optional 144p / 3GP video available in some regions like
+                            India
                             for ultra-fast downloads and minimal data usage.</li>
                     </ul>
                     <p>This wide range ensures full compatibility - whether you prefer compact mobile files or
                         high-resolution video and studio-grade sound.</p>
                     <h3>Do you support age‑restricted videos or audio?</h3>
-                    <p>Yes - age‑restricted videos/audio are supported when the content is publicly available. Private,
+                    <p>Yes - age‑restricted videos/audio are supported when the content is publicly available.
+                        Private,
                         members‑only, or login‑required content is not supported.</p>
                     <h3>Can I use ruvs.in anywhere?</h3>
-                    <p>Yes. ruvs.in is a global web-based service that works in most countries and regions. If YouTube
+                    <p>Yes. ruvs.in is a global web-based service that works in most countries and regions. If
+                        YouTube
                         access is limited in your area, using a VPN can help you reach the site and convert videos
                         without any issues.</p>
                     <h3>Do I need to install any software?</h3>
                     <p>Not at all. ruvs.in runs entirely in your browser-free, ad‑free, and fast-no extensions or
-                        installation required. Just visit ruvs.in, paste your link, and start downloading quickly and
+                        installation required. Just visit ruvs.in, paste your link, and start downloading quickly
+                        and
                         safely.</p>
                 </div>
                 <h2>Final Thoughts</h2>
-                <p>ruvs.in isn’t just another YouTube converter - it’s a refined, secure, and ad‑free platform built for
+                <p>ruvs.in isn’t just another YouTube converter - it’s a refined, secure, and ad‑free platform built
+                    for
                     people who value quality and simplicity. Convert YouTube to MP3 or MP4 in seconds, enjoy your
-                    content anywhere, and stay safe while doing it. Try ruvs.in now - paste your YouTube link above and
+                    content anywhere, and stay safe while doing it. Try ruvs.in now - paste your YouTube link above
+                    and
                     start converting instantly.</p>
             </div><br>
             <footer class="server-note" style="color:var(--text);font-size:1rem;">With ❤️ Ruvs Tools • Built to save
@@ -556,6 +710,12 @@
         </span>
 
     </div>
+    <p class="last-update">
+        Last updated:
+        <time datetime="2026-05-01T18:04">
+            May 1, 2026 – 18:04
+        </time>
+    </p>
 
     <script>
 
@@ -564,7 +724,7 @@
         const themeIcon = document.getElementById('theme-icon');
         const moonPath = '<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>';
         const sunPath = '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>';
-        const saved = localStorage.getItem('theme') || 'light';
+        const saved = localStorage.getItem('theme') || 'dark';
         document.documentElement.dataset.theme = saved;
         themeIcon.innerHTML = saved === 'dark' ? sunPath : moonPath;
         themeBtn.addEventListener('click', () => {
@@ -575,37 +735,7 @@
             themeIcon.innerHTML = next === 'dark' ? sunPath : moonPath;
         });
 
-        // ── Config ─────────────────────────────────────────────────────────────
-        const v83es = "https://rahul.serv00.net/apps/yt_convert/_w54n";
-        const POLL_MIN = 2000, POLL_MAX = 5000, POLL_STEP = 500, MAX_ATTEMPTS = 35;
-
-        let state = {
-            aborted: false, attempts: 0, pollDelay: POLL_MIN,
-            downloadUrl: null, filename: 'audio.mp3',
-            youtubeId: null, url: null, title: '',
-            mode: 'mp3', quality: '192kbps',
-        };
-
-        // ── Juice Shop ───────────────────────────────────────────────
-        async function signRequest(bodyString) {
-            const tokenRes = await fetch(v83es + '?action=juice');
-            if (!tokenRes.ok) throw new Error('Try again after sometime.');
-            const { timestamp, nonce, juice } = await tokenRes.json();
-
-            const enc       = new TextEncoder();
-            const cryptoKey = await crypto.subtle.importKey(
-                'raw', enc.encode(juice),
-                { name: 'HMAC', hash: 'SHA-256' },
-                false, ['sign']
-            );
-            const sigBuffer = await crypto.subtle.sign('HMAC', cryptoKey, enc.encode(bodyString));
-            const sigHex    = Array.from(new Uint8Array(sigBuffer))
-                .map(b => b.toString(16).padStart(2, '0')).join('');
-
-            return { timestamp, nonce, sig: sigHex };
-        }
-
-        fetch("https://www.ruvs.in/tools/geo")
+        fetch("https://ruvs.in/tools/geo")
             .then(res => res.json())
             .then(data => {
                 const btn = document.getElementById("donate-btn");
@@ -613,7 +743,7 @@
 
                 if (data.country_code === "IN") {
                     btn.href = "https://razorpay.me/@ruvs";
-                    btn.textContent = "Donate (₹)";
+                    btn.textContent = "Donate (₹) ↗";
                     coffeebtn.href = "https://razorpay.me/@ruvs"
                 } else {
                     const script = document.createElement("script");
@@ -643,8 +773,48 @@
                 document.body.appendChild(script);
             });
 
+        // ── Enjoy pandagoww ─────────────────────────────────────────────────────────────
+        const POLL_MIN = 2000, POLL_MAX = 5000, POLL_STEP = 500, MAX_ATTEMPTS = 35;
+
+        let state = {
+            aborted: false, attempts: 0, pollDelay: POLL_MIN,
+            downloadUrl: null, filename: 'audio.mp3',
+            youtubeId: null, url: null, title: '',
+            mode: 'mp3', quality: '192kbps',
+        };
+
+        // ── Detect OS ────────────────────────────────────────────────────────
+        function detectOS() {
+            const p = (navigator.platform || navigator.userAgentData?.platform || '').toLowerCase();
+            const ua = navigator.userAgent.toLowerCase();
+            if (p.includes('win') || ua.includes('windows')) return 'windows';
+            if (p.includes('mac') || ua.includes('mac os')) return 'mac';
+            if (p.includes('linux') || ua.includes('linux')) return 'linux';
+            if (/android/i.test(ua)) return 'android';
+            if (/iphone|ipad|ipod/i.test(ua)) return 'ios';
+            return 'windows'; // safe default
+        }
+
+        // ── Juice Shop ───────────────────────────────────────────────
+        async function signRequest(bodyString) {
+            const tokenRes = await fetch(v83es + '?action=juice');
+            if (!tokenRes.ok) throw new Error('Try again after a movement.');
+            const { timestamp, nonce, juice } = await tokenRes.json();
+            const enc = new TextEncoder();
+            const cryptoKey = await crypto.subtle.importKey(
+                'raw', enc.encode(juice),
+                { name: 'HMAC', hash: 'SHA-256' },
+                false, ['sign']
+            );
+            const sigBuffer = await crypto.subtle.sign('HMAC', cryptoKey, enc.encode(bodyString));
+            const sigHex = Array.from(new Uint8Array(sigBuffer))
+                .map(b => b.toString(16).padStart(2, '0')).join('');
+            return { timestamp, nonce, sig: sigHex };
+        }
+
         const els = {
             rahulContainer: document.getElementById('rahul-container'),
+            userKnown: document.getElementById('user-known'),
             urlInput: document.getElementById('yt-url'),
             btnGo: document.getElementById('btn-go'),
             audioQuality: document.getElementById('audio-quality'),
@@ -667,12 +837,17 @@
             goalPercent: document.getElementById('goalPercent'),
             goalMainText: document.getElementById('goalMainText'),
             goalSubline: document.getElementById('goalSubline'),
+            // Progress bar elements — add these to your HTML if not present
+            progressBar: document.getElementById('progress-bar'),
+            progressWrap: document.getElementById('progress-wrap'),
+            progressLabel: document.getElementById('progress-label'),
         };
 
         // ── Clipboard dialog ───────────────────────────────────────────────────
         const cdBackdrop = document.getElementById("clipboardBackdrop");
         const cdDialog = document.getElementById("clipboardDialog");
         const cdMessage = document.getElementById("cd-message");
+        const v83es = "https://rahul.serv00.net/apps/yt_convert/_w54n";
         const cdHelp = document.getElementById("cd-help");
 
         document.getElementById("paste-btn").onclick = async () => {
@@ -700,27 +875,42 @@
             if (mode === 'mp3') {
                 els.tabMp3.classList.add('active'); els.tabMp4.classList.remove('active');
                 els.optAudio.style.display = ''; els.optVideo.style.display = 'none';
-                els.btnGo.textContent = "Convert to MP3";
+                els.btnGo.textContent = "Download MP3";
             } else {
                 els.tabMp3.classList.remove('active'); els.tabMp4.classList.add('active');
                 els.optAudio.style.display = 'none'; els.optVideo.style.display = '';
-                els.btnGo.textContent = "Convert to MP4";
+                els.btnGo.textContent = "Download MP4";
             }
         }
 
         // ── Helpers ────────────────────────────────────────────────────────────
         function extractYoutubeId(input) {
-            const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/)([a-zA-Z0-9_-]{11})/);
+            const m = input.match(/(?:v=|\/shorts\/|youtu\.be\/|embed\/|\/live\/)([a-zA-Z0-9_-]{11})/);
             return m ? m[1] : null;
         }
+
         function setStatus(label, loading) {
             els.statusBox.classList.add('visible');
             els.statusLabel.textContent = label;
             if (els.infinityLoader) els.infinityLoader.style.display = loading === false ? 'none' : 'block';
         }
+
+        // ── Progress bar helper ───────────────────────────────────────────────
+        function setProgress(pct) {
+            if (!els.progressWrap) return; // graceful no-op if element not in HTML
+            if (pct === null || pct === undefined) {
+                els.progressWrap.style.display = 'none';
+                return;
+            }
+            els.progressWrap.style.display = 'block';
+            const clamped = Math.max(0, Math.min(100, pct));
+            if (els.progressBar) els.progressBar.style.width = clamped + '%';
+            if (els.progressLabel) els.progressLabel.textContent = clamped + '%';
+        }
+
         function enableBtn() {
             els.btnGo.disabled = false;
-            els.btnGo.textContent = state.mode === 'mp3' ? 'Convert to MP3' : 'Convert to MP4';
+            els.btnGo.textContent = state.mode === 'mp3' ? 'Download MP3' : 'Download MP4';
         }
         function makeFilename(title, ext) {
             if (!title) return ext === 'mp4' ? 'video.mp4' : 'audio.mp3';
@@ -754,17 +944,23 @@
             } catch { els.title.textContent = '—'; return ''; }
         }
 
-        // ── Proxy poll ─────────────────────────────────────────────────────────
+        // ── Proxy poll — now reads progress ───────────────────────────────────
         async function pollStatus(statusUrl, fname) {
+            let elapsed = 0;
+            const timer = setInterval(() => {
+                elapsed++;
+                setStatus(`Processing… ${elapsed}s`, true);
+            }, 1000);
+
             for (let i = 1; i <= MAX_ATTEMPTS; i++) {
-                setStatus(`Processing…`, true);
-                await new Promise(r => setTimeout(r, Math.min(POLL_MIN + (i - 1) * POLL_STEP, POLL_MAX)));
-                if (state.aborted) return;
+                if (state.aborted) { clearInterval(timer); return; }
                 try {
                     const res = await fetch(`${v83es}?status=${encodeURIComponent(statusUrl)}`);
                     const data = await res.json();
-                    if (data.error) { setStatus("Error: " + data.error, false); enableBtn(); return; }
+                    if (data.error) { clearInterval(timer); setStatus("Try again - refresh page: " + data.error, false); enableBtn(); return; }
+
                     if (data.status === "completed" || data.status === "done") {
+                        clearInterval(timer);
                         const raw = data.url || data.downloadUrl || data.link || data.download;
                         const hash = data.id || data.hash;
                         let abs = resolveUrl(raw, statusUrl);
@@ -772,14 +968,47 @@
                         if (abs) { doDownload(`${v83es}?dl=${encodeURIComponent(abs)}&filename=${encodeURIComponent(data.filename || fname)}`, data.filename || fname); return; }
                     }
                 } catch (e) { console.error("Poll:", e); }
+
+                await new Promise(r => setTimeout(r, Math.min(POLL_MIN + (i - 1) * POLL_STEP, POLL_MAX)));
             }
+            clearInterval(timer);
             setStatus("Timed out. Please try again.", false); enableBtn();
+        }
+
+        function startProcessingMessages(baseMsg) {
+            const messages = [
+                "⚙️ Processing your video…",
+                "🎵 Extracting the good stuff…",
+                "🚀 Almost there, hang tight…",
+                "🔧 Converting at full speed…",
+                "📦 Packaging your download…",
+                "⏳ Working hard behind the scenes…",
+                "🎬 Processing frames & audio…",
+                "💡 Just a few more seconds…",
+                "🌀 Spinning up the encoder…",
+                "🔥 Burning through the queue…",
+                "📡 Talking to our servers…",
+                "🎯 Locking in your quality settings…",
+            ];
+            let i = 0;
+            setStatus(messages[i], true);
+            return setInterval(() => {
+                i = (i + 1) % messages.length;
+                setStatus(messages[i], true);
+            }, 3000);
+        }
+
+        // ── Audio bitrate map ─────────────────────────────────────────────────
+        function getAudioBitrate(quality) {
+            // quality is like "128kbps", "192kbps", "320kbps"
+            const match = quality.match(/^(\d+)/);
+            return match ? match[1] + 'k' : '128k';
         }
 
         // ── Main convert flow ──────────────────────────────────────────────────
         async function startFlow() {
             const raw = els.urlInput.value.trim();
-            if (!raw) { alert('Please paste a YouTube link'); return; }
+            if (!raw) { showCdError('Please paste a YouTube link'); return; }
             const id = extractYoutubeId(raw);
             if (!id) { showCdError("Invalid YouTube URL"); return; }
 
@@ -794,19 +1023,28 @@
             els.successView.classList.remove('visible');
             els.rahulContainer.style.display = 'block';
             els.rahulContainer.classList.remove('fade-out');
+            els.userKnown.style.display = 'none';
+            setTimeout(() => els.userKnown.style.display = 'block', 8000);
             els.mainCard.style.display = 'none';
             els.btnGo.disabled = true; els.btnGo.textContent = '…';
             els.preview.classList.remove('visible');
             els.title.textContent = '—'; els.channel.textContent = '';
+            setProgress(null);
 
             setStatus('Starting conversion…', true);
             await Promise.race([fetchMeta(id), new Promise(r => setTimeout(r, 6000))]);
             if (state.aborted) return;
 
-            setStatus('Processing…', true);
+            // ── Build payload matching API contract ──────────────────────────
+            const audioQualityValue = state.mode === 'mp3' ? state.quality : els.audioQuality.value;
+            const audioBitrate = getAudioBitrate(audioQualityValue);
 
             const payload = {
                 url: raw,
+                os: detectOS(),
+                audio: {
+                    bitrate: audioBitrate
+                },
                 output: {
                     type: state.mode === 'mp3' ? 'audio' : 'video',
                     format: state.mode === 'mp3' ? 'mp3' : 'mp4',
@@ -815,31 +1053,35 @@
             };
 
             try {
-                // ── Sign the request before sending ───────────────────────────
                 const bodyString = JSON.stringify(payload);
                 const { timestamp, nonce, sig } = await signRequest(bodyString);
-
                 const res = await fetch(v83es, {
                     method: 'POST',
                     headers: {
-                        'Content-Type':        'application/json',
+                        'Content-Type': 'application/json',
                         'X-Request-Timestamp': timestamp,
-                        'X-Request-Nonce':     nonce,
-                        'X-Request-Sig':       sig,
+                        'X-Request-Nonce': nonce,
+                        'X-Request-Sig': sig,
                     },
                     body: bodyString,
                 });
-
                 const data = await res.json();
 
                 if (!res.ok || data.error) { setStatus("Error: " + (data.error || res.status) + (data.detail ? " — " + data.detail : ""), false); enableBtn(); return; }
                 if (data.title) applyTitle(data.title);
 
+                // Warn user if quality was adjusted by server
+                if (data.qualityChanged && data.selectedQuality) {
+                    setStatus(`Quality adjusted to ${data.selectedQuality} (best available)`, true);
+                }
+
                 // Async job
                 if (data.statusUrl) {
                     const fname = makeFilename(data.title || state.title || 'download', state.mode === 'mp3' ? 'mp3' : 'mp4');
-                    setStatus(`Queued${data.title ? ': ' + data.title : ''}…`, true);
+                    const msgInterval = startProcessingMessages();
+                    setProgress(0);
                     await pollStatus(data.statusUrl, fname);
+                    clearInterval(msgInterval);
                     return;
                 }
 
@@ -855,10 +1097,11 @@
                 if (abs) { doDownload(`${v83es}?dl=${encodeURIComponent(abs)}&filename=${encodeURIComponent(fname)}`, fname); }
                 else { setStatus("Unexpected response. Check console.", false); enableBtn(); }
 
-            } catch (err) { setStatus("Convertion failed: " + err.message, false); enableBtn(); }
+            } catch (err) { setStatus("Try again - refresh page: " + err.message, false); enableBtn(); }
         }
 
         function doDownload(url, filename) {
+            setProgress(null);
             setStatus('Preparing virus-free download…', true);
             const a = document.createElement('a');
             a.href = url; a.download = filename; a.style.display = 'none';
@@ -869,8 +1112,10 @@
                 els.rahulContainer.classList.add('fade-out');
                 setTimeout(() => {
                     els.rahulContainer.style.display = 'none';
+                    els.userKnown.style.display = 'none';
                     els.downloadBtn.style.display = 'none';
                     els.successView.classList.add('visible');
+                    document.getElementById("after-download-section").style.display = "block";
                     enableBtn();
                     window.scrollTo(0, 0);
                 }, 400);
@@ -886,12 +1131,15 @@
             els.mainCard.style.display = 'block';
             els.rahulContainer.style.display = 'none';
             els.rahulContainer.classList.remove('fade-out');
+            els.userKnown.style.display = 'none';
             els.preview.classList.remove('visible');
             els.thumb.src = ''; els.title.textContent = '—'; els.channel.textContent = '';
             state.aborted = true;
             if (els.infinityLoader) els.infinityLoader.style.display = 'none';
+            document.getElementById("after-download-section").style.display = "none";
             els.downloadBtn.classList.remove('visible'); els.downloadBtn.style.display = 'none';
             els.statusBox.classList.remove('visible');
+            setProgress(null);
             els.urlInput.value = '';
             els.urlInput.focus();
         };
@@ -908,29 +1156,31 @@
         document.getElementById("telegram").href = `https://t.me/share/url?url=${sUrl}&text=${sTitle}`;
         document.getElementById("moreShare").addEventListener("click", async () => {
             if (navigator.share) await navigator.share({ title: document.title, url: window.location.href });
-            else { navigator.clipboard.writeText(window.location.href); alert("Link copied!"); }
+            else { navigator.clipboard.writeText(window.location.href); showCdError("Link copied!"); }
         });
 
         // ── Bookmark hint ──────────────────────────────────────────────────────
         (function () {
             const p = navigator.platform.toLowerCase();
             const b = document.getElementById("bookmark-msg");
-            if (p.includes("win")) b.innerHTML = "Press &ensp;<b>Ctrl + D</b> &ensp; to bookmark ⭐ this site for easy access.";
-            else if (p.includes("mac")) b.innerHTML = "Press <b>⌘ + D</b> to bookmark ⭐ this site for easy access.";
+            if (p.includes("win")) b.innerHTML = "Press &ensp;<b style='border: 1px solid var(--border); padding: 6px 4px; border-radius: 10px; margin-right: 4px;'>Ctrl</b> + <b style='border: 1px solid var(--border); padding: 6px 4px; border-radius: 8px; margin-left: 4px;'>D</b> &ensp; to bookmark ⭐ this site for easy access.";
+            else if (p.includes("mac")) b.innerHTML = "Press &ensp;<b style='border: 1px solid var(--border); padding: 6px 4px; border-radius: 10px; margin-right: 4px;'>⌘</b> + <b style='border: 1px solid var(--border); padding: 6px 4px; border-radius: 8px; margin-left: 4px;'>D</b> to bookmark ⭐ this site for easy access.";
             else b.innerHTML = "Bookmark ⭐ this site for easy access.";
         })();
     </script>
     <script>
         var _paq = window._paq = window._paq || [];
+        /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
         _paq.push(['trackPageView']);
         _paq.push(['enableLinkTracking']);
         (function () {
             var u = "//a.ruvs.in/_wy5s/";
             _paq.push(['setTrackerUrl', u + '_e7hw.php']);
-            _paq.push(['setSiteId', '1']);
+            _paq.push(['setSiteId', '2']);
             var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
             g.async = true; g.src = u + '_ue4c.js'; s.parentNode.insertBefore(g, s);
         })();
     </script>
 </body>
+
 </html>
