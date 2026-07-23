@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ruvs Tools - Free Online Tools by Rahul</title>
+
+    <meta name="description"
+        content="A collection of free, simple, and reliable online tools by Rahul, including a YouTube to MP3/MP4 converter, Vocal Remover, Background Remover, and QR Code Generator.">
+    <meta name="keywords"
+        content="ruvs tools, online tools, free tools, youtube converter, vocal remover, background remover, qr code generator, rahul tools">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="author" content="Rahul">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="canonical" href="https://melamrahul.github.io/tools/">
+
+    <meta property="og:title" content="Ruvs Tools - Free Online Tools by Rahul">
+    <meta property="og:description"
+        content="A collection of free, simple, and reliable online tools, including converters, AI tools, and utilities.">
+    <meta property="og:url" content="https://melamrahul.github.io/tools/">
+    <meta property="og:site_name" content="Ruvs Tools">
+    <meta property="og:image" content="https://ruvs.in/resos/common/icons/ruvs-icon.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ruvs Tools - Free Online Tools by Rahul">
+    <meta name="twitter:description" content="A collection of free, simple, and reliable online tools.">
+    <meta name="twitter:image" content=https://ruvs.in/resos/common/icons/ruvs-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ruvs.in/resos/common/icons/ruvs-icon.png">
+    <link rel="apple-touch-icon" href="https://ruvs.in/resos/common/icons/ruvs-icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://melamrahul.github.io/chunk/scripts/sentinel.js?v=3.4" defer=""></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://melamrahul.github.io/chunk/styles/tools/yt_convert.css?v=3.4">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Ruvs Tools",
+      "url": "https://melamrahul.github.io/tools/",
+      "logo": "https://ruvs.in/resos/common/icons/ruvs-icon.png"
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Ruvs Tools — YouTube to MP3 Converter",
+      "url": "https://melamrahul.github.io/tools/",
+      "description": "Free YouTube to MP3 and MP4 converter by Ruvs Tools. No ads, no signup, up to 320kbps MP3 and 1080p MP4. Protected by Cloudflare Workers.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+      "featureList": [
+        "YouTube to MP3 up to 320kbps",
+        "YouTube to MP4 up to 1080p",
+        "No ads or registration required",
+        "Works on Android and iPhone",
+        "Protected by Cloudflare Workers",
+        "Unlimited virus-free downloads"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"WebApplication",
+      "name":"Ruvs Tools",
+      "url":"https://melamrahul.github.io/tools/",
+      "datePublished":"2025-05-10",
+      "dateModified":"2026-04-17",
+      "applicationCategory":"MultimediaApplication"
+    }
+    </script>
+
+    <style>
+        .container {
+            max-width: 700px !important;
+        }
+
+        #mainContent {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        #mainContent.visible {
+            opacity: 1;
+        }
+
+        /* Tools grid */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 460px) {
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px;
+            border: var(--border-width) solid var(--border);
+            background: white;
+            text-decoration: none;
+            color: var(--text);
+            transition: background 0.1s;
+        }
+
+        .tool-card:hover {
+            background: #d7e0fb;
+        }
+
+        .tool-card-top {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tool-icon {
+            width: 32px;
+            height: 32px;
+            flex-shrink: 0;
+            color: var(--border);
+        }
+
+        .tool-name {
+            font-size: 0.9rem;
+            font-weight: 800;
+            color: var(--border);
+        }
+
+        .tool-desc {
+            font-size: 0.78rem;
+            color: #555;
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .tool-tag {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            background: #d7e0fb;
+            color: var(--border);
+            border: 1px solid var(--border);
+            padding: 2px 8px;
+            align-self: flex-start;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- <div class="global-loader" id="globalLoader" aria-hidden="true">
+        <div class="spinner-ring">
+            <img src="https://melamrahul.github.io/tools/tool_logo_head.png" alt="Loading">
+        </div>
+        <span class="loader-label">Loading Tools…</span>
+    </div> -->
+
+    <div class="container" id="mainContent">
+
+        <div class="header">
+            <div class="logo-area">
+                <img src="https://ruvs.in/resos/common/icons/ruvs-icon.png" alt="Ruvs Tools Logo" class="logo-img">
+                <div class="header-title">
+                    <h1>Ruvs Tools - ruvs.in</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="tools-grid">
+
+            <a href="https://ruvs.in/" class="tool-card">
+                <div class="tool-card-top">
+                    <svg class="tool-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 15V3m0 12l-4-4m4 4l4-4" />
+                        <path d="M2 17l.621 2.485A2 2 0 0 0 4.561 21h14.878a2 2 0 0 0 1.94-1.515L22 17" />
+                    </svg>
+                    <span class="tool-name">YT MP3/MP4 Converter</span>
+                </div>
+                <div class="tool-desc">Convert YouTube videos to MP3 or MP4 format for free.</div>
+                <span class="tool-tag">Multimedia</span>
+            </a>
+
+            <!--<a href="https://www.ruvs.in/vr/" class="tool-card">
+                <div class="tool-card-top">
+                    <svg class="tool-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z" />
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2" />
+                        <line x1="12" x2="12" y1="19" y2="22" />
+                    </svg>
+                    <span class="tool-name">Vocal Remover</span>
+                </div>
+                <div class="tool-desc">Separate vocals from music to create karaoke tracks.</div>
+                <span class="tool-tag">Multimedia</span>
+            </a>-->
+
+            <!-- <a href="https://melamrahul.github.io/tools/remove_bg" class="tool-card">
+                <div class="tool-card-top">
+                    <svg class="tool-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path
+                            d="M21.93,10.2a2.83,2.83,0,0,0-3.18-4.4,2.83,2.83,0,0,0-4.4-3.18,2.83,2.83,0,0,0-4.4,3.18A2.83,2.83,0,0,0,5.77,10.2a2.83,2.83,0,0,0,3.18,4.4,2.83,2.83,0,0,0,4.4,3.18,2.83,2.83,0,0,0,4.4-3.18A2.83,2.83,0,0,0,21.93,10.2Z" />
+                        <path d="M22 2 12 12" />
+                    </svg>
+                    <span class="tool-name">Remove Background</span>
+                </div>
+                <div class="tool-desc">Instantly remove the background from any image with AI.</div>
+                <span class="tool-tag">AI Tool</span>
+            </a>
+
+            <a href="https://melamrahul.github.io/tools/qr_gen" class="tool-card">
+                <div class="tool-card-top">
+                    <svg class="tool-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect width="5" height="5" x="3" y="3" rx="1" />
+                        <rect width="5" height="5" x="16" y="3" rx="1" />
+                        <rect width="5" height="5" x="3" y="16" rx="1" />
+                        <path d="M21 16h-3a2 2 0 0 0-2 2v3" />
+                        <path d="M21 21v.01" />
+                        <path d="M12 7v3a2 2 0 0 1-2 2H7" />
+                        <path d="M3 12h.01" />
+                        <path d="M12 3h.01" />
+                        <path d="M12 16v.01" />
+                        <path d="M16 12h.01" />
+                        <path d="M21 12h.01" />
+                        <path d="M12 21v-1" />
+                    </svg>
+                    <span class="tool-name">QR Code Generator</span>
+                </div>
+                <div class="tool-desc">Create and download custom QR codes for URLs or text.</div>
+                <span class="tool-tag">Utility</span>
+            </a> -->
+
+        </div>
+
+    </div>
+
+    <!-- Google Translate Element (hidden) -->
+    <div id="google_translate_element" style="display:none"></div>
+    <footer>With ❤️ Ruvs Tools &nbsp;·&nbsp; Built to save your time</footer>
+    <script>
+        var _paq = window._paq = window._paq || [];
+        _paq.push(['trackPageView']);
+        _paq.push(['enableLinkTracking']);
+        (function () {
+            var u = "//a.ruvs.in/_wy5s/";
+            _paq.push(['setTrackerUrl', u + '_e7hw.php']);
+            _paq.push(['setSiteId', '1']);
+            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0];
+            g.async = true; g.src = u + '_ue4c.js'; s.parentNode.insertBefore(g, s);
+        })();
+    </script>
+
+</body>
+
+</html>
